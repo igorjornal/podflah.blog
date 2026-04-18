@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<title>Crônicas · PodFlah.blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Rubik+Mono+One&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/arquibancada.css" />
+<style>
+  /* Category-specific */
+  .cat-hero {
+    padding: 56px 0 36px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 40px;
+    position: relative;
+    display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end;
+  }
+  .cat-stamp {
+    display: inline-block; transform: rotate(-2deg);
+    font-family: "Oswald", sans-serif; font-weight: 700;
+    font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+    background: var(--red); color: var(--paper);
+    padding: 6px 14px; margin-bottom: 18px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .cat-hero h1 {
+    font-family: "DM Serif Display", serif;
+    font-size: clamp(64px, 10vw, 140px);
+    line-height: 0.88; letter-spacing: -0.03em;
+  }
+  .cat-hero h1 em {
+    font-style: italic; color: var(--red); position: relative;
+  }
+  .cat-hero h1 em::after {
+    content: ""; position: absolute; left: -6px; right: -6px; bottom: 6px; height: 16px;
+    background: var(--yellow); z-index: -1; transform: rotate(-1deg);
+  }
+  .cat-hero .desc {
+    font-family: "DM Serif Display", serif; font-style: italic;
+    font-size: 22px; line-height: 1.35; max-width: 56ch;
+    margin-top: 20px; color: var(--muted);
+  }
+  .cat-stats {
+    text-align: right;
+    font-family: "JetBrains Mono", monospace; font-size: 11px;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em;
+    line-height: 1.8; padding: 20px; border: 2px solid var(--ink);
+    background: var(--paper); transform: rotate(1deg);
+    box-shadow: 4px 4px 0 var(--yellow);
+  }
+  .cat-stats strong {
+    display: block; font-family: "Rubik Mono One", sans-serif;
+    font-size: 36px; color: var(--ink); margin-bottom: 2px; letter-spacing: -0.02em;
+  }
+
+  .cat-nav {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 40px; padding: 10px;
+    background: var(--ink); border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--yellow);
+  }
+  .cat-nav a {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 13px; font-weight: 600;
+    padding: 8px 16px; color: var(--paper); text-decoration: none;
+    border: 2px solid transparent;
+  }
+  .cat-nav a:hover { color: var(--yellow); }
+  .cat-nav a.active { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+  .cat-nav .count {
+    margin-left: auto; font-family: "JetBrains Mono", monospace;
+    font-size: 11px; color: var(--paper); opacity: 0.6;
+    align-self: center; padding-right: 8px;
+  }
+
+  .filter-bar {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 14px 0; border-bottom: 1px dashed var(--line);
+    margin-bottom: 28px; flex-wrap: wrap;
+  }
+  .filter-bar .left {
+    font-family: "JetBrains Mono", monospace; font-size: 11px;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .filter-bar .right { display: flex; gap: 16px; align-items: center; font-family: "Oswald", sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; }
+  .filter-bar select, .filter-bar input {
+    font-family: "JetBrains Mono", monospace; font-size: 12px;
+    padding: 8px 12px; border: 2px solid var(--ink); background: var(--paper);
+    color: var(--ink);
+  }
+
+  .featured-row {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px;
+    margin-bottom: 48px;
+  }
+  .featured-big {
+    background: var(--ink); color: var(--paper);
+    border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--red);
+    display: grid; grid-template-rows: 280px 1fr; overflow: hidden;
+    text-decoration: none; position: relative;
+  }
+  .featured-big .img {
+    background: repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 10px), linear-gradient(180deg, #c8102e 0%, #4a0810 100%);
+    display: grid; place-items: center; position: relative;
+  }
+  .featured-big .img::after { content:""; position: absolute; inset:0; background: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1.5px); background-size: 5px 5px; mix-blend-mode: screen; }
+  .featured-big .img .label { font-family: "Rubik Mono One", sans-serif; font-size: 64px; color: var(--yellow); -webkit-text-stroke: 2px var(--ink); text-shadow: 6px 6px 0 rgba(0,0,0,0.5); transform: rotate(-3deg); text-align:center; line-height:0.9; }
+  .featured-big .img .flag { position: absolute; top: 14px; left: 14px; font-family: "JetBrains Mono", monospace; font-size: 10px; background: rgba(0,0,0,0.5); color: var(--paper); padding: 4px 8px; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.3); }
+  .featured-big .body { padding: 28px 32px 32px; }
+  .featured-big .kicker { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--yellow); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .featured-big h2 { font-family: "DM Serif Display", serif; font-size: 42px; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 14px; }
+  .featured-big h2 em { font-style: italic; color: var(--yellow); }
+  .featured-big p { font-size: 16px; line-height: 1.5; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+  .featured-big .foot { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px dashed rgba(255,255,255,0.2); font-family: "JetBrains Mono", monospace; font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .featured-side { display: flex; flex-direction: column; gap: 20px; }
+  .mini-card {
+    display: grid; grid-template-columns: 120px 1fr; gap: 16px;
+    padding: 16px; border: 2px solid var(--ink); background: var(--paper);
+    text-decoration: none; color: inherit; transition: all 0.15s; position: relative;
+  }
+  .mini-card:hover { transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--red); }
+  .mini-card .th { aspect-ratio: 1; background: repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 10px), linear-gradient(135deg, #2a2a2a, #141210); display: grid; place-items: center; color: var(--yellow); font-family: "Rubik Mono One", sans-serif; font-size: 14px; text-align: center; padding: 0 6px; line-height: 1; letter-spacing: -0.02em; }
+  .mini-card .th.red { background: repeating-linear-gradient(135deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 10px), linear-gradient(135deg, var(--red), var(--red-deep)); }
+  .mini-card .num { position: absolute; top: -10px; right: -10px; font-family: "Rubik Mono One", sans-serif; font-size: 24px; color: var(--red); background: var(--paper); width: 36px; height: 36px; border: 2px solid var(--ink); display: grid; place-items: center; transform: rotate(4deg); }
+  .mini-card h4 { font-family: "DM Serif Display", serif; font-size: 18px; line-height: 1.15; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .mini-card .m { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .section-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--ink);
+  }
+  .section-h h2 { font-family: "DM Serif Display", serif; font-size: 36px; letter-spacing: -0.01em; }
+  .section-h h2 em { color: var(--red); font-style: italic; }
+  .section-h .cnt { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  .post-list {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 1000px) { .post-list { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) { .post-list { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--paper); border: 2px solid var(--ink);
+    text-decoration: none; color: inherit; position: relative;
+    display: flex; flex-direction: column; transition: all 0.2s;
+  }
+  .card:nth-child(3n+1) { transform: rotate(-0.3deg); }
+  .card:nth-child(3n+2) { transform: rotate(0.2deg); }
+  .card:nth-child(3n+3) { transform: rotate(-0.15deg); }
+  .card:hover { transform: translate(-3px,-3px) rotate(0deg); box-shadow: 6px 6px 0 var(--red); z-index: 5; }
+  .card .th {
+    aspect-ratio: 16/10; position: relative; overflow: hidden;
+    background: repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 10px), linear-gradient(180deg, #2a2a2a, #141210);
+    display: grid; place-items: center;
+  }
+  .card .th.red { background: repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 10px), linear-gradient(180deg, var(--red), var(--red-deep)); }
+  .card .th::after { content:""; position: absolute; inset: 0; background: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1.5px); background-size: 5px 5px; mix-blend-mode: screen; }
+  .card .th .lab { font-family: "Rubik Mono One", sans-serif; font-size: 26px; color: var(--yellow); -webkit-text-stroke: 1px var(--ink); transform: rotate(-3deg); text-align: center; line-height: 1; padding: 0 12px; text-shadow: 3px 3px 0 rgba(0,0,0,0.4); }
+  .card .tape-top { top: -10px; left: 20px; }
+  .card:nth-child(3n+2) .tape-top { background: rgba(200,16,46,0.85); left: auto; right: 20px; transform: rotate(4deg); }
+  .card:nth-child(3n+3) .tape-top { background: rgba(21,19,16,0.85); left: 40%; transform: rotate(-2deg); }
+  .card .body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .card .meta { display: flex; justify-content: space-between; align-items: center; font-family: "JetBrains Mono", monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .card h3 { font-family: "DM Serif Display", serif; font-size: 22px; line-height: 1.1; letter-spacing: -0.01em; }
+  .card p { font-size: 13px; line-height: 1.55; color: var(--muted); }
+  .card .foot { display: flex; justify-content: space-between; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.15); font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 24px 0 80px; font-family: "Oswald", sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px; }
+  .pagination a, .pagination span { width: 40px; height: 40px; display: grid; place-items: center; border: 2px solid var(--ink); text-decoration: none; color: var(--ink); font-weight: 600; }
+  .pagination .active { background: var(--ink); color: var(--yellow); }
+  .pagination .arrow { width: auto; padding: 0 16px; }
+
+  @media (max-width: 900px) {
+    .cat-hero { grid-template-columns: 1fr; }
+    .featured-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-mark">P</span>
+      <span>podflah<small>.blog</small></span>
+    </a>
+    <nav class="main-nav">
+      <a href="home-arquibancada.html">Blog</a>
+      <a href="categoria-arquibancada.html" class="active">Crônicas</a>
+      <a href="autor-arquibancada.html">Perfil Oficial</a>
+      <a href="#">O PodFlah</a>
+      <a href="#">Podcast</a>
+    </nav>
+    <div class="social">
+      <a href="#">IG</a><a href="#">FB</a><a href="#">YT</a><a href="#">TK</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="crumbs" style="padding-top:24px;">
+    <a href="home-arquibancada.html">BLOG</a><span class="sep">/</span>CATEGORIAS<span class="sep">/</span>CRÔNICAS
+  </div>
+
+  <section class="cat-hero">
+    <div>
+      <div class="cat-stamp">● SEÇÃO · CATEGORIA</div>
+      <h1>Crônicas<br/><em>da arquibancada</em></h1>
+      <p class="desc">A coluna toda semana do Igor: o futebol como a gente sente — no peito, no ônibus, na escola, no bar. Prosa rubro-negra sem filtro e sem muleta.</p>
+    </div>
+    <div class="cat-stats">
+      <strong>147</strong>
+      <span>CRÔNICAS PUBLICADAS</span>
+      <div style="margin-top:12px; padding-top:12px; border-top: 1px dashed rgba(0,0,0,0.2);">
+        <strong style="font-size:20px;">TODA 2ª · 6:00</strong>
+        <span>NOVA EDIÇÃO</span>
+      </div>
+    </div>
+  </section>
+
+  <nav class="cat-nav">
+    <a href="#">Todos</a>
+    <a href="#" class="active">Crônicas</a>
+    <a href="#">Análise</a>
+    <a href="#">Libertadores</a>
+    <a href="#">Brasileirão</a>
+    <a href="#">Mercado da Bola</a>
+    <a href="#">Bastidores</a>
+    <span class="count">147 POSTS</span>
+  </nav>
+
+  <div class="filter-bar">
+    <div class="left">EXIBINDO <strong style="color:var(--ink)">1–10</strong> DE <strong style="color:var(--ink)">147 POSTS</strong></div>
+    <div class="right">
+      <span>ORDENAR:</span>
+      <select>
+        <option>Mais recentes</option>
+        <option>Mais lidos</option>
+        <option>Mais comentados</option>
+        <option>Mais antigos</option>
+      </select>
+      <input type="text" placeholder="⌕ buscar nesta categoria" />
+    </div>
+  </div>
+
+  <!-- FEATURED + SIDE -->
+  <section class="featured-row">
+    <a href="post-arquibancada.html" class="featured-big">
+      <div class="img">
+        <span class="flag">[IMG] COMEMORAÇÃO · MARACANÃ</span>
+        <div class="label">A EPOPEIA<br/>DO TETRA</div>
+      </div>
+      <div class="body">
+        <div class="kicker">★ DESTAQUE DA CATEGORIA · 14.2K LEITURAS</div>
+        <h2>A <em>Epopeia</em> do Tetra</h2>
+        <p>A manga que o colégio nos viu rasgar, a camisa que escondemos dos pais todas as noites de quarta, o grito abafado na escola no dia seguinte — tudo isso pagou a dívida.</p>
+        <div class="foot">
+          <span>IGOR SCHWANSING · 15 DEZ 2025</span>
+          <span>8 MIN</span>
+        </div>
+      </div>
+    </a>
+    <div class="featured-side">
+      <a href="post-arquibancada.html" class="mini-card">
+        <div class="num">01</div>
+        <div class="th red">CAMPEÃO<br/>2025</div>
+        <div>
+          <h4>Não é revanche. Mas também não é só futebol.</h4>
+          <div class="m">12 DEZ · 6 MIN · 9.8K</div>
+        </div>
+      </a>
+      <a href="post-arquibancada.html" class="mini-card">
+        <div class="num">02</div>
+        <div class="th red">SÁBADO<br/>É GUERRA</div>
+        <div>
+          <h4>Os dias mais demorados do ano</h4>
+          <div class="m">08 DEZ · 5 MIN · 7.4K</div>
+        </div>
+      </a>
+      <a href="post-arquibancada.html" class="mini-card">
+        <div class="num">03</div>
+        <div class="th">ARQUI-<br/>BANCADA</div>
+        <div>
+          <h4>A semana que sonhamos em janeiro cruzou quatro dias pra eternidade</h4>
+          <div class="m">05 DEZ · 7 MIN · 5.1K</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <div class="section-h">
+    <h2>Todas as <em>crônicas</em></h2>
+    <div class="cnt">POR DATA DE PUBLICAÇÃO · ↓</div>
+  </div>
+
+  <div class="post-list" id="posts"></div>
+
+  <div class="pagination">
+    <a href="#" class="arrow">← ANT</a>
+    <a href="#">01</a>
+    <span class="active">02</span>
+    <a href="#">03</a>
+    <a href="#">04</a>
+    <a href="#">…</a>
+    <a href="#">15</a>
+    <a href="#" class="arrow">PRÓX →</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="color:var(--paper);">
+          <span class="logo-mark">P</span>
+          <span>podflah<small>.blog</small></span>
+        </div>
+        <p>Crônicas, análises e o podcast sobre o Flamengo. Feito por torcedor, pra torcedor, desde 2018.</p>
+      </div>
+      <div><h5>NAVEGAR</h5><ul><li><a href="home-arquibancada.html">Blog</a></li><li><a href="#">Podcast</a></li><li><a href="categoria-arquibancada.html">Crônicas</a></li><li><a href="arquivo-arquibancada.html">Arquivo</a></li></ul></div>
+      <div><h5>SOBRE</h5><ul><li><a href="#">O PodFlah</a></li><li><a href="autor-arquibancada.html">Perfil oficial</a></li><li><a href="#">Anuncie</a></li><li><a href="#">Contato</a></li></ul></div>
+      <div><h5>LEGAL</h5><ul><li><a href="#">Privacidade</a></li><li><a href="#">Acessibilidade</a></li><li><a href="#">Termos</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 · PODFLAH · TODOS OS DIREITOS</span>
+      <span>FEITO NO RIO · COM TINTA VERMELHA</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../shared/data.js"></script>
+<script>
+  const posts = window.PODFLAH_DATA.posts.filter(p => p.category === 'CRÔNICAS');
+  // pad with duplicates to simulate a full category listing
+  const fill = window.PODFLAH_DATA.posts;
+  const list = [...posts, ...fill, ...posts].slice(0, 9);
+  const grid = document.getElementById('posts');
+  grid.innerHTML = list.map(p => {
+    const isRed = p.imgColor === 'red';
+    return `
+    <a href="post-arquibancada.html" class="card">
+      <div class="tape tape-top"></div>
+      <div class="th ${isRed ? 'red' : ''}"><div class="lab">${p.imgLabel}</div></div>
+      <div class="body">
+        <div class="meta">
+          <span class="cat-chip ${p.category === 'CRÔNICAS' ? '' : p.category === 'ANÁLISE' ? 'black' : 'red'}">${p.category}</span>
+          <span>${p.date}</span>
+        </div>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+        <div class="foot">
+          <span>${p.author.toUpperCase()}</span>
+          <span>${p.readTime}</span>
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+</script>
+
+</body>
+</html>

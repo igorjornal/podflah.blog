@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<title>Igor Schwansing · PodFlah.blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Rubik+Mono+One&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/arquibancada.css" />
+<style>
+  .author-hero {
+    padding: 56px 0 48px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 48px;
+    display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: start;
+    position: relative;
+  }
+  .author-photo {
+    aspect-ratio: 1; position: relative;
+    background: repeating-linear-gradient(135deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 10px), linear-gradient(135deg, var(--red), var(--red-deep));
+    border: 3px solid var(--ink);
+    box-shadow: 10px 10px 0 var(--yellow), 10px 10px 0 3px var(--ink);
+    display: grid; place-items: center;
+    overflow: hidden;
+    transform: rotate(-2deg);
+  }
+  .author-photo::after { content:""; position: absolute; inset: 0; background: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1.5px); background-size: 5px 5px; mix-blend-mode: screen; }
+  .author-photo .initials {
+    font-family: "Rubik Mono One", sans-serif; font-size: 120px; color: var(--yellow);
+    -webkit-text-stroke: 3px var(--ink); text-shadow: 8px 8px 0 rgba(0,0,0,0.4);
+  }
+  .author-photo .tape-1 {
+    position: absolute; top: -14px; left: 30px; width: 100px; height: 24px;
+    background: rgba(255,214,58,0.9);
+    background-image: repeating-linear-gradient(90deg, transparent 0 3px, rgba(0,0,0,0.07) 3px 4px);
+    transform: rotate(-6deg); z-index: 2;
+  }
+  .author-photo .stamp {
+    position: absolute; bottom: 12px; right: 12px;
+    font-family: "Oswald", sans-serif; font-weight: 700; font-size: 11px;
+    letter-spacing: 0.18em; color: var(--yellow);
+    border: 2px double var(--yellow); padding: 4px 10px; transform: rotate(8deg);
+    background: rgba(0,0,0,0.3);
+  }
+
+  .author-info .role {
+    display: inline-block;
+    font-family: "Oswald", sans-serif; font-weight: 700;
+    font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+    background: var(--ink); color: var(--yellow);
+    padding: 6px 14px; margin-bottom: 20px;
+    transform: rotate(-1deg); box-shadow: 3px 3px 0 var(--red);
+  }
+  .author-info h1 {
+    font-family: "DM Serif Display", serif;
+    font-size: clamp(54px, 8vw, 104px);
+    line-height: 0.88; letter-spacing: -0.03em; margin-bottom: 22px;
+  }
+  .author-info h1 em {
+    font-style: italic; color: var(--red); position: relative;
+  }
+  .author-info h1 em::after {
+    content:""; position: absolute; left:-4px; right:-4px; bottom: 4px; height: 12px;
+    background: var(--yellow); z-index: -1; transform: rotate(-1deg);
+  }
+  .author-info .bio {
+    font-family: "DM Serif Display", serif; font-style: italic;
+    font-size: 22px; line-height: 1.4; max-width: 58ch;
+    color: var(--ink); opacity: 0.85; margin-bottom: 28px;
+  }
+  .author-info .contact {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px;
+  }
+  .author-info .contact a {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "JetBrains Mono", monospace; font-size: 12px;
+    color: var(--ink); text-decoration: none;
+    border: 2px solid var(--ink); padding: 8px 14px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .author-info .contact a:hover { background: var(--ink); color: var(--yellow); }
+  .author-info .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .stats-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 3px solid var(--ink); background: var(--paper);
+    margin-bottom: 56px; box-shadow: 6px 6px 0 var(--yellow);
+  }
+  .stats-strip .cell {
+    padding: 24px 20px; text-align: center;
+    border-right: 2px solid var(--ink); position: relative;
+  }
+  .stats-strip .cell:last-child { border-right: none; }
+  .stats-strip .cell strong {
+    display: block; font-family: "Rubik Mono One", sans-serif;
+    font-size: 44px; letter-spacing: -0.03em; color: var(--ink);
+    line-height: 1;
+  }
+  .stats-strip .cell span {
+    display: block; margin-top: 8px;
+    font-family: "JetBrains Mono", monospace; font-size: 10px;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.14em;
+  }
+  .stats-strip .cell.accent { background: var(--yellow); }
+  .stats-strip .cell.accent strong { color: var(--ink); }
+
+  /* BIO + COL LATERAL */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 340px; gap: 56px;
+    margin-bottom: 64px;
+  }
+  .about-text h2 {
+    font-family: "DM Serif Display", serif; font-size: 44px; line-height: 1;
+    letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  .about-text h2 em { color: var(--red); font-style: italic; }
+  .about-text p {
+    font-size: 17px; line-height: 1.7; margin-bottom: 16px;
+  }
+  .about-text p:first-of-type::first-letter {
+    font-family: "DM Serif Display", serif; float: left; font-size: 80px;
+    line-height: 0.85; padding: 6px 10px 0 0; color: var(--red);
+  }
+  .about-text .quote {
+    font-family: "DM Serif Display", serif; font-style: italic;
+    font-size: 28px; line-height: 1.3;
+    padding: 20px 0 20px 24px;
+    border-left: 4px solid var(--red);
+    margin: 28px 0;
+  }
+
+  .about-side { display: flex; flex-direction: column; gap: 24px; }
+  .side-box {
+    border: 2px solid var(--ink); padding: 20px; background: var(--paper);
+    position: relative;
+  }
+  .side-box h4 {
+    font-family: "Oswald", sans-serif; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--ink);
+  }
+  .timeline li {
+    list-style: none; padding: 10px 0 10px 16px; border-left: 2px solid var(--red);
+    margin-left: 6px; position: relative;
+  }
+  .timeline li::before {
+    content: ""; position: absolute; left: -7px; top: 16px;
+    width: 10px; height: 10px; background: var(--red); border: 2px solid var(--ink); border-radius: 50%;
+  }
+  .timeline strong { display: block; font-family: "Oswald", sans-serif; font-size: 13px; letter-spacing: 0.08em; }
+  .timeline span { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .timeline p { font-size: 13px; line-height: 1.5; margin-top: 4px; color: var(--muted); }
+
+  .topic-box { background: var(--ink); color: var(--paper); }
+  .topic-box h4 { border-bottom-color: var(--paper); }
+  .topic-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .topic-list span { font-family: "Oswald", sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.08em; padding: 5px 10px; border: 1px solid var(--paper); text-transform: uppercase; cursor: pointer; }
+  .topic-list span:hover { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+
+  .posts-section { margin-bottom: 64px; }
+  .section-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--ink);
+  }
+  .section-h h2 { font-family: "DM Serif Display", serif; font-size: 36px; letter-spacing: -0.01em; }
+  .section-h h2 em { color: var(--red); font-style: italic; }
+  .section-h .cnt { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  .post-list {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  }
+  @media (max-width: 1000px) { .post-list { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) { .post-list { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--paper); border: 2px solid var(--ink);
+    text-decoration: none; color: inherit; position: relative;
+    display: flex; flex-direction: column; transition: all 0.2s;
+  }
+  .card:nth-child(3n+1) { transform: rotate(-0.3deg); }
+  .card:nth-child(3n+2) { transform: rotate(0.2deg); }
+  .card:hover { transform: translate(-3px,-3px) rotate(0deg); box-shadow: 6px 6px 0 var(--red); z-index: 5; }
+  .card .th { aspect-ratio: 16/10; background: repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 10px), linear-gradient(180deg, #2a2a2a, #141210); display: grid; place-items: center; position: relative; }
+  .card .th.red { background: repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 10px), linear-gradient(180deg, var(--red), var(--red-deep)); }
+  .card .th::after { content:""; position: absolute; inset: 0; background: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1.5px); background-size: 5px 5px; mix-blend-mode: screen; }
+  .card .th .lab { font-family: "Rubik Mono One", sans-serif; font-size: 26px; color: var(--yellow); -webkit-text-stroke: 1px var(--ink); transform: rotate(-3deg); text-align: center; line-height: 1; padding: 0 12px; text-shadow: 3px 3px 0 rgba(0,0,0,0.4); }
+  .card .body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .card .meta { display: flex; justify-content: space-between; font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .card h3 { font-family: "DM Serif Display", serif; font-size: 22px; line-height: 1.1; }
+  .card p { font-size: 13px; line-height: 1.55; color: var(--muted); }
+  .card .foot { display: flex; justify-content: space-between; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.15); font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .follow-cta {
+    background: var(--red); color: var(--paper);
+    padding: 48px 40px; text-align: center;
+    border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--yellow);
+    margin-bottom: 80px; position: relative; overflow: hidden;
+  }
+  .follow-cta::before { content:""; position: absolute; top: -40px; left: -40px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,214,58,0.2); }
+  .follow-cta h3 {
+    font-family: "DM Serif Display", serif; font-size: 40px; line-height: 1;
+    margin-bottom: 12px; position: relative; z-index: 2;
+  }
+  .follow-cta h3 em { font-style: italic; color: var(--yellow); }
+  .follow-cta p { font-size: 15px; max-width: 460px; margin: 0 auto 22px; position: relative; z-index: 2; }
+  .follow-cta form { display: flex; gap: 8px; max-width: 460px; margin: 0 auto; position: relative; z-index: 2; }
+  .follow-cta input { flex:1; padding: 14px; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); font-family: "JetBrains Mono", monospace; font-size: 13px; }
+  .follow-cta button { padding: 14px 22px; background: var(--ink); color: var(--yellow); border: 2px solid var(--ink); font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px; cursor: pointer; }
+
+  @media (max-width: 900px) {
+    .author-hero { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .stats-strip .cell:nth-child(2) { border-right: none; }
+    .stats-strip .cell:nth-child(-n+2) { border-bottom: 2px solid var(--ink); }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="home-arquibancada.html" class="logo"><span class="logo-mark">P</span><span>podflah<small>.blog</small></span></a>
+    <nav class="main-nav">
+      <a href="home-arquibancada.html">Blog</a>
+      <a href="categoria-arquibancada.html">Crônicas</a>
+      <a href="autor-arquibancada.html" class="active">Perfil Oficial</a>
+      <a href="#">O PodFlah</a>
+      <a href="#">Podcast</a>
+    </nav>
+    <div class="social"><a href="#">IG</a><a href="#">FB</a><a href="#">YT</a><a href="#">TK</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="crumbs" style="padding-top:24px;">
+    <a href="home-arquibancada.html">BLOG</a><span class="sep">/</span>AUTORES<span class="sep">/</span>IGOR SCHWANSING
+  </div>
+
+  <section class="author-hero">
+    <div class="author-photo">
+      <div class="tape-1"></div>
+      <div class="initials">IS</div>
+      <div class="stamp">EDIÇÃO OFICIAL</div>
+    </div>
+    <div class="author-info">
+      <div class="role">● CRONISTA-CHEFE · HOST DO PODFLAH</div>
+      <h1>Igor <em>Schwansing</em></h1>
+      <p class="bio">Carioca, rubro-negro desde o berço. Escreve sobre Flamengo há 12 anos, apresenta o PodFlah toda semana e acredita que arquibancada é o único lugar onde ainda faz sentido jurar fidelidade.</p>
+      <div class="contact">
+        <a href="#">@igorschwansing</a>
+        <a href="#">igor@podflah.blog</a>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+      </div>
+      <div class="cta-row">
+        <a href="#" class="btn-primary">+ SEGUIR AUTOR</a>
+        <a href="#" class="btn-ghost">ASSINAR NEWSLETTER</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="cell"><strong>248</strong><span>POSTS PUBLICADOS</span></div>
+    <div class="cell accent"><strong>184</strong><span>EPISÓDIOS DE PODCAST</span></div>
+    <div class="cell"><strong>43.2k</strong><span>SEGUIDORES</span></div>
+    <div class="cell"><strong>2018</strong><span>NO AR DESDE</span></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <h2>Sobre <em>o Igor</em></h2>
+      <p>Cresci em Copacabana, com tio que levou a gente ao Maracanã a primeira vez em 1992. Era um sábado de dezembro e o Flamengo ganhou. Não lembro do placar, não lembro de um gol sequer — lembro da arquibancada. Do barulho que vinha do chão. Do cheiro de cerveja, suor e pipoca queimada.</p>
+      <p>Desde então, todo texto que eu escrevo nasce daquela tarde. Cobrir Flamengo, pra mim, não é técnica: é memória afetiva com prazo de entrega. Escrevi em redação de jornal, trabalhei dois anos cobrindo Europa, voltei pro Rio em 2015 — e desde 2018 faço o PodFlah, meu espaço pra falar do que me importa, do jeito que me importa.</p>
+      <blockquote class="quote">"A arquibancada não esquece. E quando a arquibancada não esquece, o campo responde. É essa a regra, e é pra ela que escrevo."</blockquote>
+      <p>O blog é isso: crônicas autorais toda segunda, análises táticas depois de cada jogo importante, e o podcast com convidados que amam o clube do mesmo jeito que a gente. Sem muleta, sem filtro, sem teleprompter.</p>
+    </div>
+    <aside class="about-side">
+      <div class="side-box">
+        <h4>LINHA DO TEMPO</h4>
+        <ul class="timeline">
+          <li><strong>2026 · ATUAL</strong><span>15k inscritos na newsletter</span></li>
+          <li><strong>2023</strong><span>Prêmio ACEESP</span><p>Melhor coluna digital sobre futebol</p></li>
+          <li><strong>2018</strong><span>Lançamento PodFlah</span><p>Primeiro episódio: "Quem é esse Jorge Jesus?"</p></li>
+          <li><strong>2015</strong><span>Volta ao Rio</span></li>
+          <li><strong>2013–15</strong><span>Cobertura na Europa</span></li>
+        </ul>
+      </div>
+      <div class="side-box topic-box">
+        <h4>ESCREVE SOBRE</h4>
+        <div class="topic-list">
+          <span>Crônica</span>
+          <span>Tática</span>
+          <span>Libertadores</span>
+          <span>Brasileirão</span>
+          <span>Bastidores</span>
+          <span>Torcida</span>
+          <span>Maracanã</span>
+          <span>Base</span>
+          <span>História</span>
+          <span>Rivalidade</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="posts-section">
+    <div class="section-h">
+      <h2>Posts <em>do autor</em></h2>
+      <div class="cnt">9 DE 248 · POR DATA ↓</div>
+    </div>
+    <div class="post-list" id="author-posts"></div>
+  </div>
+
+  <div class="follow-cta">
+    <h3>Quer ler o Igor <em>toda segunda?</em></h3>
+    <p>A carta sai às 6h com crônica exclusiva, leitura da rodada e aquele aviso: "essa semana tem jogão".</p>
+    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='INSCRITO ✓';">
+      <input type="email" placeholder="seu@email.com.br" required />
+      <button type="submit">ASSINAR →</button>
+    </form>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="color:var(--paper);"><span class="logo-mark">P</span><span>podflah<small>.blog</small></span></div>
+        <p>Crônicas, análises e o podcast sobre o Flamengo. Feito por torcedor, pra torcedor, desde 2018.</p>
+      </div>
+      <div><h5>NAVEGAR</h5><ul><li><a href="home-arquibancada.html">Blog</a></li><li><a href="#">Podcast</a></li><li><a href="categoria-arquibancada.html">Crônicas</a></li><li><a href="arquivo-arquibancada.html">Arquivo</a></li></ul></div>
+      <div><h5>SOBRE</h5><ul><li><a href="#">O PodFlah</a></li><li><a href="autor-arquibancada.html">Perfil oficial</a></li><li><a href="#">Anuncie</a></li><li><a href="#">Contato</a></li></ul></div>
+      <div><h5>LEGAL</h5><ul><li><a href="#">Privacidade</a></li><li><a href="#">Acessibilidade</a></li><li><a href="#">Termos</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 · PODFLAH · TODOS OS DIREITOS</span>
+      <span>FEITO NO RIO · COM TINTA VERMELHA</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../shared/data.js"></script>
+<script>
+  const posts = window.PODFLAH_DATA.posts.slice(0, 9);
+  document.getElementById('author-posts').innerHTML = posts.map(p => `
+    <a href="post-arquibancada.html" class="card">
+      <div class="th ${p.imgColor === 'red' ? 'red' : ''}"><div class="lab">${p.imgLabel}</div></div>
+      <div class="body">
+        <div class="meta">
+          <span class="cat-chip ${p.category === 'CRÔNICAS' ? '' : p.category === 'ANÁLISE' ? 'black' : 'red'}">${p.category}</span>
+          <span>${p.date}</span>
+        </div>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt.slice(0, 120)}…</p>
+        <div class="foot"><span>${p.readTime}</span><span>♥ ${(Math.random()*10+1).toFixed(1)}K</span></div>
+      </div>
+    </a>
+  `).join('');
+</script>
+
+</body>
+</html>

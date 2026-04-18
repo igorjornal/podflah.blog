@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<title>Editor · PodFlah Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Rubik+Mono+One&display=swap" rel="stylesheet" />
+<style>
+  :root { --paper: #f1ebdc; --ink: #151310; --red: #c8102e; --yellow: #ffd63a; --muted: #6a6558; --line: rgba(0,0,0,0.15); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; min-height: 100vh; }
+  body::before { content:""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.1; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+
+  /* TOPBAR */
+  .topbar { display: flex; align-items: center; gap: 16px; padding: 12px 24px; border-bottom: 2px solid var(--ink); background: var(--paper); position: sticky; top: 0; z-index: 30; }
+  .topbar::after { content:""; position: absolute; left: 0; right: 0; bottom: -5px; height: 3px; background: repeating-linear-gradient(90deg, var(--red) 0 8px, transparent 8px 16px); }
+  .topbar a.back { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); font-family: "Oswald"; font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; border: 2px solid var(--ink); }
+  .topbar a.back:hover { background: var(--ink); color: var(--yellow); }
+  .topbar .crumbs { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .topbar .crumbs strong { color: var(--ink); }
+  .topbar .status { margin-left: auto; display: flex; align-items: center; gap: 16px; font-family: "JetBrains Mono"; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .topbar .status .saved { display: flex; align-items: center; gap: 6px; }
+  .topbar .status .dot { width: 8px; height: 8px; background: #2f9e2f; border-radius: 50%; }
+  .topbar .actions { display: flex; gap: 8px; }
+  .btn { padding: 10px 16px; font-family: "Oswald"; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 12px; border: 2px solid var(--ink); cursor: pointer; text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; background: var(--paper); }
+  .btn:hover { background: var(--yellow); }
+  .btn.primary { background: var(--ink); color: var(--yellow); }
+  .btn.primary:hover { background: var(--red); color: var(--paper); }
+  .btn.danger { color: var(--red); border-color: var(--red); }
+
+  /* LAYOUT: editor + sidebar */
+  .editor-shell { display: grid; grid-template-columns: 1fr 320px; min-height: calc(100vh - 60px); }
+
+  /* TOOLBAR */
+  .ed-toolbar { display: flex; gap: 4px; padding: 10px 16px; border-bottom: 2px solid var(--ink); background: var(--paper); position: sticky; top: 60px; z-index: 20; flex-wrap: wrap; align-items: center; }
+  .ed-toolbar .grp { display: flex; gap: 2px; padding-right: 10px; margin-right: 6px; border-right: 1px dashed var(--line); }
+  .ed-toolbar .grp:last-child { border-right: none; }
+  .ed-toolbar button { width: 32px; height: 32px; border: 1px solid transparent; background: transparent; cursor: pointer; font-family: "DM Serif Display", serif; font-size: 16px; color: var(--ink); display: grid; place-items: center; }
+  .ed-toolbar button.text { font-family: "Oswald"; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; padding: 0 10px; width: auto; text-transform: uppercase; }
+  .ed-toolbar button:hover { border-color: var(--ink); background: var(--yellow); }
+  .ed-toolbar button.active { background: var(--ink); color: var(--yellow); border-color: var(--ink); }
+  .ed-toolbar select { font-family: "Oswald"; font-weight: 600; font-size: 11px; padding: 6px 10px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; }
+
+  /* CANVAS */
+  .ed-canvas { padding: 40px 60px 80px; max-width: 920px; margin: 0 auto; width: 100%; }
+  .draft-stamp { display: inline-block; transform: rotate(-2deg); font-family: "Oswald"; font-weight: 700; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; background: var(--yellow); color: var(--ink); padding: 4px 10px; border: 2px solid var(--ink); margin-bottom: 18px; }
+
+  .meta-line { display: flex; gap: 12px; align-items: center; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .meta-line .pill { padding: 3px 8px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; }
+  .meta-line .pill.cat { background: var(--red); color: var(--paper); border-color: var(--red); }
+
+  .ed-title { width: 100%; border: none; outline: none; background: transparent; font-family: "DM Serif Display", serif; font-size: clamp(48px, 7vw, 84px); line-height: 0.92; letter-spacing: -0.025em; color: var(--ink); padding: 4px 0; resize: none; min-height: 1.5em; }
+  .ed-title::placeholder { color: var(--muted); opacity: 0.4; font-style: italic; }
+  .ed-title em, .ed-title i { font-style: italic; color: var(--red); }
+
+  .ed-dek { width: 100%; border: none; outline: none; background: transparent; font-family: "DM Serif Display", serif; font-style: italic; font-size: 22px; line-height: 1.4; color: var(--muted); padding: 14px 0 24px; resize: none; min-height: 2em; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  .ed-dek::placeholder { opacity: 0.5; }
+
+  .ed-byline { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 2px solid var(--ink); margin-bottom: 32px; font-family: "JetBrains Mono"; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .ed-byline .av { width: 28px; height: 28px; background: linear-gradient(135deg, var(--red), #8a0b1f); color: var(--paper); display: grid; place-items: center; font-family: "Oswald"; font-weight: 700; font-size: 11px; border: 1px solid var(--ink); }
+  .ed-byline strong { color: var(--ink); font-family: "Oswald"; font-weight: 700; }
+
+  /* COVER drop area */
+  .ed-cover { aspect-ratio: 21/9; border: 2px dashed var(--ink); background: repeating-linear-gradient(135deg, rgba(0,0,0,0.1) 0 2px, transparent 2px 12px), linear-gradient(135deg, var(--red), var(--red-deep, #8a0b1f)); display: grid; place-items: center; margin-bottom: 32px; cursor: pointer; position: relative; overflow: hidden; }
+  .ed-cover::after { content:""; position: absolute; inset: 0; background: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1.5px); background-size: 5px 5px; mix-blend-mode: screen; pointer-events: none; }
+  .ed-cover .lab { font-family: "Rubik Mono One"; font-size: 28px; color: var(--yellow); -webkit-text-stroke: 1.5px var(--ink); transform: rotate(-3deg); text-align: center; padding: 0 16px; line-height: 1; letter-spacing: -0.01em; }
+  .ed-cover .hint { position: absolute; bottom: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; font-family: "JetBrains Mono"; font-size: 10px; color: var(--paper); text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.85; }
+
+  /* BODY */
+  .ed-body { font-family: "DM Serif Display", serif; font-size: 21px; line-height: 1.65; color: var(--ink); outline: none; min-height: 400px; }
+  .ed-body p { margin-bottom: 22px; }
+  .ed-body h2 { font-family: "DM Serif Display", serif; font-size: 36px; line-height: 1.05; letter-spacing: -0.02em; margin: 40px 0 18px; }
+  .ed-body h2 em { color: var(--red); font-style: italic; }
+  .ed-body em, .ed-body i { font-style: italic; color: var(--red); }
+  .ed-body blockquote { border-left: 4px solid var(--red); padding: 12px 0 12px 20px; margin: 28px 0; font-style: italic; font-size: 24px; line-height: 1.4; }
+  .ed-body p::first-letter { /* leave default */ }
+  .ed-body p.lead::first-letter { font-family: "Rubik Mono One"; font-size: 78px; line-height: 0.85; float: left; padding: 6px 12px 0 0; color: var(--red); }
+
+  /* Insertion bar floating */
+  .insert-bar { display: flex; gap: 6px; margin: 24px 0; padding: 8px 12px; border: 2px dashed var(--line); align-items: center; opacity: 0.6; transition: opacity 0.15s; }
+  .insert-bar:hover { opacity: 1; border-color: var(--ink); }
+  .insert-bar .lab { font-family: "JetBrains Mono"; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-right: 6px; }
+  .insert-bar button { font-family: "Oswald"; font-weight: 700; font-size: 10px; padding: 5px 10px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; letter-spacing: 0.1em; text-transform: uppercase; }
+  .insert-bar button:hover { background: var(--ink); color: var(--yellow); }
+
+  /* Word counter at bottom */
+  .ed-foot { position: sticky; bottom: 0; padding: 10px 24px; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; font-family: "JetBrains Mono"; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; border-top: 2px solid var(--ink); }
+  .ed-foot strong { color: var(--yellow); }
+
+  /* SIDEBAR */
+  .ed-side { background: var(--paper); border-left: 3px solid var(--ink); padding: 24px 20px; overflow-y: auto; max-height: calc(100vh - 60px); position: sticky; top: 60px; }
+  .ed-side h4 { font-family: "Oswald"; font-weight: 700; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin: 22px 0 12px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+  .ed-side h4:first-child { margin-top: 0; }
+
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-family: "JetBrains Mono"; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .field input, .field select, .field textarea { width: 100%; padding: 8px 10px; border: 2px solid var(--ink); background: var(--paper); font-family: "Inter", sans-serif; font-size: 13px; color: var(--ink); outline: none; }
+  .field textarea { resize: vertical; min-height: 70px; font-family: "DM Serif Display", serif; font-style: italic; line-height: 1.4; }
+  .field .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .toggle { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; font-size: 13px; }
+  .toggle .sw { width: 36px; height: 20px; background: var(--line); border-radius: 10px; position: relative; cursor: pointer; transition: background 0.15s; }
+  .toggle .sw::after { content:""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: var(--paper); border-radius: 50%; transition: left 0.15s; box-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+  .toggle.on .sw { background: var(--red); }
+  .toggle.on .sw::after { left: 18px; }
+
+  .tag-input { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px; border: 2px solid var(--ink); background: var(--paper); }
+  .tag-input span { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; background: var(--ink); color: var(--yellow); font-family: "Oswald"; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .tag-input span:nth-child(2) { background: var(--red); color: var(--paper); }
+  .tag-input span:nth-child(3) { background: var(--yellow); color: var(--ink); }
+  .tag-input input { border: none; outline: none; flex: 1; min-width: 80px; font-family: "JetBrains Mono"; font-size: 11px; padding: 4px; }
+
+  .checklist { list-style: none; margin-top: 8px; }
+  .checklist li { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-family: "JetBrains Mono"; font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+  .checklist li.ok { color: var(--ink); }
+  .checklist li .ck { width: 14px; height: 14px; border: 2px solid var(--ink); display: grid; place-items: center; font-size: 10px; }
+  .checklist li.ok .ck { background: var(--ink); color: var(--yellow); }
+
+  .schedule { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .schedule input { padding: 8px; border: 2px solid var(--ink); background: var(--paper); font-family: "JetBrains Mono"; font-size: 11px; color: var(--ink); outline: none; }
+
+  .seo-preview { padding: 12px; border: 2px dashed var(--line); background: rgba(0,0,0,0.02); }
+  .seo-preview .url { font-family: "JetBrains Mono"; font-size: 10px; color: #1a7a1a; }
+  .seo-preview .ttl { font-family: "Inter"; font-weight: 600; font-size: 14px; color: #1a0dab; line-height: 1.2; margin: 4px 0; }
+  .seo-preview .desc { font-family: "Inter"; font-size: 12px; color: #555; line-height: 1.4; }
+
+  /* History */
+  .history { display: flex; flex-direction: column; gap: 6px; }
+  .history a { font-family: "JetBrains Mono"; font-size: 10px; color: var(--muted); text-decoration: none; padding: 6px 8px; border-left: 2px solid var(--line); display: flex; justify-content: space-between; letter-spacing: 0.05em; }
+  .history a:hover { background: var(--yellow); color: var(--ink); border-left-color: var(--ink); }
+  .history a.current { border-left-color: var(--red); color: var(--ink); font-weight: 700; }
+
+  @media (max-width: 1100px) {
+    .editor-shell { grid-template-columns: 1fr; }
+    .ed-side { position: static; max-height: none; border-left: none; border-top: 3px solid var(--ink); }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="admin-dashboard.html" class="back">← VOLTAR</a>
+  <div class="crumbs">ADMIN <span style="color:var(--red)">/</span> POSTS <span style="color:var(--red)">/</span> <strong>EDITOR</strong> · NOVA CRÔNICA</div>
+  <div class="status">
+    <div class="saved"><div class="dot"></div>SALVO HÁ 14S · v.12</div>
+    <div>1.247 PALAVRAS · 6 MIN LEITURA</div>
+  </div>
+  <div class="actions">
+    <a href="post-arquibancada.html" target="_blank" class="btn">↗ PRÉ-VISUALIZAR</a>
+    <a href="#" class="btn">AGENDAR</a>
+    <a href="#" class="btn primary">PUBLICAR →</a>
+  </div>
+</div>
+
+<div class="editor-shell">
+
+  <!-- LEFT: EDITOR -->
+  <div>
+    <div class="ed-toolbar">
+      <div class="grp">
+        <select>
+          <option>PARÁGRAFO</option>
+          <option>TÍTULO H2</option>
+          <option>TÍTULO H3</option>
+          <option>CITAÇÃO</option>
+          <option>LEAD (CAPITULAR)</option>
+        </select>
+      </div>
+      <div class="grp">
+        <button class="text active" title="Negrito"><b>B</b></button>
+        <button class="text" title="Itálico (vermelho)" style="font-style:italic; color:var(--red);"><i>I</i></button>
+        <button class="text" title="Sublinhado"><u>U</u></button>
+        <button title="Tachado"><s>S</s></button>
+      </div>
+      <div class="grp">
+        <button title="Lista">≡</button>
+        <button title="Numerada">1.</button>
+        <button title="Citação">"</button>
+        <button title="Código">&lt;/&gt;</button>
+      </div>
+      <div class="grp">
+        <button title="Link">⌘</button>
+        <button title="Imagem">▣</button>
+        <button title="Vídeo">▶</button>
+        <button title="Embed podcast">♬</button>
+      </div>
+      <div class="grp">
+        <button class="text" title="Esquerda">⇤</button>
+        <button class="text" title="Centro">≡</button>
+        <button class="text" title="Direita">⇥</button>
+      </div>
+      <div class="grp" style="margin-left:auto; border-right:none;">
+        <button class="text" title="Desfazer">↶ DESFAZER</button>
+        <button class="text" title="Refazer">REFAZER ↷</button>
+      </div>
+    </div>
+
+    <div class="ed-canvas">
+      <div class="draft-stamp">◐ RASCUNHO · NÃO PUBLICADO</div>
+
+      <div class="meta-line">
+        <span class="pill cat">● CRÔNICAS</span>
+        <span>SEXTA · 18 ABR 2026</span>
+        <span class="pill">+ ADICIONAR KICKER</span>
+      </div>
+
+      <div class="ed-title" contenteditable="true" data-placeholder="Título da crônica…">Preview: Flamengo x Palmeiras — a final dos <em>sonhos</em></div>
+
+      <div class="ed-dek" contenteditable="true" data-placeholder="Dek / subtítulo (opcional)">Sábado, 21h30, Maracanã. Quatorze anos depois da última, a gente revive o medo que vira poesia.</div>
+
+      <div class="ed-byline">
+        <div class="av">IS</div>
+        <div><strong>IGOR SCHWANSING</strong> · CRONISTA OFICIAL</div>
+      </div>
+
+      <div class="ed-cover" title="Clique para subir a imagem de capa">
+        <div class="lab">+ ARRASTE OU CLIQUE<br>PRA IMAGEM DE CAPA</div>
+        <div class="hint">
+          <span>RECOMENDADO 2400×1080 · JPG/WEBP</span>
+          <span>OU ESCOLHA DA BIBLIOTECA →</span>
+        </div>
+      </div>
+
+      <div class="ed-body" contenteditable="true">
+        <p class="lead">Tem dias em que o futebol cobra um juro de catorze anos de uma vez só. Esse sábado vai ser um deles. Na pequena tela do bar, no botequim do bairro, no sofá da mãe, no rádio do táxi — vai estar tocando o mesmo nó na garganta de quem viveu 2011 sem entender por que o mundo, naquela noite, decidiu desabar do nosso lado.</p>
+
+        <p>O Palmeiras chega bem. Não adianta fingir o contrário, e crônica boa nunca foi feita de auto-engano. Eles têm volume, têm ritmo, têm um treinador que decifrou um pedaço importante do nosso meio-campo no jogo da fase de grupos. <em>Mas a gente tem o Maracanã.</em></p>
+
+        <h2>O que muda no <em>esquema</em></h2>
+
+        <p>Filipe Luís deve voltar ao 4-2-3-1, com Pulgar e De La Cruz no meio, Arrascaeta solto entre as linhas. É o desenho que melhor protegeu nossa retaguarda nos últimos seis jogos, e não tem por que mexer em time que está vencendo. A dúvida está mais à frente: Bruno Henrique ou Cebolinha pelo lado esquerdo?</p>
+
+        <blockquote>"Não jogamos pra evitar derrotas. Jogamos pra fazer a noite virar lenda." — Filipe, na coletiva.</blockquote>
+
+        <p>O lance é esse. A final não é sobre tática. Tática é o que a gente fala de segunda a sexta. <em>No sábado a gente fala de fé.</em></p>
+      </div>
+
+      <div class="insert-bar">
+        <span class="lab">↓ INSERIR BLOCO ↓</span>
+        <button>+ PARÁGRAFO</button>
+        <button>+ IMAGEM</button>
+        <button>+ CITAÇÃO</button>
+        <button>+ EMBED</button>
+        <button>+ DIVISOR</button>
+        <button>+ BOX DESTAQUE</button>
+        <button>+ ESCALAÇÃO</button>
+      </div>
+    </div>
+
+    <div class="ed-foot">
+      <span><strong>1.247</strong> PALAVRAS · <strong>6 MIN</strong> LEITURA · <strong>3</strong> H2 · <strong>1</strong> CITAÇÃO</span>
+      <span>SHORTCUTS: <strong>⌘B</strong> NEGRITO · <strong>⌘I</strong> ITÁLICO VERMELHO · <strong>⌘K</strong> LINK · <strong>⌘S</strong> SALVAR</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: SIDEBAR -->
+  <aside class="ed-side">
+
+    <h4>STATUS &amp; PUBLICAÇÃO</h4>
+    <div class="field">
+      <label>STATUS</label>
+      <select><option>◐ RASCUNHO</option><option>◷ AGENDADO</option><option>● PUBLICADO</option><option>⊘ ARQUIVADO</option></select>
+    </div>
+    <div class="field">
+      <label>VISIBILIDADE</label>
+      <select><option>PÚBLICO</option><option>PRIVADO (só assinantes)</option><option>PROTEGIDO POR SENHA</option></select>
+    </div>
+    <div class="schedule">
+      <input type="date" value="2026-04-19" />
+      <input type="time" value="06:00" />
+    </div>
+
+    <h4>CATEGORIA &amp; TAGS</h4>
+    <div class="field">
+      <label>CATEGORIA PRINCIPAL</label>
+      <select><option>Crônicas</option><option>Análise</option><option>Libertadores</option><option>Brasileirão</option><option>Bastidores</option></select>
+    </div>
+    <div class="field">
+      <label>TAGS</label>
+      <div class="tag-input">
+        <span>FINAL ×</span>
+        <span>PALMEIRAS ×</span>
+        <span>2026 ×</span>
+        <input type="text" placeholder="+ tag" />
+      </div>
+    </div>
+
+    <h4>METADADOS</h4>
+    <div class="field"><label>SLUG</label><input type="text" value="preview-flamengo-x-palmeiras-final-dos-sonhos" /></div>
+    <div class="field"><label>RESUMO PARA HOME (DEK)</label><textarea>Sábado, 21h30, Maracanã. Quatorze anos depois da última, a gente revive o medo que vira poesia.</textarea></div>
+    <div class="field row">
+      <div><label>TEMPO LEITURA</label><input type="text" value="6 MIN" /></div>
+      <div><label>POSIÇÃO</label><select><option>HERO</option><option>DESTAQUE</option><option>NORMAL</option></select></div>
+    </div>
+
+    <div class="toggle on"><span>FIXAR NA HOME</span><div class="sw"></div></div>
+    <div class="toggle"><span>PERMITIR COMENTÁRIOS</span><div class="sw" style="background:var(--red)"><span style="position:absolute;top:2px;left:18px;width:16px;height:16px;background:var(--paper);border-radius:50%;display:block;"></span></div></div>
+    <div class="toggle on"><span>ENVIAR NA NEWSLETTER</span><div class="sw"></div></div>
+
+    <h4>SEO PREVIEW</h4>
+    <div class="seo-preview">
+      <div class="url">podflah.blog › cronicas › preview-flamengo-x-palmeiras…</div>
+      <div class="ttl">Preview: Flamengo x Palmeiras — a final dos sonhos</div>
+      <div class="desc">Sábado, 21h30, Maracanã. Quatorze anos depois da última, a gente revive o medo que vira poesia. Por Igor Schwansing.</div>
+    </div>
+
+    <h4>CHECKLIST DE PUBLICAÇÃO</h4>
+    <ul class="checklist">
+      <li class="ok"><span class="ck">✓</span>Título preenchido</li>
+      <li class="ok"><span class="ck">✓</span>Categoria selecionada</li>
+      <li class="ok"><span class="ck">✓</span>Resumo (dek) com mais de 80 caracteres</li>
+      <li><span class="ck"></span>Imagem de capa (recomendado)</li>
+      <li><span class="ck"></span>Pelo menos 3 tags</li>
+      <li class="ok"><span class="ck">✓</span>Slug definido</li>
+    </ul>
+
+    <h4>HISTÓRICO (12 versões)</h4>
+    <div class="history">
+      <a href="#" class="current"><span>v.12 · ATUAL</span><span>14s atrás</span></a>
+      <a href="#"><span>v.11 · auto</span><span>3 min atrás</span></a>
+      <a href="#"><span>v.10 · auto</span><span>8 min atrás</span></a>
+      <a href="#"><span>v.09 · revisão</span><span>22 min atrás</span></a>
+      <a href="#"><span>v.08 · auto</span><span>1h atrás</span></a>
+      <a href="#"><span>v.01 · criação</span><span>ontem 18:43</span></a>
+    </div>
+
+    <a href="#" class="btn danger" style="margin-top: 24px; width: 100%; justify-content: center;">⌫ DESCARTAR RASCUNHO</a>
+  </aside>
+
+</div>
+
+<script>
+  // contenteditable autosave indicator (mock)
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.addEventListener('input', () => {
+      const dot = document.querySelector('.topbar .saved');
+      dot.innerHTML = '<div class="dot" style="background:var(--yellow)"></div>SALVANDO…';
+      clearTimeout(window._saveT);
+      window._saveT = setTimeout(() => {
+        dot.innerHTML = '<div class="dot"></div>SALVO HÁ 1S · v.13';
+      }, 800);
+    });
+  });
+</script>
+
+</body>
+</html>

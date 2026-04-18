@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<title>Admin · PodFlah.blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Rubik+Mono+One&display=swap" rel="stylesheet" />
+<style>
+  :root { --paper: #f1ebdc; --ink: #151310; --red: #c8102e; --yellow: #ffd63a; --muted: #6a6558; --line: rgba(0,0,0,0.15); --panel: #faf6ea; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; min-height: 100vh; }
+  body::before { content:""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.12; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+
+  .app { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+  /* SIDEBAR */
+  aside.side { background: var(--ink); color: var(--paper); padding: 24px 18px; position: sticky; top: 0; height: 100vh; overflow-y: auto; border-right: 3px solid var(--ink); }
+  aside.side::after { content:""; position: absolute; right: -7px; top: 0; bottom: 0; width: 4px; background: repeating-linear-gradient(0deg, var(--red) 0 10px, var(--yellow) 10px 20px); }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--paper); margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px dashed rgba(255,255,255,0.2); }
+  .brand .mark { width: 36px; height: 36px; background: var(--red); color: var(--yellow); display: grid; place-items: center; font-family: "Rubik Mono One", sans-serif; font-size: 18px; transform: rotate(-4deg); border: 2px solid var(--paper); box-shadow: 2px 2px 0 var(--paper); }
+  .brand .name { font-family: "Rubik Mono One", sans-serif; font-size: 17px; line-height: 1; letter-spacing: -0.02em; }
+  .brand .name small { display: block; font-family: "DM Serif Display", serif; font-style: italic; font-size: 13px; color: var(--yellow); margin-top: 2px; font-weight: 400; }
+  .brand .mode { font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--yellow); margin-left: auto; padding: 2px 6px; border: 1px solid var(--yellow); }
+
+  .side h5 { font-family: "Oswald", sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin: 22px 0 10px; padding: 0 8px; }
+  .side nav a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--paper); text-decoration: none; font-family: "Inter", sans-serif; font-weight: 500; font-size: 14px; border-left: 3px solid transparent; margin-bottom: 2px; }
+  .side nav a:hover { background: rgba(255,255,255,0.06); border-left-color: var(--yellow); }
+  .side nav a.active { background: var(--red); color: var(--paper); border-left-color: var(--yellow); }
+  .side nav a .ico { width: 18px; height: 18px; display: grid; place-items: center; font-family: "Oswald"; font-weight: 700; color: var(--yellow); font-size: 13px; }
+  .side nav a.active .ico { color: var(--paper); }
+  .side nav a .badge { margin-left: auto; font-family: "JetBrains Mono", monospace; font-size: 10px; background: var(--yellow); color: var(--ink); padding: 1px 6px; font-weight: 700; }
+
+  .side .profile { margin-top: 32px; padding: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
+  .side .profile .av { width: 36px; height: 36px; background: linear-gradient(135deg, var(--red), #8a0b1f); border: 2px solid var(--yellow); display: grid; place-items: center; font-family: "Oswald"; font-weight: 700; color: var(--paper); font-size: 13px; }
+  .side .profile .who { font-size: 13px; font-weight: 600; }
+  .side .profile .who small { display: block; font-family: "JetBrains Mono", monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; }
+  .side .profile .cog { margin-left: auto; color: var(--yellow); cursor: pointer; font-size: 14px; }
+
+  /* MAIN */
+  main.content { padding: 0; }
+  .topbar { display: flex; align-items: center; gap: 16px; padding: 16px 32px; border-bottom: 2px solid var(--ink); background: var(--paper); position: sticky; top: 0; z-index: 20; }
+  .topbar::after { content:""; position: absolute; left: 0; right: 0; bottom: -5px; height: 3px; background: repeating-linear-gradient(90deg, var(--red) 0 8px, transparent 8px 16px); }
+  .topbar h1 { font-family: "DM Serif Display", serif; font-size: 24px; letter-spacing: -0.01em; }
+  .topbar h1 em { color: var(--red); font-style: italic; }
+  .topbar .search { flex: 1; max-width: 440px; display: flex; align-items: center; gap: 8px; padding: 8px 14px; border: 2px solid var(--ink); background: var(--paper); font-family: "JetBrains Mono", monospace; font-size: 12px; margin-left: 24px; }
+  .topbar .search input { border: none; background: transparent; outline: none; flex: 1; font-family: inherit; font-size: inherit; color: var(--ink); }
+  .topbar .actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 12px; border: 2px solid var(--ink); cursor: pointer; text-decoration: none; transition: all 0.15s; }
+  .btn.primary { background: var(--ink); color: var(--yellow); }
+  .btn.primary:hover { background: var(--red); color: var(--paper); }
+  .btn.ghost { background: var(--paper); color: var(--ink); }
+  .btn.ghost:hover { background: var(--yellow); }
+  .bell { width: 36px; height: 36px; border: 2px solid var(--ink); display: grid; place-items: center; background: var(--paper); position: relative; cursor: pointer; }
+  .bell::after { content:""; position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: var(--red); border-radius: 50%; }
+
+  .pad { padding: 32px; max-width: 1400px; }
+
+  /* HERO strip */
+  .hello { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; margin-bottom: 28px; padding-bottom: 24px; border-bottom: 2px solid var(--ink); }
+  .hello h2 { font-family: "DM Serif Display", serif; font-size: 40px; line-height: 1; letter-spacing: -0.02em; }
+  .hello h2 em { color: var(--red); font-style: italic; }
+  .hello p { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 6px; }
+  .hello .streak { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; text-align: right; padding: 10px 14px; border: 2px solid var(--ink); background: var(--yellow); }
+  .hello .streak strong { display: block; font-family: "Rubik Mono One", sans-serif; font-size: 28px; color: var(--ink); letter-spacing: -0.02em; }
+
+  /* KPI */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+  .kpi { border: 2px solid var(--ink); padding: 18px; background: var(--paper); position: relative; }
+  .kpi:nth-child(1) { box-shadow: 4px 4px 0 var(--red); }
+  .kpi:nth-child(2) { box-shadow: 4px 4px 0 var(--yellow); }
+  .kpi:nth-child(3) { box-shadow: 4px 4px 0 var(--ink); }
+  .kpi:nth-child(4) { background: var(--ink); color: var(--paper); box-shadow: 4px 4px 0 var(--red); }
+  .kpi .k { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; margin-bottom: 8px; }
+  .kpi .v { font-family: "Rubik Mono One", sans-serif; font-size: 40px; letter-spacing: -0.03em; line-height: 1; }
+  .kpi .d { font-family: "JetBrains Mono", monospace; font-size: 11px; margin-top: 8px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .kpi .d.up { color: #1a7a1a; }
+  .kpi:nth-child(4) .d.up { color: #6edd6e; }
+  .kpi .d.down { color: var(--red); }
+  .spark { height: 32px; margin-top: 10px; display: flex; align-items: flex-end; gap: 2px; }
+  .spark span { flex: 1; background: var(--red); opacity: 0.8; }
+  .kpi:nth-child(4) .spark span { background: var(--yellow); }
+
+  /* Two-col layout */
+  .dash-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; margin-bottom: 32px; }
+
+  .panel { border: 2px solid var(--ink); background: var(--paper); }
+  .panel > .hd { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 2px solid var(--ink); background: var(--paper); }
+  .panel > .hd h3 { font-family: "DM Serif Display", serif; font-size: 22px; letter-spacing: -0.01em; }
+  .panel > .hd h3 em { color: var(--red); font-style: italic; }
+  .panel > .hd .tools { display: flex; gap: 8px; font-family: "JetBrains Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .panel > .hd .tools a { color: var(--muted); text-decoration: none; padding: 4px 8px; border: 1px solid transparent; }
+  .panel > .hd .tools a.on { border-color: var(--ink); color: var(--ink); background: var(--yellow); }
+  .panel > .bd { padding: 18px; }
+
+  /* Chart */
+  .chart { height: 220px; display: flex; align-items: flex-end; gap: 6px; padding: 12px 6px 0; border-bottom: 1px dashed var(--line); }
+  .chart .bar { flex: 1; background: var(--red); position: relative; cursor: pointer; }
+  .chart .bar::after { content: attr(data-v); position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); opacity: 0; transition: opacity 0.15s; }
+  .chart .bar:hover::after { opacity: 1; }
+  .chart .bar.peak { background: var(--ink); }
+  .chart .bar.peak::before { content:"TETRA!"; position: absolute; top: -36px; left: 50%; transform: translateX(-50%) rotate(-3deg); background: var(--yellow); padding: 2px 6px; font-family: "Oswald"; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; border: 1px solid var(--ink); }
+  .chart-x { display: flex; gap: 6px; padding: 6px; font-family: "JetBrains Mono", monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .chart-x span { flex: 1; text-align: center; }
+
+  .chart-legend { display: flex; justify-content: space-between; padding-top: 10px; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* Top posts */
+  .top-list { display: flex; flex-direction: column; gap: 10px; }
+  .top-list .tl-item { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 10px; border-bottom: 1px dashed var(--line); }
+  .top-list .tl-item:last-child { border-bottom: none; }
+  .top-list .n { font-family: "Rubik Mono One", sans-serif; font-size: 20px; color: var(--red); letter-spacing: -0.02em; }
+  .top-list .ti { font-family: "DM Serif Display", serif; font-size: 15px; line-height: 1.2; margin-bottom: 2px; }
+  .top-list .tm { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .top-list .val { text-align: right; font-family: "Oswald"; font-weight: 700; font-size: 14px; }
+  .top-list .val small { display: block; font-family: "JetBrains Mono"; font-size: 9px; color: var(--muted); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+  /* Posts table */
+  .tbl { width: 100%; border-collapse: collapse; }
+  .tbl thead th { background: var(--ink); color: var(--paper); font-family: "Oswald", sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 14px; text-align: left; }
+  .tbl tbody td { padding: 14px; border-bottom: 1px solid var(--line); font-size: 13px; vertical-align: middle; }
+  .tbl tbody tr:hover { background: var(--yellow); background: rgba(255,214,58,0.15); }
+  .tbl .ttl { font-family: "DM Serif Display", serif; font-size: 17px; line-height: 1.15; letter-spacing: -0.01em; }
+  .tbl .ttl small { display: block; font-family: "JetBrains Mono"; font-weight: 400; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; margin-top: 3px; text-transform: uppercase; font-style: normal; }
+  .tag { display: inline-block; font-family: "Oswald"; font-weight: 700; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--ink); }
+  .tag.pub { background: var(--ink); color: var(--yellow); }
+  .tag.draft { background: var(--paper); color: var(--ink); }
+  .tag.sched { background: var(--yellow); color: var(--ink); }
+  .tag.cat { background: var(--red); color: var(--paper); border-color: var(--red); }
+  .tag.cat.b { background: var(--ink); color: var(--yellow); border-color: var(--ink); }
+  .tag.cat.y { background: var(--yellow); color: var(--ink); border-color: var(--ink); }
+  .tbl .act { display: flex; gap: 6px; }
+  .tbl .act a { font-family: "Oswald"; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 2px solid transparent; padding-bottom: 1px; }
+  .tbl .act a:hover { border-bottom-color: var(--red); color: var(--red); }
+  .tbl .act a.danger { color: var(--red); }
+
+  .subheader-actions { display: flex; gap: 10px; align-items: center; }
+  .subheader-actions .filter { display: flex; gap: 6px; padding: 6px; border: 2px solid var(--ink); background: var(--paper); font-family: "Oswald"; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .subheader-actions .filter span { padding: 4px 10px; cursor: pointer; }
+  .subheader-actions .filter span.on { background: var(--ink); color: var(--yellow); }
+
+  /* Quick actions */
+  .quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .quick a { display: flex; flex-direction: column; gap: 6px; padding: 16px; text-decoration: none; color: inherit; border: 2px solid var(--ink); background: var(--paper); transition: all 0.15s; position: relative; }
+  .quick a:hover { transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--red); }
+  .quick a .ic { width: 32px; height: 32px; background: var(--ink); color: var(--yellow); display: grid; place-items: center; font-family: "Rubik Mono One"; font-size: 16px; margin-bottom: 8px; }
+  .quick a strong { font-family: "DM Serif Display", serif; font-size: 18px; letter-spacing: -0.01em; }
+  .quick a small { font-family: "JetBrains Mono"; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .quick a.accent { background: var(--red); color: var(--paper); }
+  .quick a.accent .ic { background: var(--yellow); color: var(--ink); }
+  .quick a.accent small { color: rgba(255,255,255,0.7); }
+
+  /* Activity feed */
+  .feed { display: flex; flex-direction: column; }
+  .feed .fi { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; padding: 12px; border-bottom: 1px dashed var(--line); align-items: start; }
+  .feed .fi:last-child { border-bottom: none; }
+  .feed .fi .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); margin-top: 6px; }
+  .feed .fi .dot.green { background: #2f9e2f; }
+  .feed .fi .dot.y { background: var(--yellow); border: 1px solid var(--ink); }
+  .feed .fi .txt { font-size: 13px; line-height: 1.45; }
+  .feed .fi .txt strong { font-family: "Oswald"; font-weight: 700; }
+  .feed .fi .txt em { font-style: normal; color: var(--red); }
+  .feed .fi .when { font-family: "JetBrains Mono"; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+
+  @media (max-width: 1000px) {
+    .app { grid-template-columns: 1fr; }
+    aside.side { position: static; height: auto; }
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .dash-grid { grid-template-columns: 1fr; }
+    .quick { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <a href="home-arquibancada.html" class="brand" title="Voltar ao site">
+      <span class="mark">P</span>
+      <span class="name">PODFLAH<small>admin</small></span>
+      <span class="mode">BETA</span>
+    </a>
+
+    <h5>Principal</h5>
+    <nav>
+      <a href="admin-dashboard.html" class="active"><span class="ico">▦</span>Dashboard</a>
+      <a href="admin-editor.html"><span class="ico">✎</span>Novo post</a>
+      <a href="#"><span class="ico">≡</span>Posts <span class="badge">248</span></a>
+      <a href="#"><span class="ico">◉</span>Categorias</a>
+      <a href="#"><span class="ico">☻</span>Comentários <span class="badge">12</span></a>
+    </nav>
+
+    <h5>Mídia</h5>
+    <nav>
+      <a href="#"><span class="ico">▣</span>Biblioteca</a>
+      <a href="#"><span class="ico">♬</span>Podcast <span class="badge">184</span></a>
+      <a href="#"><span class="ico">✉</span>Newsletter</a>
+    </nav>
+
+    <h5>Audiência</h5>
+    <nav>
+      <a href="#"><span class="ico">∿</span>Analytics</a>
+      <a href="#"><span class="ico">♥</span>Assinantes</a>
+    </nav>
+
+    <h5>Sistema</h5>
+    <nav>
+      <a href="#"><span class="ico">✦</span>Aparência</a>
+      <a href="#"><span class="ico">⚙</span>Configurações</a>
+    </nav>
+
+    <div class="profile">
+      <div class="av">IS</div>
+      <div class="who">Igor<small>ADMIN</small></div>
+      <span class="cog">⚙</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="content">
+
+    <div class="topbar">
+      <h1>Dashboard <em>do Igor</em></h1>
+      <div class="search">⌕ <input type="text" placeholder="buscar posts, autores, tags…" /></div>
+      <div class="actions">
+        <a href="home-arquibancada.html" class="btn ghost" target="_blank">↗ Ver site</a>
+        <a href="admin-editor.html" class="btn primary">+ Novo post</a>
+        <div class="bell" title="Notificações">🔔</div>
+      </div>
+    </div>
+
+    <div class="pad">
+
+      <div class="hello">
+        <div>
+          <h2>Salve, <em>Igor!</em></h2>
+          <p>SÁBADO · 18 ABR 2026 · VOCÊ TEM <strong style="color:var(--red)">2 RASCUNHOS</strong> E <strong style="color:var(--red)">12 COMENTÁRIOS</strong> PRA REVISAR</p>
+        </div>
+        <div class="streak">
+          <strong>14</strong>
+          <span>SEMANAS SEGUIDAS POSTANDO</span>
+        </div>
+      </div>
+
+      <!-- QUICK -->
+      <div class="quick">
+        <a href="admin-editor.html" class="accent">
+          <div class="ic">✎</div>
+          <strong>Nova crônica</strong>
+          <small>ABRE O EDITOR</small>
+        </a>
+        <a href="#">
+          <div class="ic">♬</div>
+          <strong>Novo episódio</strong>
+          <small>UPLOAD DE ÁUDIO</small>
+        </a>
+        <a href="#">
+          <div class="ic">✉</div>
+          <strong>Disparar carta</strong>
+          <small>NEWSLETTER</small>
+        </a>
+        <a href="#">
+          <div class="ic">▣</div>
+          <strong>Subir fotos</strong>
+          <small>BIBLIOTECA</small>
+        </a>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpis">
+        <div class="kpi">
+          <div class="k">VISITANTES (30D)</div>
+          <div class="v">128.4K</div>
+          <div class="d up">▲ 24% VS MÊS ANTERIOR</div>
+          <div class="spark"><span style="height:40%"></span><span style="height:55%"></span><span style="height:48%"></span><span style="height:70%"></span><span style="height:60%"></span><span style="height:82%"></span><span style="height:95%"></span></div>
+        </div>
+        <div class="kpi">
+          <div class="k">POSTS PUBLICADOS</div>
+          <div class="v">248</div>
+          <div class="d up">▲ 8 ESTE MÊS</div>
+          <div class="spark"><span style="height:50%"></span><span style="height:60%"></span><span style="height:45%"></span><span style="height:70%"></span><span style="height:65%"></span><span style="height:75%"></span><span style="height:80%"></span></div>
+        </div>
+        <div class="kpi">
+          <div class="k">ASSINANTES NEWSLETTER</div>
+          <div class="v">15.2K</div>
+          <div class="d up">▲ 412 ESTE MÊS</div>
+          <div class="spark"><span style="height:30%"></span><span style="height:42%"></span><span style="height:55%"></span><span style="height:60%"></span><span style="height:68%"></span><span style="height:78%"></span><span style="height:88%"></span></div>
+        </div>
+        <div class="kpi">
+          <div class="k">DOWNLOADS PODCAST</div>
+          <div class="v">42.1K</div>
+          <div class="d up">▲ 18% VS MÊS ANT.</div>
+          <div class="spark"><span style="height:55%"></span><span style="height:50%"></span><span style="height:60%"></span><span style="height:70%"></span><span style="height:66%"></span><span style="height:80%"></span><span style="height:92%"></span></div>
+        </div>
+      </div>
+
+      <!-- DASH GRID -->
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="hd">
+            <h3>Audiência da <em>semana</em></h3>
+            <div class="tools">
+              <a href="#">7D</a>
+              <a href="#" class="on">30D</a>
+              <a href="#">90D</a>
+              <a href="#">1A</a>
+            </div>
+          </div>
+          <div class="bd">
+            <div class="chart" id="chart"></div>
+            <div class="chart-x">
+              <span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span><span>DOM</span>
+            </div>
+            <div class="chart-legend">
+              <span>PICO: 12 DEZ · TETRA · 22.4K VISITAS</span>
+              <span>MÉDIA/DIA: 4.2K</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="hd">
+            <h3>Top <em>posts</em></h3>
+            <div class="tools"><a href="#" class="on">30D</a></div>
+          </div>
+          <div class="bd">
+            <div class="top-list">
+              <div class="tl-item"><div class="n">01</div><div><div class="ti">A Epopeia do Tetra</div><div class="tm">CRÔNICA · 15 DEZ</div></div><div class="val">14.2K<small>LEITURAS</small></div></div>
+              <div class="tl-item"><div class="n">02</div><div><div class="ti">Flamengo na final continental</div><div class="tm">ANÁLISE · 24 NOV</div></div><div class="val">9.8K<small>LEITURAS</small></div></div>
+              <div class="tl-item"><div class="n">03</div><div><div class="ti">Não é revanche, mas também…</div><div class="tm">CRÔNICA · 12 DEZ</div></div><div class="val">7.4K<small>LEITURAS</small></div></div>
+              <div class="tl-item"><div class="n">04</div><div><div class="ti">Os dias mais demorados do ano</div><div class="tm">CRÔNICA · 08 DEZ</div></div><div class="val">6.1K<small>LEITURAS</small></div></div>
+              <div class="tl-item"><div class="n">05</div><div><div class="ti">As expulsões e o tropeço em si mesmo</div><div class="tm">ANÁLISE · 28 NOV</div></div><div class="val">5.3K<small>LEITURAS</small></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POSTS TABLE -->
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="hd">
+          <h3>Posts <em>recentes</em></h3>
+          <div class="subheader-actions">
+            <div class="filter"><span class="on">TODOS</span><span>PUBLICADOS</span><span>RASCUNHOS</span><span>AGENDADOS</span></div>
+            <a href="#" class="btn ghost">EXPORTAR CSV</a>
+          </div>
+        </div>
+        <div class="bd" style="padding:0;">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th style="width:42%">TÍTULO</th>
+                <th>CATEGORIA</th>
+                <th>STATUS</th>
+                <th>DATA</th>
+                <th>LEITURAS</th>
+                <th>AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="ttl">A Epopeia do Tetra<small>15 DEZ · 8 MIN · 4.2K PALAVRAS</small></div></td>
+                <td><span class="tag cat">CRÔNICAS</span></td>
+                <td><span class="tag pub">● PUBLICADO</span></td>
+                <td>15 DEZ, 06:00</td>
+                <td><strong>14.2K</strong></td>
+                <td><div class="act"><a href="admin-editor.html">EDITAR</a> · <a href="post-arquibancada.html" target="_blank">VER</a> · <a href="#" class="danger">EXCLUIR</a></div></td>
+              </tr>
+              <tr>
+                <td><div class="ttl">Preview: Flamengo x Palmeiras — a final dos sonhos<small>RASCUNHO · 2.1K PALAVRAS · SALVO HÁ 14 MIN</small></div></td>
+                <td><span class="tag cat b">ANÁLISE</span></td>
+                <td><span class="tag draft">◐ RASCUNHO</span></td>
+                <td>—</td>
+                <td>—</td>
+                <td><div class="act"><a href="admin-editor.html">CONTINUAR</a> · <a href="#">AGENDAR</a> · <a href="#" class="danger">DESCARTAR</a></div></td>
+              </tr>
+              <tr>
+                <td><div class="ttl">Carta do Igor #47: a semana que vem<small>PROGRAMADO · NEWSLETTER</small></div></td>
+                <td><span class="tag cat y">CARTA</span></td>
+                <td><span class="tag sched">◷ AGENDADO</span></td>
+                <td>20 ABR, 06:00</td>
+                <td>—</td>
+                <td><div class="act"><a href="admin-editor.html">EDITAR</a> · <a href="#">ADIANTAR</a> · <a href="#" class="danger">CANCELAR</a></div></td>
+              </tr>
+              <tr>
+                <td><div class="ttl">Não é revanche. Mas também não é só futebol.<small>12 DEZ · 6 MIN · 3.1K PALAVRAS</small></div></td>
+                <td><span class="tag cat">CRÔNICAS</span></td>
+                <td><span class="tag pub">● PUBLICADO</span></td>
+                <td>12 DEZ, 06:00</td>
+                <td><strong>9.8K</strong></td>
+                <td><div class="act"><a href="admin-editor.html">EDITAR</a> · <a href="post-arquibancada.html" target="_blank">VER</a> · <a href="#" class="danger">EXCLUIR</a></div></td>
+              </tr>
+              <tr>
+                <td><div class="ttl">Heróico, sofrido, clássico de Libertadores<small>24 NOV · 10 MIN · 5.4K PALAVRAS</small></div></td>
+                <td><span class="tag cat">LIBERTADORES</span></td>
+                <td><span class="tag pub">● PUBLICADO</span></td>
+                <td>24 NOV, 23:12</td>
+                <td><strong>7.4K</strong></td>
+                <td><div class="act"><a href="admin-editor.html">EDITAR</a> · <a href="post-arquibancada.html" target="_blank">VER</a> · <a href="#" class="danger">EXCLUIR</a></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ACTIVITY -->
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="hd"><h3>Atividade <em>recente</em></h3><div class="tools"><a href="#" class="on">TUDO</a><a href="#">COMENTÁRIOS</a><a href="#">SISTEMA</a></div></div>
+          <div class="bd" style="padding: 0;">
+            <div class="feed">
+              <div class="fi"><div class="dot"></div><div class="txt"><strong>Pedrinho_RJ</strong> comentou em <em>"A Epopeia do Tetra"</em>: "Me arrepiou, Igor. Primeira crônica que meu pai leu do blog."</div><div class="when">AGORA</div></div>
+              <div class="fi"><div class="dot green"></div><div class="txt"><strong>432 novos assinantes</strong> na newsletter hoje — maior dia da história do blog.</div><div class="when">08:14</div></div>
+              <div class="fi"><div class="dot"></div><div class="txt"><strong>MarianaFla</strong> comentou em <em>"Flamengo na final continental"</em>: "Seu texto faz a gente voltar pra arquibancada sem sair de casa."</div><div class="when">07:52</div></div>
+              <div class="fi"><div class="dot y"></div><div class="txt"><strong>Backup automático</strong> completo · 248 posts, 184 episódios, 1.2GB de mídia.</div><div class="when">06:00</div></div>
+              <div class="fi"><div class="dot"></div><div class="txt"><strong>FlamengoNews</strong> mencionou você no Instagram: "Leitura obrigatória da semana."</div><div class="when">ONTEM · 22:01</div></div>
+              <div class="fi"><div class="dot green"></div><div class="txt"><strong>PodFlah #184</strong> publicado e disparado pra 15.2K assinantes.</div><div class="when">ONTEM · 06:00</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="hd"><h3>Moderar <em>comentários</em></h3><div class="tools"><a href="#" class="on">12 NOVOS</a></div></div>
+          <div class="bd">
+            <div class="feed">
+              <div class="fi">
+                <div class="dot"></div>
+                <div class="txt"><strong>anon_2026:</strong> <em style="color:var(--muted); font-style:italic;">"isso é tudo lenda, time fez nada disso…"</em></div>
+                <div class="when"><a href="#" style="color:var(--red); font-family:Oswald; font-weight:700; font-size:10px; text-decoration:none; letter-spacing:0.1em;">SPAM</a></div>
+              </div>
+              <div class="fi">
+                <div class="dot y"></div>
+                <div class="txt"><strong>juliaflah:</strong> <em style="font-style:italic;">"Que texto, mano. Chorei."</em> — aguardando aprovação.</div>
+                <div class="when"><a href="#" style="color:#2f9e2f; font-family:Oswald; font-weight:700; font-size:10px; text-decoration:none; letter-spacing:0.1em;">✓ APROVAR</a></div>
+              </div>
+              <div class="fi">
+                <div class="dot y"></div>
+                <div class="txt"><strong>leokadu:</strong> <em style="font-style:italic;">"Discordo da análise do gol do Arrascaeta, acho que…"</em> — aguardando.</div>
+                <div class="when"><a href="#" style="color:#2f9e2f; font-family:Oswald; font-weight:700; font-size:10px; text-decoration:none; letter-spacing:0.1em;">✓ APROVAR</a></div>
+              </div>
+            </div>
+            <a href="#" style="display:block; text-align:center; margin-top: 14px; font-family: Oswald; font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px; border: 2px solid var(--ink); text-decoration: none; color: var(--ink);">VER TODOS OS COMENTÁRIOS →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+  // Simple bar chart
+  const values = [32, 45, 38, 52, 41, 58, 95, 48, 50, 42, 60, 55, 68, 72];
+  const peakIdx = 6;
+  document.getElementById('chart').innerHTML = values.map((v, i) => `<div class="bar ${i===peakIdx?'peak':''}" style="height:${v}%" data-v="${(v*230).toLocaleString('pt-BR')}"></div>`).join('');
+</script>
+
+</body>
+</html>

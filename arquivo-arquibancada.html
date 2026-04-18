@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<title>Arquivo · PodFlah.blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Rubik+Mono+One&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/arquibancada.css" />
+<style>
+  .archive-hero { padding: 48px 0 28px; border-bottom: 2px solid var(--ink); margin-bottom: 32px; }
+  .archive-hero .stamp { display: inline-block; transform: rotate(-2deg); font-family: "Oswald", sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; background: var(--ink); color: var(--yellow); padding: 6px 14px; margin-bottom: 18px; box-shadow: 3px 3px 0 var(--red); }
+  .archive-hero h1 { font-family: "DM Serif Display", serif; font-size: clamp(56px, 9vw, 120px); line-height: 0.88; letter-spacing: -0.03em; margin-bottom: 20px; }
+  .archive-hero h1 em { font-style: italic; color: var(--red); position: relative; }
+  .archive-hero h1 em::after { content:""; position:absolute; left:-4px; right:-4px; bottom:6px; height:14px; background: var(--yellow); z-index:-1; transform: rotate(-1deg); }
+  .archive-hero p { font-family: "DM Serif Display", serif; font-style: italic; font-size: 20px; max-width: 60ch; line-height: 1.4; color: var(--muted); }
+
+  /* BIG SEARCH */
+  .big-search { border: 3px solid var(--ink); background: var(--paper); padding: 28px; margin-bottom: 36px; position: relative; box-shadow: 6px 6px 0 var(--yellow); }
+  .big-search .label { font-family: "Oswald", sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .big-search .bar { display: flex; gap: 0; border: 2px solid var(--ink); }
+  .big-search input { flex: 1; padding: 18px 20px; border: none; background: transparent; font-family: "DM Serif Display", serif; font-size: 28px; color: var(--ink); outline: none; letter-spacing: -0.01em; }
+  .big-search input::placeholder { color: var(--muted); opacity: 0.5; font-style: italic; }
+  .big-search button { padding: 0 28px; background: var(--ink); color: var(--yellow); border: none; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 13px; cursor: pointer; }
+  .big-search button:hover { background: var(--red); }
+  .big-search .hint { margin-top: 12px; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+  .big-search .hint kbd { font-family: inherit; background: var(--ink); color: var(--paper); padding: 2px 6px; margin: 0 2px; font-size: 10px; }
+
+  /* SUGGESTED CHIPS */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+  .chips .label { align-self: center; font-family: "JetBrains Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-right: 8px; }
+  .chips a { font-family: "Oswald", sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 12px; border: 2px solid var(--ink); color: var(--ink); text-decoration: none; background: var(--paper); }
+  .chips a:hover { background: var(--ink); color: var(--yellow); }
+  .chips a.hot { background: var(--red); color: var(--paper); border-color: var(--ink); }
+
+  /* FILTERS BAR */
+  .filters { display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 12px; margin-bottom: 32px; padding: 16px; background: var(--paper); border: 2px solid var(--ink); align-items: center; }
+  .filters > div { display: flex; flex-direction: column; gap: 4px; }
+  .filters label { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .filters select, .filters input[type=date] { padding: 10px; border: 2px solid var(--ink); font-family: "JetBrains Mono", monospace; font-size: 12px; background: var(--paper); color: var(--ink); }
+  .filters .apply { background: var(--ink); color: var(--yellow); padding: 14px 20px; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 13px; border: 2px solid var(--ink); cursor: pointer; }
+  .filters .apply:hover { background: var(--red); }
+
+  .result-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 12px; border-bottom: 2px solid var(--ink); margin-bottom: 24px; }
+  .result-head h2 { font-family: "DM Serif Display", serif; font-size: 32px; letter-spacing: -0.01em; }
+  .result-head h2 em { color: var(--red); font-style: italic; }
+  .result-head .count { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  /* RESULTS LIST (rows) */
+  .results { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+  .row { display: grid; grid-template-columns: 140px 1fr auto; gap: 20px; padding: 16px; border: 2px solid var(--ink); background: var(--paper); text-decoration: none; color: inherit; transition: all 0.15s; position: relative; align-items: center; }
+  .row:nth-child(odd) { transform: rotate(-0.15deg); }
+  .row:nth-child(even) { transform: rotate(0.1deg); }
+  .row:hover { transform: translate(-3px,-3px) rotate(0); box-shadow: 5px 5px 0 var(--red); z-index: 5; }
+  .row .th { aspect-ratio: 4/3; background: repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 10px), linear-gradient(135deg, #2a2a2a, #141210); display: grid; place-items: center; position: relative; overflow: hidden; }
+  .row .th.red { background: repeating-linear-gradient(135deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 10px), linear-gradient(135deg, var(--red), var(--red-deep)); }
+  .row .th::after { content:""; position: absolute; inset: 0; background: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1.5px); background-size: 5px 5px; mix-blend-mode: screen; }
+  .row .th .lab { font-family: "Rubik Mono One", sans-serif; font-size: 14px; color: var(--yellow); -webkit-text-stroke: 1px var(--ink); transform: rotate(-3deg); text-align: center; line-height: 1; padding: 0 8px; letter-spacing: -0.01em; }
+  .row .mid .meta { display: flex; gap: 12px; font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; align-items: center; }
+  .row .mid h3 { font-family: "DM Serif Display", serif; font-size: 22px; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .row .mid h3 mark { background: var(--yellow); color: var(--ink); padding: 0 2px; }
+  .row .mid p { font-size: 13px; line-height: 1.5; color: var(--muted); max-width: 70ch; }
+  .row .right { text-align: right; font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+  .row .right .read { display: inline-flex; align-items: center; gap: 6px; font-family: "Oswald", sans-serif; font-weight: 700; font-size: 11px; color: var(--ink); padding: 6px 10px; border: 2px solid var(--ink); }
+
+  /* TIMELINE by year */
+  .timeline-nav { position: sticky; top: 84px; background: var(--paper); border: 2px solid var(--ink); padding: 14px; margin-bottom: 28px; display: flex; gap: 10px; overflow-x: auto; z-index: 10; }
+  .timeline-nav a { font-family: "Rubik Mono One", sans-serif; font-size: 18px; color: var(--ink); text-decoration: none; padding: 8px 14px; letter-spacing: -0.02em; border-bottom: 3px solid transparent; white-space: nowrap; }
+  .timeline-nav a.active { color: var(--red); border-bottom-color: var(--red); }
+  .timeline-nav a:hover { border-bottom-color: var(--ink); }
+
+  .year-block { margin-bottom: 48px; }
+  .year-block .year-head { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: end; border-bottom: 3px double var(--ink); padding-bottom: 14px; margin-bottom: 24px; }
+  .year-block .year-head .year { font-family: "Rubik Mono One", sans-serif; font-size: 96px; color: var(--red); -webkit-text-stroke: 2px var(--ink); line-height: 0.9; letter-spacing: -0.04em; }
+  .year-block .year-head .sub { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; padding-bottom: 16px; }
+  .year-block .year-head .sub strong { display: block; font-family: "DM Serif Display", serif; font-size: 24px; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 4px; text-transform: none; }
+
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 24px 0 80px; font-family: "Oswald", sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px; }
+  .pagination a, .pagination span { width: 40px; height: 40px; display: grid; place-items: center; border: 2px solid var(--ink); text-decoration: none; color: var(--ink); font-weight: 600; }
+  .pagination .active { background: var(--ink); color: var(--yellow); }
+  .pagination .arrow { width: auto; padding: 0 16px; }
+
+  @media (max-width: 800px) {
+    .filters { grid-template-columns: 1fr 1fr; }
+    .row { grid-template-columns: 80px 1fr; }
+    .row .right { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; }
+    .year-block .year-head .year { font-size: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="home-arquibancada.html" class="logo"><span class="logo-mark">P</span><span>podflah<small>.blog</small></span></a>
+    <nav class="main-nav">
+      <a href="home-arquibancada.html">Blog</a>
+      <a href="categoria-arquibancada.html">Crônicas</a>
+      <a href="autor-arquibancada.html">Perfil Oficial</a>
+      <a href="#">O PodFlah</a>
+      <a href="arquivo-arquibancada.html" class="active">Arquivo</a>
+    </nav>
+    <div class="social"><a href="#">IG</a><a href="#">FB</a><a href="#">YT</a><a href="#">TK</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="crumbs" style="padding-top:24px;">
+    <a href="home-arquibancada.html">BLOG</a><span class="sep">/</span>ARQUIVO & BUSCA
+  </div>
+
+  <section class="archive-hero">
+    <div class="stamp">● ARQUIVO · DESDE 2018</div>
+    <h1>Tudo que a gente <em>já escreveu.</em></h1>
+    <p>248 posts, 184 episódios, 8 anos de arquibancada. Busque por palavra, filtre por categoria ou navegue pela linha do tempo.</p>
+  </section>
+
+  <div class="big-search">
+    <div class="label">⌕ BUSCAR NO ARQUIVO</div>
+    <div class="bar">
+      <input type="text" placeholder="digite: tetra, maracanã, libertadores, arrascaeta…" id="search-input" />
+      <button>BUSCAR</button>
+    </div>
+    <div class="hint">Dicas: use <kbd>"aspas"</kbd> pra frase exata · <kbd>autor:igor</kbd> pra filtrar por autor · <kbd>cat:crônicas</kbd> pra categoria</div>
+  </div>
+
+  <div class="chips">
+    <span class="label">Buscas em alta →</span>
+    <a href="#" class="hot">Tetra 2025</a>
+    <a href="#">Maracanã</a>
+    <a href="#">Libertadores</a>
+    <a href="#">Arrascaeta</a>
+    <a href="#">Fla-Flu</a>
+    <a href="#">Filipe Luís</a>
+    <a href="#">Crônica</a>
+    <a href="#">Base</a>
+    <a href="#">Derbys</a>
+  </div>
+
+  <div class="filters">
+    <div><label>CATEGORIA</label><select><option>Todas</option><option>Crônicas</option><option>Análise</option><option>Libertadores</option><option>Brasileirão</option><option>Bastidores</option></select></div>
+    <div><label>AUTOR</label><select><option>Todos</option><option>Igor Schwansing</option></select></div>
+    <div><label>DE</label><input type="date" value="2018-01-01" /></div>
+    <div><label>ATÉ</label><input type="date" value="2026-04-18" /></div>
+    <button class="apply">APLICAR →</button>
+  </div>
+
+  <div class="result-head">
+    <h2>Resultados para <em>"tetra"</em></h2>
+    <div class="count">23 POSTS ENCONTRADOS · 0.14s</div>
+  </div>
+
+  <div class="timeline-nav">
+    <a href="#y2026" class="active">2026 (12)</a>
+    <a href="#y2025">2025 (47)</a>
+    <a href="#y2024">2024 (41)</a>
+    <a href="#y2023">2023 (38)</a>
+    <a href="#y2022">2022 (35)</a>
+    <a href="#y2021">2021 (29)</a>
+    <a href="#y2020">2020 (22)</a>
+    <a href="#y2019">2019 (18)</a>
+    <a href="#y2018">2018 (6)</a>
+  </div>
+
+  <div class="year-block" id="y2025">
+    <div class="year-head">
+      <div class="year">2025</div>
+      <div class="sub"><strong>A temporada do Tetra</strong>47 POSTS · 12 ANÁLISES · 31 CRÔNICAS · 4 BASTIDORES</div>
+    </div>
+    <div class="results" id="results-2025"></div>
+  </div>
+
+  <div class="year-block" id="y2024">
+    <div class="year-head">
+      <div class="year">2024</div>
+      <div class="sub"><strong>O ano da reconstrução</strong>41 POSTS · PUBLICADOS ENTRE JAN E DEZ</div>
+    </div>
+    <div class="results" id="results-2024"></div>
+  </div>
+
+  <div class="pagination">
+    <a href="#" class="arrow">← ANT</a>
+    <a href="#">01</a>
+    <span class="active">02</span>
+    <a href="#">03</a>
+    <a href="#">04</a>
+    <a href="#">…</a>
+    <a href="#">25</a>
+    <a href="#" class="arrow">PRÓX →</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="color:var(--paper);"><span class="logo-mark">P</span><span>podflah<small>.blog</small></span></div>
+        <p>Crônicas, análises e o podcast sobre o Flamengo. Feito por torcedor, pra torcedor, desde 2018.</p>
+      </div>
+      <div><h5>NAVEGAR</h5><ul><li><a href="home-arquibancada.html">Blog</a></li><li><a href="#">Podcast</a></li><li><a href="categoria-arquibancada.html">Crônicas</a></li><li><a href="arquivo-arquibancada.html">Arquivo</a></li></ul></div>
+      <div><h5>SOBRE</h5><ul><li><a href="#">O PodFlah</a></li><li><a href="autor-arquibancada.html">Perfil oficial</a></li><li><a href="#">Anuncie</a></li><li><a href="#">Contato</a></li></ul></div>
+      <div><h5>LEGAL</h5><ul><li><a href="#">Privacidade</a></li><li><a href="#">Acessibilidade</a></li><li><a href="#">Termos</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 · PODFLAH · TODOS OS DIREITOS</span>
+      <span>FEITO NO RIO · COM TINTA VERMELHA</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../shared/data.js"></script>
+<script>
+  const posts = window.PODFLAH_DATA.posts;
+  const rowHtml = (p, highlight) => {
+    const title = highlight ? p.title.replace(new RegExp(highlight, 'ig'), m => `<mark>${m}</mark>`) : p.title;
+    return `
+    <a href="post-arquibancada.html" class="row">
+      <div class="th ${p.imgColor === 'red' ? 'red' : ''}"><div class="lab">${p.imgLabel}</div></div>
+      <div class="mid">
+        <div class="meta">
+          <span class="cat-chip ${p.category === 'CRÔNICAS' ? '' : p.category === 'ANÁLISE' ? 'black' : 'red'}">${p.category}</span>
+          <span>${p.date}</span>
+          <span>· ${p.readTime}</span>
+          <span>· ${p.author}</span>
+        </div>
+        <h3>${title}</h3>
+        <p>${p.excerpt}</p>
+      </div>
+      <div class="right">
+        <span>♥ ${(Math.random()*10+2).toFixed(1)}K · ${Math.floor(Math.random()*80+10)} COMENT</span>
+        <span class="read">LER →</span>
+      </div>
+    </a>`;
+  };
+  document.getElementById('results-2025').innerHTML = posts.slice(0, 5).map(p => rowHtml(p, 'tetra|epopeia|flamengo')).join('');
+  document.getElementById('results-2024').innerHTML = posts.slice(5).map(p => rowHtml(p, null)).join('');
+</script>
+
+</body>
+</html>

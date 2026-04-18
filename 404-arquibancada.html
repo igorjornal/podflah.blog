@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<title>404 · Página não encontrada · PodFlah.blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Rubik+Mono+One&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/arquibancada.css" />
+<style>
+  main.err { min-height: calc(100vh - 90px); display: grid; place-items: center; padding: 60px 32px; }
+  .err-box { max-width: 920px; width: 100%; position: relative; }
+  .err-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .big-404 {
+    font-family: "Rubik Mono One", sans-serif; font-size: clamp(160px, 26vw, 320px);
+    line-height: 0.82; letter-spacing: -0.06em;
+    color: var(--red); -webkit-text-stroke: 4px var(--ink);
+    text-shadow: 12px 12px 0 var(--yellow);
+    transform: rotate(-3deg); text-align: center;
+    position: relative;
+  }
+  .big-404::before { content:""; position: absolute; inset: -20px; background: radial-gradient(circle, rgba(255,214,58,0.2), transparent 70%); z-index: -1; }
+  .err-content .stamp {
+    display: inline-block; transform: rotate(-2deg);
+    font-family: "Oswald", sans-serif; font-weight: 700;
+    font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+    background: var(--ink); color: var(--yellow);
+    padding: 6px 14px; margin-bottom: 20px;
+    box-shadow: 3px 3px 0 var(--red);
+  }
+  .err-content h1 { font-family: "DM Serif Display", serif; font-size: clamp(40px, 5vw, 64px); line-height: 0.92; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .err-content h1 em { font-style: italic; color: var(--red); position: relative; }
+  .err-content h1 em::after { content:""; position:absolute; left:-4px; right:-4px; bottom:4px; height:10px; background: var(--yellow); z-index:-1; transform: rotate(-1deg); }
+  .err-content p { font-family: "DM Serif Display", serif; font-style: italic; font-size: 20px; line-height: 1.4; color: var(--ink); opacity: 0.8; margin-bottom: 28px; max-width: 44ch; }
+  .err-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+
+  .back-search { display: flex; border: 2px solid var(--ink); background: var(--paper); max-width: 440px; }
+  .back-search input { flex: 1; padding: 14px 16px; border: none; background: transparent; font-family: "JetBrains Mono", monospace; font-size: 13px; outline: none; }
+  .back-search button { padding: 0 20px; background: var(--ink); color: var(--yellow); border: none; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px; cursor: pointer; }
+
+  .suggest { margin-top: 56px; padding-top: 32px; border-top: 2px dashed var(--line); }
+  .suggest h3 { font-family: "Oswald", sans-serif; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+  .suggest .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .suggest a { display: block; padding: 14px 16px; border: 2px solid var(--ink); background: var(--paper); text-decoration: none; color: inherit; font-family: "DM Serif Display", serif; font-size: 16px; line-height: 1.2; position: relative; transition: all 0.15s; }
+  .suggest a:nth-child(odd) { transform: rotate(-0.3deg); }
+  .suggest a:nth-child(even) { transform: rotate(0.2deg); }
+  .suggest a:hover { background: var(--ink); color: var(--yellow); transform: translate(-3px,-3px); box-shadow: 4px 4px 0 var(--red); }
+  .suggest a small { display: block; font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; font-style: normal; }
+  .suggest a:hover small { color: var(--yellow); }
+
+  .scribble { position: absolute; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--red); text-transform: uppercase; letter-spacing: 0.15em; transform: rotate(-8deg); border: 2px dashed var(--red); padding: 6px 10px; background: var(--paper); }
+  .scribble.s1 { top: -20px; right: 10px; }
+
+  @media (max-width: 800px) {
+    .err-grid { grid-template-columns: 1fr; text-align: center; }
+    .err-content p { margin-left: auto; margin-right: auto; }
+    .err-actions { justify-content: center; }
+    .back-search { margin: 0 auto; }
+    .suggest .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="home-arquibancada.html" class="logo"><span class="logo-mark">P</span><span>podflah<small>.blog</small></span></a>
+    <nav class="main-nav">
+      <a href="home-arquibancada.html">Blog</a>
+      <a href="categoria-arquibancada.html">Crônicas</a>
+      <a href="autor-arquibancada.html">Perfil Oficial</a>
+      <a href="#">O PodFlah</a>
+      <a href="arquivo-arquibancada.html">Arquivo</a>
+    </nav>
+    <div class="social"><a href="#">IG</a><a href="#">FB</a><a href="#">YT</a><a href="#">TK</a></div>
+  </div>
+</header>
+
+<main class="err">
+  <div class="err-box">
+    <div class="err-grid">
+      <div class="big-404" aria-hidden="true">
+        404
+        <div class="scribble s1">IMPEDIMENTO!</div>
+      </div>
+      <div class="err-content">
+        <div class="stamp">● ERRO · 404</div>
+        <h1>Essa página <em>tá no banco.</em></h1>
+        <p>Ou você digitou o endereço errado, ou o post foi pro vestiário. Acontece. A boa é que o blog tem 248 outros esperando você.</p>
+        <div class="err-actions">
+          <a href="home-arquibancada.html" class="btn-primary">← VOLTAR PRA HOME</a>
+          <a href="arquivo-arquibancada.html" class="btn-ghost">VER ARQUIVO</a>
+        </div>
+        <form class="back-search" onsubmit="event.preventDefault(); window.location='arquivo-arquibancada.html';">
+          <input type="text" placeholder="ou buscar no blog…" />
+          <button>⌕ BUSCAR</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="suggest">
+      <h3>↓ TALVEZ VOCÊ ESTIVESSE PROCURANDO…</h3>
+      <div class="grid">
+        <a href="post-arquibancada.html"><small>CRÔNICA · EM DESTAQUE</small>A Epopeia do Tetra</a>
+        <a href="post-arquibancada.html"><small>ANÁLISE · LIBERTADORES</small>Flamengo segue o Racing e está na final</a>
+        <a href="autor-arquibancada.html"><small>PERFIL OFICIAL</small>Igor Schwansing</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="color:var(--paper);"><span class="logo-mark">P</span><span>podflah<small>.blog</small></span></div>
+        <p>Crônicas, análises e o podcast sobre o Flamengo. Feito por torcedor, pra torcedor, desde 2018.</p>
+      </div>
+      <div><h5>NAVEGAR</h5><ul><li><a href="home-arquibancada.html">Blog</a></li><li><a href="#">Podcast</a></li><li><a href="categoria-arquibancada.html">Crônicas</a></li><li><a href="arquivo-arquibancada.html">Arquivo</a></li></ul></div>
+      <div><h5>SOBRE</h5><ul><li><a href="#">O PodFlah</a></li><li><a href="autor-arquibancada.html">Perfil oficial</a></li><li><a href="#">Anuncie</a></li><li><a href="#">Contato</a></li></ul></div>
+      <div><h5>LEGAL</h5><ul><li><a href="#">Privacidade</a></li><li><a href="#">Acessibilidade</a></li><li><a href="#">Termos</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 · PODFLAH · TODOS OS DIREITOS</span>
+      <span>FEITO NO RIO · COM TINTA VERMELHA</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<title>A Epopeia do Tetra · PodFlah.blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Rubik+Mono+One&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #f1ebdc;
+    --ink: #151310;
+    --red: #c8102e;
+    --red-deep: #8a0b1f;
+    --yellow: #ffd63a;
+    --muted: #6a6558;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; }
+  body {
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(0,0,0,0.025) 1px, transparent 1.5px),
+      repeating-linear-gradient(0deg, transparent 0 3px, rgba(120,100,60,0.02) 3px 4px);
+    background-size: 9px 9px, auto;
+    min-height: 100vh;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    opacity: 0.18; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  header.topbar { border-bottom: 2px solid var(--ink); background: var(--paper); position: sticky; top: 0; z-index: 50; }
+  header.topbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 4px; background: repeating-linear-gradient(90deg, var(--red) 0 8px, transparent 8px 16px); }
+  .topbar-inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; padding: 18px 32px; max-width: 1280px; margin: 0 auto; }
+  .logo { font-family: "Rubik Mono One", sans-serif; font-size: 28px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); }
+  .logo-mark { width: 44px; height: 44px; background: var(--red); color: var(--yellow); display: grid; place-items: center; font-family: "Rubik Mono One", sans-serif; font-size: 22px; transform: rotate(-4deg); border: 3px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+  .logo small { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 26px; font-style: italic; color: var(--red); }
+  nav.main-nav { display: flex; gap: 28px; font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: 0.08em; font-size: 14px; font-weight: 600; }
+  nav.main-nav a { color: var(--ink); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+  nav.main-nav a:hover { border-bottom-color: var(--red); }
+  .back-link { font-family: "JetBrains Mono", monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 2px solid var(--ink); }
+  .back-link:hover { background: var(--ink); color: var(--paper); }
+
+  /* ARTICLE HEADER */
+  .article-head { padding: 48px 0 32px; text-align: center; position: relative; }
+  .breadcrumb { font-family: "JetBrains Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 24px; }
+  .breadcrumb a { color: var(--muted); text-decoration: none; }
+  .breadcrumb .sep { margin: 0 10px; color: var(--red); }
+  .article-cat {
+    display: inline-block; background: var(--red); color: var(--paper); padding: 6px 14px;
+    font-family: "Oswald", sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 20px; transform: rotate(-2deg);
+  }
+  .article-kicker { font-family: "Oswald", sans-serif; font-size: 16px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 16px; }
+  h1.article-title {
+    font-family: "DM Serif Display", serif;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.92; letter-spacing: -0.02em;
+    max-width: 14ch; margin: 0 auto 24px;
+  }
+  h1.article-title em { color: var(--red); font-style: italic; position: relative; }
+  h1.article-title em::after { content: ""; position: absolute; left: -4px; right: -4px; bottom: 6px; height: 12px; background: var(--yellow); z-index: -1; transform: rotate(-1deg); }
+  .article-meta { display: flex; justify-content: center; gap: 32px; font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; padding: 20px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); max-width: 680px; margin: 24px auto 0; }
+  .article-meta .sep-dot { color: var(--red); }
+
+  /* HERO IMG */
+  .article-hero {
+    margin: 40px -40px 0;
+    height: 500px;
+    position: relative;
+    background: linear-gradient(180deg, #c8102e 0%, #4a0810 100%);
+    background-image:
+      radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1.5px),
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 14px),
+      linear-gradient(180deg, #c8102e 0%, #4a0810 100%);
+    background-size: 5px 5px, auto, auto;
+    border: 3px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink);
+    overflow: hidden;
+    display: grid; place-items: center;
+  }
+  .article-hero .caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 16px 24px; background: rgba(0,0,0,0.7); color: rgba(255,255,255,0.85);
+    font-family: "JetBrains Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    display: flex; justify-content: space-between;
+  }
+  .article-hero .big-label {
+    font-family: "Rubik Mono One", sans-serif; font-size: 96px; color: var(--yellow);
+    -webkit-text-stroke: 2px var(--ink); transform: rotate(-3deg); text-shadow: 8px 8px 0 rgba(0,0,0,0.5);
+    text-align: center; line-height: 0.88;
+  }
+  .article-hero .big-label span { display:block; font-size:48px; color: var(--paper); -webkit-text-stroke: 1px var(--ink); }
+
+  /* ARTICLE BODY */
+  .article-body {
+    display: grid; grid-template-columns: 80px 1fr 240px;
+    gap: 40px;
+    padding: 60px 0 80px;
+  }
+  .article-tools { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 10px; }
+  .tool-btn {
+    width: 48px; height: 48px;
+    border: 2px solid var(--ink); background: var(--paper); cursor: pointer;
+    display: grid; place-items: center;
+    font-family: "Oswald", sans-serif; font-weight: 700; font-size: 13px;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .tool-btn:hover { background: var(--ink); color: var(--yellow); transform: translate(-2px,-2px); box-shadow: 2px 2px 0 var(--red); }
+  .tool-label { font-family: "JetBrains Mono", monospace; font-size: 9px; text-align: center; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  .prose {
+    font-family: "Inter", sans-serif;
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .prose p { margin-bottom: 22px; }
+  .prose p.lede {
+    font-family: "DM Serif Display", serif;
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .prose p.lede::first-letter {
+    font-size: 84px;
+    float: left;
+    line-height: 0.85;
+    padding: 6px 12px 0 0;
+    font-family: "DM Serif Display", serif;
+    color: var(--red);
+  }
+  .prose h2 {
+    font-family: "DM Serif Display", serif;
+    font-size: 36px;
+    line-height: 1.1;
+    margin: 48px 0 16px;
+    letter-spacing: -0.01em;
+  }
+  .prose h2 em { color: var(--red); font-style: italic; }
+  .prose blockquote {
+    margin: 40px -20px;
+    padding: 30px 28px;
+    background: var(--ink);
+    color: var(--yellow);
+    font-family: "DM Serif Display", serif;
+    font-size: 28px;
+    line-height: 1.25;
+    font-style: italic;
+    position: relative;
+    border-left: 6px solid var(--red);
+    transform: rotate(-0.4deg);
+    box-shadow: 6px 6px 0 var(--red);
+  }
+  .prose blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: -20px; left: 14px;
+    font-size: 96px;
+    color: var(--red);
+    line-height: 1;
+    font-family: "DM Serif Display", serif;
+  }
+  .prose blockquote cite { display: block; margin-top: 16px; font-family: "JetBrains Mono", monospace; font-size: 12px; font-style: normal; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; text-transform: uppercase; }
+  .prose .pullquote {
+    float: right;
+    width: 280px;
+    margin: 10px -40px 20px 28px;
+    padding: 20px;
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    font-family: "DM Serif Display", serif;
+    font-size: 22px;
+    line-height: 1.2;
+    transform: rotate(2deg);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .prose figure {
+    margin: 40px 0;
+  }
+  .prose figure .img {
+    aspect-ratio: 16/9;
+    background: repeating-linear-gradient(135deg, rgba(0,0,0,0.2) 0 2px, transparent 2px 12px), linear-gradient(180deg, #2a2a2a, #141210);
+    border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--red);
+    display: grid; place-items: center;
+    color: var(--yellow);
+    font-family: "Rubik Mono One", sans-serif;
+    font-size: 42px; text-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+  }
+  .prose figure figcaption {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 4px 0;
+    display: flex; justify-content: space-between; gap: 20px;
+    border-bottom: 1px dashed rgba(0,0,0,0.3);
+    padding-bottom: 10px;
+  }
+  .prose strong { background: var(--yellow); padding: 0 4px; }
+  .prose a { color: var(--red); font-weight: 500; }
+
+  /* SIDEBAR */
+  .article-aside { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 20px; }
+  .aside-card {
+    background: var(--paper); border: 2px solid var(--ink); padding: 18px;
+    position: relative;
+  }
+  .aside-card.dark { background: var(--ink); color: var(--paper); }
+  .aside-card h4 { font-family: "Oswald", sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid currentColor; }
+  .mini-author { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .mini-author .avatar { width: 48px; height: 48px; background: linear-gradient(135deg, var(--red), var(--red-deep)); color: var(--paper); display: grid; place-items: center; border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--yellow); font-family: "Oswald", sans-serif; font-weight: 700; }
+  .mini-author .name { font-family: "DM Serif Display", serif; font-size: 18px; }
+  .mini-author .role { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .follow-btn { width: 100%; padding: 10px; background: var(--ink); color: var(--yellow); border: none; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px; cursor: pointer; }
+  .follow-btn:hover { background: var(--red); color: var(--paper); }
+
+  .related-item { display: grid; grid-template-columns: 60px 1fr; gap: 10px; align-items: start; padding: 10px 0; border-bottom: 1px dashed rgba(0,0,0,0.15); text-decoration: none; color: inherit; }
+  .related-item:last-child { border: none; }
+  .related-item .thumb {
+    width: 60px; height: 60px;
+    background: repeating-linear-gradient(135deg, rgba(0,0,0,0.2) 0 2px, transparent 2px 10px), linear-gradient(135deg, var(--red), var(--red-deep));
+    display: grid; place-items: center;
+    font-family: "Rubik Mono One", sans-serif; font-size: 10px; color: var(--yellow);
+    -webkit-text-stroke: 0.5px var(--ink);
+    text-align: center; padding: 4px;
+  }
+  .related-item h5 { font-family: "DM Serif Display", serif; font-size: 14px; line-height: 1.2; margin-bottom: 4px; }
+  .related-item .date { font-family: "JetBrains Mono", monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* COMMENTS / CTA */
+  .article-foot {
+    max-width: 680px; margin: 0 auto 80px; padding: 40px;
+    background: var(--ink); color: var(--paper);
+    border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--yellow);
+    text-align: center;
+  }
+  .article-foot h3 { font-family: "DM Serif Display", serif; font-size: 36px; margin-bottom: 12px; }
+  .article-foot h3 em { color: var(--yellow); font-style: italic; }
+  .article-foot p { font-size: 15px; line-height: 1.5; color: rgba(255,255,255,0.7); margin-bottom: 20px; max-width: 440px; margin-left: auto; margin-right: auto; }
+  .article-foot form { display: flex; gap: 8px; max-width: 440px; margin: 0 auto; }
+  .article-foot input { flex: 1; padding: 12px 14px; background: var(--paper); border: 2px solid var(--yellow); font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink); }
+  .article-foot button { padding: 12px 18px; background: var(--yellow); color: var(--ink); border: none; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px; cursor: pointer; }
+
+  /* NEXT ARTICLE */
+  .next-block {
+    max-width: 1180px; margin: 0 auto 80px; padding: 0 32px;
+  }
+  .next-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .next-card {
+    background: var(--paper); border: 2px solid var(--ink); padding: 24px;
+    text-decoration: none; color: inherit;
+    transition: all 0.15s;
+  }
+  .next-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--red); }
+  .next-card .label { font-family: "JetBrains Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--red); margin-bottom: 8px; }
+  .next-card h3 { font-family: "DM Serif Display", serif; font-size: 24px; line-height: 1.1; }
+
+  footer { background: var(--ink); color: var(--paper); padding: 40px 0 24px; margin-top: 40px; position: relative; }
+  footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, var(--red) 0 14px, var(--yellow) 14px 28px); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-family: "JetBrains Mono", monospace; font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; padding-top: 20px; }
+
+  @media (max-width: 900px) {
+    .article-body { grid-template-columns: 1fr; }
+    .article-tools { flex-direction: row; position: static; }
+    .article-aside { position: static; }
+    .prose .pullquote { float: none; width: 100%; margin: 20px 0; }
+    .article-hero { margin: 20px 0; height: 280px; }
+    .article-hero .big-label { font-size: 48px; }
+    nav.main-nav { display: none; }
+    .next-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="home-arquibancada.html" class="logo">
+      <span class="logo-mark">P</span>
+      <span>podflah<small>.blog</small></span>
+    </a>
+    <nav class="main-nav">
+      <a href="home-arquibancada.html">Blog</a>
+      <a href="#">Crônicas</a>
+      <a href="#">Perfil Oficial</a>
+      <a href="#">O PodFlah</a>
+      <a href="#">Podcast</a>
+    </nav>
+    <a href="home-arquibancada.html" class="back-link">← VOLTAR</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="article-head">
+    <div class="breadcrumb">
+      <a href="#">BLOG</a><span class="sep">/</span><a href="#">CRÔNICAS</a><span class="sep">/</span>EDIÇÃO Nº 248
+    </div>
+    <div class="article-cat">CRÔNICAS · EDITORIAL</div>
+    <div class="article-kicker">— POR IGOR SCHWANSING —</div>
+    <h1 class="article-title">A Epopeia <em>do Tetra</em></h1>
+    <div class="article-meta">
+      <span>15 DEZ 2025</span>
+      <span class="sep-dot">●</span>
+      <span>8 MIN DE LEITURA</span>
+      <span class="sep-dot">●</span>
+      <span>14.2K LEITURAS</span>
+      <span class="sep-dot">●</span>
+      <span>312 COMENTÁRIOS</span>
+    </div>
+  </div>
+
+  <div class="article-hero">
+    <div class="big-label">A EPOPEIA<span>— DO TETRA —</span></div>
+    <div class="caption">
+      <span>[IMG] COMEMORAÇÃO NO MARACANÃ · 12/12/2025</span>
+      <span>FOTO: PLACEHOLDER</span>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <aside class="article-tools">
+      <div><button class="tool-btn">♥</button><div class="tool-label">1.2K</div></div>
+      <div><button class="tool-btn">✎</button><div class="tool-label">COM</div></div>
+      <div><button class="tool-btn">↗</button><div class="tool-label">SHARE</div></div>
+      <div><button class="tool-btn">★</button><div class="tool-label">SALV</div></div>
+      <div><button class="tool-btn">A+</button><div class="tool-label">TEXTO</div></div>
+    </aside>
+
+    <article class="prose">
+      <p class="lede">A manga que o colégio nos viu rasgar, a camisa que escondemos dos pais todas as noites de quarta, o grito abafado na escola no dia seguinte — tudo isso pagou a dívida. E o Flamengo, enfim, escreveu a epopeia do tetra.</p>
+
+      <p>Tem noite que a gente sabe, antes mesmo de começar, que vai mudar tudo. Não é superstição, não é feeling de torcedor. É aquela pressão no peito quando o time entra em campo: a bola rola e o tempo passa diferente. Foi assim ontem. Foi assim há uma semana. Foi assim quatro anos atrás.</p>
+
+      <p>E quando o árbitro apitou o final, não teve grito que segurasse. Teve gente chorando encostada no portão da arquibancada, teve desconhecido abraçando desconhecido — e eu me peguei pensando nos meus quinze anos, naquela manga que rasguei pra fazer faixa, no sermão da minha mãe.</p>
+
+      <blockquote>
+        A arquibancada não esquece. E quando a arquibancada não esquece, o campo responde.
+        <cite>— DA CRÔNICA ANTERIOR, EM SETEMBRO</cite>
+      </blockquote>
+
+      <h2>O peso de <em>cada minuto</em></h2>
+
+      <p>O segundo tempo foi diferente. Não porque o Flamengo mudou de postura — e aí está a beleza do futebol: às vezes, nada muda e tudo muda. O adversário começou a errar passes curtos que não errava no primeiro. O meio-campo do rubro-negro passou a pisar na grama com outra firmeza.</p>
+
+      <p class="pullquote">"Não é só um título. É o recibo de uma dívida inteira com a geração que viu o tri."</p>
+
+      <p>Eu lembro de cada minuto. Lembro da cabeçada no trave, do gol anulado que não foi anulado, do abraço coletivo quando a bola balançou a rede pela última vez. <strong>E lembro, sobretudo, do silêncio de três segundos antes de explodir.</strong></p>
+
+      <figure>
+        <div class="img">[IMG] ARQUIBANCADA NORTE · ERUPÇÃO</div>
+        <figcaption>
+          <span>FOTO: PLACEHOLDER</span>
+          <span>MARACANÃ · 12/12/2025 · 22H07</span>
+        </figcaption>
+      </figure>
+
+      <h2>O que fica</h2>
+
+      <p>Amanhã a gente volta pra rotina. Volta o trabalho, volta a aula, volta o boleto. Mas essa camisa, essa que a gente dobrou hoje e guardou com cuidado, ela carrega uma coisa nova. Ela carrega o tetra. Ela carrega essa noite.</p>
+
+      <p>E é isso que o futebol faz de mais bonito. Ele pega uma noite comum de um dezembro comum, e transforma em memória coletiva. Em geração. Em epopeia.</p>
+
+      <p>O Flamengo, enfim, escreveu a sua. E a gente estava lá. <a href="#">Como sempre.</a></p>
+    </article>
+
+    <aside class="article-aside">
+
+      <div class="aside-card">
+        <h4>SOBRE O AUTOR</h4>
+        <div class="mini-author">
+          <div class="avatar">IS</div>
+          <div>
+            <div class="name">Igor Schwansing</div>
+            <div class="role">CRONISTA-CHEFE</div>
+          </div>
+        </div>
+        <p style="font-size:13px; line-height:1.5; margin-bottom: 14px;">Carioca, rubro-negro desde o berço. Escreve há 12 anos e apresenta o PodFlah.</p>
+        <button class="follow-btn">+ SEGUIR AUTOR</button>
+      </div>
+
+      <div class="aside-card">
+        <h4>NESTA EDIÇÃO</h4>
+        <a href="#" class="related-item">
+          <div class="thumb">RACING<br/>0X1</div>
+          <div>
+            <h5>A final continental em Avellaneda</h5>
+            <div class="date">14 DEZ · 9 MIN</div>
+          </div>
+        </a>
+        <a href="#" class="related-item">
+          <div class="thumb">FLA<br/>FLU</div>
+          <div>
+            <h5>Derrota no Fla-Flu expõe erros</h5>
+            <div class="date">02 DEZ · 9 MIN</div>
+          </div>
+        </a>
+        <a href="#" class="related-item">
+          <div class="thumb">MER<br/>CA<br/>DO</div>
+          <div>
+            <h5>Os 5 nomes para 2026</h5>
+            <div class="date">28 NOV · 7 MIN</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="aside-card dark">
+        <h4>↓ NO PODCAST</h4>
+        <div style="font-family:'Rubik Mono One',sans-serif; color:var(--yellow); font-size:24px;">EP #184</div>
+        <div style="font-family:'DM Serif Display',serif; font-size:18px; line-height:1.2; margin: 6px 0 10px;">O tetra e o que vem agora</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;">15 DEZ · 1H 12MIN</div>
+        <button class="follow-btn" style="background:var(--yellow); color: var(--ink);">▶ OUVIR AGORA</button>
+      </div>
+
+    </aside>
+  </div>
+
+  <div class="article-foot">
+    <h3>Continua a conversa na <em>caixa de entrada</em></h3>
+    <p>Toda segunda, a leitura da rodada + uma crônica exclusiva direto do Igor.</p>
+    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='INSCRITO ✓';">
+      <input type="email" placeholder="seu@email.com.br" required />
+      <button type="submit">ASSINAR →</button>
+    </form>
+  </div>
+
+  <div class="next-block">
+    <div style="display:flex; justify-content:space-between; align-items:end; margin-bottom:24px; padding-bottom:12px; border-bottom:2px solid var(--ink);">
+      <h2 style="font-family:'DM Serif Display',serif; font-size:36px;">Continue <em style="color:var(--red); font-style:italic;">lendo</em></h2>
+    </div>
+    <div class="next-grid">
+      <a href="#" class="next-card">
+        <div class="label">← ANTERIOR · CRÔNICAS</div>
+        <h3>Não é revanche. Mas também não é só futebol.</h3>
+      </a>
+      <a href="#" class="next-card" style="text-align:right;">
+        <div class="label">PRÓXIMA · CRÔNICAS →</div>
+        <h3>Os dias mais demorados do ano</h3>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom">
+      <span>© 2026 · PODFLAH · TODOS OS DIREITOS</span>
+      <span>FEITO NO RIO · COM TINTA VERMELHA</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

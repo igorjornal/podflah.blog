@@ -1,0 +1,1251 @@
+<!DOCTYPE html><html lang="pt-br"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head><script bis_use="true" type="text/javascript" charset="utf-8" data-bis-config="{&quot;blacklistIframeSrc&quot;:[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//www.google.com/recaptcha/enterprise/anchor&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;,&quot;//www.ukrnafta.com/data/map/&quot;,&quot;//maps.google.com/maps&quot;,&quot;//www.openstreetmap.org/export/embed.html&quot;,&quot;//www.google.com/maps/d/u/3/embed&quot;,&quot;//itm.ebaydesc.com/itmdesc&quot;,&quot;//books.google.com/books&quot;,&quot;//embed.podcasts.apple.com&quot;,&quot;//www.paypal.com/smartchat&quot;,&quot;//www.centurylink.com/assets/includes/common/sfChatiFrame.html&quot;,&quot;//macmillan-prod-gen.ada.support/embed&quot;,&quot;//macmillan-prod-gen.ada.support/chat&quot;,&quot;//ctl-consumer.my.site.com/&quot;],&quot;whitelistDomainsForPostBody&quot;:[&quot;youtube.com&quot;]}" data-dynamic-id="9b88991e-2470-4e22-9256-7e445481d4c8" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js"></script>
+
+
+<meta charset="utf-8">
+<title>PodFlah.blog · Arquibancada</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&amp;family=DM+Serif+Display&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Rubik+Mono+One&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/textures.css">
+<style>
+  :root {
+    --paper: #f1ebdc;
+    --ink: #151310;
+    --red: #c8102e;
+    --red-deep: #8a0b1f;
+    --yellow: #ffd63a;
+    --yellow-soft: #fff2a8;
+    --muted: #6a6558;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); color: var(--ink); font-family: "Inter", sans-serif; }
+  body {
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(0,0,0,0.025) 1px, transparent 1.5px),
+      radial-gradient(circle at 80% 70%, rgba(200,16,46,0.02) 1px, transparent 1.5px),
+      repeating-linear-gradient(0deg, transparent 0 3px, rgba(120,100,60,0.02) 3px 4px);
+    background-size: 9px 9px, 13px 13px, auto;
+    min-height: 100vh;
+  }
+  /* global noise overlay */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.18;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* ——— HEADER ——— */
+  header.topbar {
+    border-bottom: 2px solid var(--ink);
+    background: var(--paper);
+    position: sticky; top: 0; z-index: 50;
+  }
+  header.topbar::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 4px;
+    background: repeating-linear-gradient(90deg, var(--red) 0 8px, transparent 8px 16px);
+  }
+  .topbar-inner {
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 32px;
+    padding: 18px 32px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .logo {
+    font-family: "Rubik Mono One", "Oswald", sans-serif;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .logo-mark {
+    width: 44px; height: 44px;
+    background: var(--red);
+    color: var(--yellow);
+    display: grid; place-items: center;
+    font-family: "Rubik Mono One", sans-serif;
+    font-size: 22px;
+    transform: rotate(-4deg);
+    border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .logo small {
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-size: 26px;
+    font-style: italic;
+    color: var(--red);
+  }
+  nav.main-nav {
+    display: flex; gap: 28px;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  nav.main-nav a {
+    color: var(--ink); text-decoration: none; padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.15s;
+  }
+  nav.main-nav a:hover { border-bottom-color: var(--red); }
+  nav.main-nav a.active { border-bottom-color: var(--ink); }
+  .social { display: flex; gap: 10px; }
+  .social a {
+    width: 34px; height: 34px;
+    border: 2px solid var(--ink);
+    display: grid; place-items: center;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    font-family: "Oswald", sans-serif;
+    background: var(--paper);
+    transition: all 0.15s;
+  }
+  .social a:hover { background: var(--ink); color: var(--paper); transform: translate(-2px,-2px); box-shadow: 2px 2px 0 var(--red); }
+
+  /* ——— MASTHEAD ——— */
+  .masthead {
+    padding: 40px 0 24px;
+    display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end;
+    border-bottom: 1px dashed rgba(0,0,0,0.25);
+  }
+  .masthead h1 {
+    font-family: "DM Serif Display", serif;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    color: var(--red);
+    position: relative;
+  }
+  .masthead h1 em::after {
+    content: "";
+    position: absolute; left: -4px; right: -4px; bottom: 4px; height: 10px;
+    background: var(--yellow);
+    z-index: -1;
+    transform: rotate(-1deg);
+  }
+  .masthead .meta {
+    text-align: right;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    text-transform: uppercase;
+  }
+  .masthead .meta strong { color: var(--ink); }
+  .edition-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 32px;
+  }
+  .edition-bar .pill {
+    background: var(--ink); color: var(--paper);
+    padding: 4px 10px;
+    font-weight: 600;
+  }
+
+  /* ——— HERO FEATURED ——— */
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 0;
+    margin-bottom: 56px;
+    background: var(--ink);
+    border: 3px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--red);
+  }
+  .hero-img {
+    position: relative;
+    height: 520px;
+    background:
+      radial-gradient(ellipse at center, rgba(255,215,58,0.15) 0%, transparent 60%),
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 10px),
+      linear-gradient(180deg, #c8102e 0%, #4a0810 100%);
+    overflow: hidden;
+  }
+  .hero-img::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+  }
+  .hero-img .halftone {
+    position: absolute; inset: 0;
+    background: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1.5px);
+    background-size: 5px 5px;
+    mix-blend-mode: screen;
+  }
+  .hero-img .tag-img {
+    position: absolute; bottom: 20px; left: 20px;
+    color: rgba(255,255,255,0.7);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.4);
+  }
+  .hero-img .img-label {
+    position: absolute;
+    left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-4deg);
+    font-family: "Rubik Mono One", sans-serif;
+    font-size: 72px;
+    color: var(--yellow);
+    letter-spacing: -0.02em;
+    text-align: center;
+    line-height: 0.88;
+    -webkit-text-stroke: 2px var(--ink);
+    text-shadow: 6px 6px 0 rgba(0,0,0,0.6);
+  }
+  .hero-img .img-label span { display: block; font-size: 36px; color: var(--paper); -webkit-text-stroke: 1px var(--ink); }
+
+  .hero-content {
+    padding: 40px 36px;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .hero-content::before {
+    content: "";
+    position: absolute; top: -14px; left: 40px;
+    width: 140px; height: 36px;
+    background: var(--yellow);
+    transform: rotate(-3deg);
+    background-image: repeating-linear-gradient(90deg, transparent 0 3px, rgba(0,0,0,0.05) 3px 4px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .hero-content::after {
+    content: "DESTAQUE DA SEMANA";
+    position: absolute; top: -6px; left: 50px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    transform: rotate(-3deg);
+  }
+  .hero-kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--yellow);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: "DM Serif Display", serif;
+    font-size: 58px;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    color: var(--paper);
+  }
+  .hero-title em { font-style: italic; color: var(--yellow); }
+  .hero-excerpt {
+    font-family: "Inter", sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 28px;
+  }
+  .hero-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255,255,255,0.25);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .byline { display: flex; align-items: center; gap: 10px; }
+  .avatar {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--red), var(--red-deep));
+    border: 2px solid var(--yellow);
+    display: grid; place-items: center;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    color: var(--paper);
+    font-size: 14px;
+  }
+  .read-cta {
+    background: var(--yellow);
+    color: var(--ink);
+    padding: 10px 18px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.15s;
+  }
+  .read-cta:hover { background: var(--paper); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--red); }
+
+  /* ——— CATEGORY TABS ——— */
+  .cat-bar {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 40px;
+    padding: 12px;
+    background: var(--ink);
+    border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--yellow);
+  }
+  .cat-bar button {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    background: transparent;
+    color: var(--paper);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cat-bar button:hover { color: var(--yellow); }
+  .cat-bar button.active {
+    background: var(--yellow);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .cat-bar .search {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px;
+    border: 2px solid var(--paper);
+    color: var(--paper);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+  }
+
+  /* ——— GRID ——— */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+    margin-bottom: 80px;
+  }
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+  @media (min-width: 1100px) {
+    .post-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .post-card {
+    position: relative;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex; flex-direction: column;
+  }
+  .post-card:nth-child(3n+1) { transform: rotate(-0.4deg); }
+  .post-card:nth-child(3n+2) { transform: rotate(0.3deg); }
+  .post-card:nth-child(3n+3) { transform: rotate(-0.2deg); }
+  .post-card:hover {
+    transform: translate(-3px, -3px) rotate(0deg);
+    box-shadow: 6px 6px 0 var(--red);
+    z-index: 5;
+  }
+  .post-card-img {
+    position: relative;
+    aspect-ratio: 16/10;
+    background:
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.2) 0 2px, transparent 2px 12px),
+      linear-gradient(180deg, #2a2a2a 0%, #141210 100%);
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  .post-card-img.red {
+    background:
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 12px),
+      linear-gradient(180deg, #c8102e 0%, #5a0816 100%);
+  }
+  .post-card-img .label {
+    font-family: "Rubik Mono One", sans-serif;
+    font-size: 28px;
+    color: var(--yellow);
+    -webkit-text-stroke: 1px var(--ink);
+    transform: rotate(-3deg);
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+    padding: 0 12px;
+    text-align: center;
+    line-height: 1;
+  }
+  .post-card-img::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1.5px);
+    background-size: 5px 5px;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .post-card-tape {
+    position: absolute;
+    top: -10px; left: 20px;
+    width: 88px; height: 22px;
+    background: rgba(255, 214, 58, 0.85);
+    background-image: repeating-linear-gradient(90deg, transparent 0 3px, rgba(0,0,0,0.06) 3px 4px);
+    transform: rotate(-6deg);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    z-index: 3;
+  }
+  .post-card:nth-child(3n+2) .post-card-tape {
+    background: rgba(200, 16, 46, 0.85);
+    left: auto; right: 20px; transform: rotate(4deg);
+  }
+  .post-card:nth-child(3n+3) .post-card-tape {
+    background: rgba(21, 19, 16, 0.85);
+    left: 40%; transform: rotate(-2deg);
+  }
+
+  .post-card-body {
+    padding: 22px 22px 26px;
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 12px;
+    position: relative;
+  }
+  .post-card-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .cat-chip {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--ink);
+    padding: 3px 8px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cat-chip.red { background: var(--red); color: var(--paper); }
+  .cat-chip.black { background: var(--ink); color: var(--yellow); }
+  .post-card h3 {
+    font-family: "DM Serif Display", serif;
+    font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .post-card p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .post-card-foot {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(0,0,0,0.15);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .post-card-foot .author { display: flex; align-items: center; gap: 6px; }
+  .post-card-foot .avatar-sm {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--red);
+    border: 1px solid var(--ink);
+    display: inline-block;
+  }
+
+  /* ——— SIDEBAR ——— */
+  .sidebar { display: flex; flex-direction: column; gap: 28px; }
+  .side-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 20px;
+    position: relative;
+  }
+  .side-card.dark { background: var(--ink); color: var(--paper); }
+  .side-card.red { background: var(--red); color: var(--paper); border-color: var(--ink); }
+  .side-card h4 {
+    font-family: "Oswald", sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid currentColor;
+  }
+  .side-card h4 .pin-icon { display: inline-block; width: 8px; height: 8px; background: var(--red); border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+
+  /* Author card */
+  .author-card { text-align: center; }
+  .author-card .big-avatar {
+    width: 80px; height: 80px;
+    margin: 0 auto 12px;
+    background: linear-gradient(135deg, var(--red), var(--red-deep));
+    border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--yellow);
+    display: grid; place-items: center;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    color: var(--paper);
+    font-size: 28px;
+    transform: rotate(-3deg);
+  }
+  .author-card h3 {
+    font-family: "DM Serif Display", serif;
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+  .author-card .role {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .author-card .bio {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .author-card .stats {
+    display: flex; justify-content: space-around;
+    padding: 12px 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 14px;
+  }
+  .author-card .stats div { text-align: center; }
+  .author-card .stats strong {
+    display: block;
+    font-family: "Oswald", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .author-card .stats span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Podcast card */
+  .pod-list { display: flex; flex-direction: column; gap: 14px; }
+  .pod-item {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.2);
+  }
+  .pod-item:last-child { border-bottom: none; }
+  .pod-number {
+    font-family: "Rubik Mono One", sans-serif;
+    font-size: 18px;
+    color: var(--yellow);
+  }
+  .pod-item .pod-title {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+  .pod-item .pod-meta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .play-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--ink);
+    display: grid; place-items: center;
+    font-size: 12px;
+    border: 2px solid var(--paper);
+    cursor: pointer;
+  }
+
+  /* Newsletter */
+  .newsletter h4 { border-color: var(--ink); }
+  .newsletter p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .newsletter form { display: flex; flex-direction: column; gap: 8px; }
+  .newsletter input {
+    padding: 12px 14px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--ink);
+  }
+  .newsletter input::placeholder { color: var(--muted); }
+  .newsletter button {
+    padding: 12px 14px;
+    background: var(--ink);
+    color: var(--yellow);
+    border: 2px solid var(--ink);
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .newsletter button:hover { background: var(--yellow); color: var(--ink); }
+
+  /* Stamp decoration */
+  .corner-stamp {
+    position: absolute;
+    top: -10px; right: -10px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 2px double var(--red);
+    padding: 4px 10px;
+    transform: rotate(6deg);
+    background: var(--paper);
+  }
+
+  /* Pagination */
+  .pagination {
+    display: flex; justify-content: center; align-items: center; gap: 10px;
+    margin: 24px 0 60px;
+    font-family: "Oswald", sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+  .pagination a, .pagination span {
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    border: 2px solid var(--ink);
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .pagination .active { background: var(--ink); color: var(--yellow); }
+  .pagination .arrow { width: auto; padding: 0 16px; gap: 6px; }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 0 30px;
+    position: relative;
+    margin-top: 40px;
+  }
+  footer::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, var(--red) 0 14px, var(--yellow) 14px 28px);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px dashed rgba(255,255,255,0.2);
+  }
+  .footer-grid h5 {
+    font-family: "Oswald", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    color: var(--yellow);
+  }
+  .footer-grid ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-grid a {
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.8;
+  }
+  .footer-grid a:hover { opacity: 1; color: var(--yellow); }
+  .footer-brand p {
+    font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.6);
+    margin-top: 12px; max-width: 340px;
+  }
+  .footer-bottom {
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Section dividers */
+  .section-header {
+    display: flex; justify-content: space-between; align-items: end;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .section-header h2 {
+    font-family: "DM Serif Display", serif;
+    font-size: 36px;
+    letter-spacing: -0.01em;
+  }
+  .section-header h2 em { color: var(--red); font-style: italic; }
+  .section-header .counter {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  @media (max-width: 900px) {
+    .masthead { grid-template-columns: 1fr; }
+    .masthead .meta { text-align: left; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-img { height: 320px; }
+    .hero-title { font-size: 42px; }
+    .content-grid { grid-template-columns: 1fr; }
+    .post-grid { grid-template-columns: 1fr; }
+    .topbar-inner { grid-template-columns: auto 1fr; }
+    nav.main-nav { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body __processed_71f685a1-109f-4dff-b83e-6eea09aa2692__="true" bis_status="ok" bis_frame_id="13178" bis_body_id="fr_d03ahx6qfmf70vb5stw42u" bis_depth="0" bis_chainid="104" bis_size="{&quot;x&quot;:0,&quot;y&quot;:0,&quot;w&quot;:1200,&quot;h&quot;:3962,&quot;abs_x&quot;:400,&quot;abs_y&quot;:78}" data-cc-id="cc-1" style="cursor: crosshair; font-size: 2px;">
+
+<header class="topbar" bis_size="{&quot;x&quot;:0,&quot;y&quot;:58,&quot;w&quot;:1200,&quot;h&quot;:81,&quot;abs_x&quot;:400,&quot;abs_y&quot;:136}">
+  <div class="topbar-inner" bis_size="{&quot;x&quot;:0,&quot;y&quot;:58,&quot;w&quot;:1200,&quot;h&quot;:79,&quot;abs_x&quot;:400,&quot;abs_y&quot;:136}">
+    <a href="#" class="logo" bis_size="{&quot;x&quot;:31,&quot;y&quot;:76,&quot;w&quot;:269,&quot;h&quot;:43,&quot;abs_x&quot;:431,&quot;abs_y&quot;:154}">
+      <span class="logo-mark" bis_size="{&quot;x&quot;:30,&quot;y&quot;:75,&quot;w&quot;:46,&quot;h&quot;:46,&quot;abs_x&quot;:430,&quot;abs_y&quot;:153}">P</span>
+      <span bis_size="{&quot;x&quot;:83,&quot;y&quot;:81,&quot;w&quot;:217,&quot;h&quot;:35,&quot;abs_x&quot;:483,&quot;abs_y&quot;:159}">podflah<small bis_size="{&quot;x&quot;:246,&quot;y&quot;:81,&quot;w&quot;:55,&quot;h&quot;:35,&quot;abs_x&quot;:646,&quot;abs_y&quot;:159}" data-cc-id="cc-14" style="">.blog</small></span>
+    </a>
+    <nav class="main-nav" bis_size="{&quot;x&quot;:333,&quot;y&quot;:83,&quot;w&quot;:636,&quot;h&quot;:30,&quot;abs_x&quot;:733,&quot;abs_y&quot;:161}">
+      <a href="#" class="active" bis_size="{&quot;x&quot;:333,&quot;y&quot;:83,&quot;w&quot;:34,&quot;h&quot;:30,&quot;abs_x&quot;:733,&quot;abs_y&quot;:161}">Blog</a>
+      <a href="#" bis_size="{&quot;x&quot;:396,&quot;y&quot;:83,&quot;w&quot;:66,&quot;h&quot;:30,&quot;abs_x&quot;:796,&quot;abs_y&quot;:161}">Crônicas</a>
+      <a href="#" bis_size="{&quot;x&quot;:491,&quot;y&quot;:83,&quot;w&quot;:100,&quot;h&quot;:30,&quot;abs_x&quot;:891,&quot;abs_y&quot;:161}">Perfil Oficial</a>
+      <a href="#" bis_size="{&quot;x&quot;:620,&quot;y&quot;:83,&quot;w&quot;:73,&quot;h&quot;:30,&quot;abs_x&quot;:1020,&quot;abs_y&quot;:161}">O PodFlah</a>
+      <a href="#" bis_size="{&quot;x&quot;:721,&quot;y&quot;:83,&quot;w&quot;:60,&quot;h&quot;:30,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:161}" data-cc-id="cc-11" style=""><br></a>
+    </nav>
+    <div class="social" bis_size="{&quot;x&quot;:1002,&quot;y&quot;:81,&quot;w&quot;:165,&quot;h&quot;:33,&quot;abs_x&quot;:1402,&quot;abs_y&quot;:159}">
+      <a href="#" title="Instagram" bis_size="{&quot;x&quot;:1002,&quot;y&quot;:81,&quot;w&quot;:33,&quot;h&quot;:33,&quot;abs_x&quot;:1402,&quot;abs_y&quot;:159}">IG</a>
+      <a href="#" title="Facebook" bis_size="{&quot;x&quot;:1046,&quot;y&quot;:81,&quot;w&quot;:33,&quot;h&quot;:33,&quot;abs_x&quot;:1446,&quot;abs_y&quot;:159}">FB</a>
+      <a href="#" title="YouTube" bis_size="{&quot;x&quot;:1090,&quot;y&quot;:81,&quot;w&quot;:33,&quot;h&quot;:33,&quot;abs_x&quot;:1490,&quot;abs_y&quot;:159}">YT</a>
+      <a href="#" title="TikTok" bis_size="{&quot;x&quot;:1134,&quot;y&quot;:81,&quot;w&quot;:33,&quot;h&quot;:33,&quot;abs_x&quot;:1534,&quot;abs_y&quot;:159}">TK</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" bis_size="{&quot;x&quot;:0,&quot;y&quot;:81,&quot;w&quot;:1200,&quot;h&quot;:3518,&quot;abs_x&quot;:400,&quot;abs_y&quot;:159}" data-cc-id="cc-9">
+
+  <div class="masthead" hidden style="display:none" bis_size="{&quot;x&quot;:31,&quot;y&quot;:81,&quot;w&quot;:1136,&quot;h&quot;:373,&quot;abs_x&quot;:431,&quot;abs_y&quot;:159}" data-cc-id="cc-2">
+    <h1 bis_size="{&quot;x&quot;:31,&quot;y&quot;:121,&quot;w&quot;:924,&quot;h&quot;:309,&quot;abs_x&quot;:431,&quot;abs_y&quot;:199}" data-cc-id="cc-10" style=""><br></h1>
+    <div class="meta" bis_size="{&quot;x&quot;:988,&quot;y&quot;:349,&quot;w&quot;:179,&quot;h&quot;:81,&quot;abs_x&quot;:1388,&quot;abs_y&quot;:427}" data-cc-id="cc-4" style=""><br></div>
+  </div>
+
+  <div class="news-ticker">
+    <div class="ticker-label">◉ ÚLTIMAS</div>
+    <div class="ticker-viewport">
+      <div class="ticker-track">
+        <span>Treino fechado no Ninho marcou retorno de Arrascaeta ao gramado</span>
+        <span class="dot">●</span>
+        <span>Diretoria mira reforço argentino para o meio-campo em 2026</span>
+        <span class="dot">●</span>
+        <span>Filipe Luís confirma escalação de força para a final</span>
+        <span class="dot">●</span>
+        <span>Maracanã esgota ingressos para o primeiro jogo decisivo em 3h</span>
+        <span class="dot">●</span>
+        <span>PodFlah #184 no ar: "O tetra e o que vem agora"</span>
+        <span class="dot">●</span>
+        <!-- duplicate for seamless loop -->
+        <span>Treino fechado no Ninho marcou retorno de Arrascaeta ao gramado</span>
+        <span class="dot">●</span>
+        <span>Diretoria mira reforço argentino para o meio-campo em 2026</span>
+        <span class="dot">●</span>
+        <span>Filipe Luís confirma escalação de força para a final</span>
+        <span class="dot">●</span>
+        <span>Maracanã esgota ingressos para o primeiro jogo decisivo em 3h</span>
+        <span class="dot">●</span>
+        <span>PodFlah #184 no ar: "O tetra e o que vem agora"</span>
+        <span class="dot">●</span>
+      </div>
+    </div>
+    <div class="ticker-time">AO VIVO · <span id="ticker-clock">06:08</span></div>
+  </div>
+  <style>
+    .news-ticker { display: grid; grid-template-columns: auto 1fr auto; align-items: stretch; border: 2px solid var(--ink); background: var(--paper); margin: 24px 0 40px; box-shadow: 5px 5px 0 var(--red); overflow: hidden; }
+    .news-ticker .ticker-label { background: var(--ink); color: var(--yellow); font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; font-size: 12px; padding: 0 16px; display: flex; align-items: center; }
+    .news-ticker .ticker-viewport { overflow: hidden; position: relative; }
+    .news-ticker .ticker-viewport::before, .news-ticker .ticker-viewport::after { content: ""; position: absolute; top: 0; bottom: 0; width: 24px; z-index: 2; pointer-events: none; }
+    .news-ticker .ticker-viewport::before { left: 0; background: linear-gradient(90deg, var(--paper), transparent); }
+    .news-ticker .ticker-viewport::after { right: 0; background: linear-gradient(270deg, var(--paper), transparent); }
+    .news-ticker .ticker-track { display: flex; gap: 28px; align-items: center; white-space: nowrap; padding: 14px 20px; animation: tickerScroll 60s linear infinite; font-family: "Inter", sans-serif; font-size: 14px; color: var(--ink); }
+    .news-ticker .ticker-track span { font-weight: 500; }
+    .news-ticker .ticker-track .dot { color: var(--red); font-size: 8px; }
+    .news-ticker .ticker-time { background: var(--red); color: var(--paper); font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.12em; padding: 0 16px; display: flex; align-items: center; text-transform: uppercase; }
+    @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .news-ticker:hover .ticker-track { animation-play-state: paused; }
+  </style>
+  <script>
+    (function(){
+      const c = document.getElementById('ticker-clock');
+      if (!c) return;
+      const tick = () => { const d = new Date(); c.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); };
+      tick(); setInterval(tick, 30000);
+    })();
+  </script>
+
+  <!-- HERO -->
+  <article class="hero" bis_size="{&quot;x&quot;:31,&quot;y&quot;:539,&quot;w&quot;:1136,&quot;h&quot;:525,&quot;abs_x&quot;:431,&quot;abs_y&quot;:617}">
+    <div class="hero-img" bis_size="{&quot;x&quot;:34,&quot;y&quot;:542,&quot;w&quot;:638,&quot;h&quot;:520,&quot;abs_x&quot;:434,&quot;abs_y&quot;:620}">
+      <div class="halftone" bis_size="{&quot;x&quot;:34,&quot;y&quot;:542,&quot;w&quot;:638,&quot;h&quot;:520,&quot;abs_x&quot;:434,&quot;abs_y&quot;:620}"></div>
+      <div class="img-label" bis_size="{&quot;x&quot;:140,&quot;y&quot;:708,&quot;w&quot;:428,&quot;h&quot;:187,&quot;abs_x&quot;:540,&quot;abs_y&quot;:786}">A EPOPEIA<span bis_size="{&quot;x&quot;:148,&quot;y&quot;:834,&quot;w&quot;:419,&quot;h&quot;:60,&quot;abs_x&quot;:548,&quot;abs_y&quot;:912}">— DO TETRA —</span></div>
+      <div class="tag-img" bis_size="{&quot;x&quot;:54,&quot;y&quot;:1014,&quot;w&quot;:336,&quot;h&quot;:27,&quot;abs_x&quot;:454,&quot;abs_y&quot;:1092}">[IMG] COMEMORAÇÃO · MARACANÃ · 12/12/2025</div>
+    </div>
+    <div class="hero-content" bis_size="{&quot;x&quot;:673,&quot;y&quot;:542,&quot;w&quot;:491,&quot;h&quot;:520,&quot;abs_x&quot;:1073,&quot;abs_y&quot;:620}">
+      <div bis_size="{&quot;x&quot;:709,&quot;y&quot;:582,&quot;w&quot;:419,&quot;h&quot;:315,&quot;abs_x&quot;:1109,&quot;abs_y&quot;:660}">
+        <div class="hero-kicker" bis_size="{&quot;x&quot;:709,&quot;y&quot;:582,&quot;w&quot;:419,&quot;h&quot;:15,&quot;abs_x&quot;:1109,&quot;abs_y&quot;:660}">● CRÔNICA DO IGOR · EM DESTAQUE</div>
+        <h1 class="hero-title" bis_size="{&quot;x&quot;:709,&quot;y&quot;:609,&quot;w&quot;:419,&quot;h&quot;:110,&quot;abs_x&quot;:1109,&quot;abs_y&quot;:687}">A Epopeia <em bis_size="{&quot;x&quot;:709,&quot;y&quot;:597,&quot;w&quot;:319,&quot;h&quot;:134,&quot;abs_x&quot;:1109,&quot;abs_y&quot;:675}">do Tetra</em></h1>
+        <p class="hero-excerpt" bis_size="{&quot;x&quot;:709,&quot;y&quot;:737,&quot;w&quot;:419,&quot;h&quot;:131,&quot;abs_x&quot;:1109,&quot;abs_y&quot;:815}" data-cc-id="cc-13" style="">A manga que o colégio nos viu rasgar, a camisa que escondemos dos pais todas as noites de quarta, o grito abafado na escola no dia seguinte — tudo isso pagou a dívida. E o Flamengo, enfim, escreveu a EPOPEIA DO TETRA.</p>
+      </div>
+      <div class="hero-footer" bis_size="{&quot;x&quot;:709,&quot;y&quot;:962,&quot;w&quot;:419,&quot;h&quot;:60,&quot;abs_x&quot;:1109,&quot;abs_y&quot;:1040}">
+        <div class="byline" bis_size="{&quot;x&quot;:709,&quot;y&quot;:986,&quot;w&quot;:184,&quot;h&quot;:31,&quot;abs_x&quot;:1109,&quot;abs_y&quot;:1064}">
+          <div class="avatar" bis_size="{&quot;x&quot;:709,&quot;y&quot;:986,&quot;w&quot;:31,&quot;h&quot;:31,&quot;abs_x&quot;:1109,&quot;abs_y&quot;:1064}">IS</div>
+          <div bis_size="{&quot;x&quot;:751,&quot;y&quot;:987,&quot;w&quot;:142,&quot;h&quot;:28,&quot;abs_x&quot;:1151,&quot;abs_y&quot;:1065}">
+            <div style="color:var(--paper);font-family:Inter;font-size:12px;" bis_size="{&quot;x&quot;:751,&quot;y&quot;:987,&quot;w&quot;:142,&quot;h&quot;:14,&quot;abs_x&quot;:1151,&quot;abs_y&quot;:1065}">IGOR SCHWANSING</div>
+            <div bis_size="{&quot;x&quot;:751,&quot;y&quot;:1002,&quot;w&quot;:142,&quot;h&quot;:14,&quot;abs_x&quot;:1151,&quot;abs_y&quot;:1080}">15 DEZ 2025 · 8 MIN</div>
+          </div>
+        </div>
+        <a href="post-arquibancada.html" class="read-cta" bis_size="{&quot;x&quot;:992,&quot;y&quot;:982,&quot;w&quot;:136,&quot;h&quot;:39,&quot;abs_x&quot;:1392,&quot;abs_y&quot;:1060}">Ler crônica →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- CATEGORIES -->
+  <div class="cat-bar" bis_size="{&quot;x&quot;:31,&quot;y&quot;:1120,&quot;w&quot;:1136,&quot;h&quot;:68,&quot;abs_x&quot;:431,&quot;abs_y&quot;:1198}">
+    <button class="active" bis_size="{&quot;x&quot;:46,&quot;y&quot;:1135,&quot;w&quot;:76,&quot;h&quot;:38,&quot;abs_x&quot;:446,&quot;abs_y&quot;:1213}">Todos</button>
+    <button bis_size="{&quot;x&quot;:129,&quot;y&quot;:1135,&quot;w&quot;:99,&quot;h&quot;:38,&quot;abs_x&quot;:529,&quot;abs_y&quot;:1213}">Crônicas</button>
+    <button bis_size="{&quot;x&quot;:234,&quot;y&quot;:1135,&quot;w&quot;:87,&quot;h&quot;:38,&quot;abs_x&quot;:634,&quot;abs_y&quot;:1213}">Análise</button>
+    <button bis_size="{&quot;x&quot;:328,&quot;y&quot;:1135,&quot;w&quot;:127,&quot;h&quot;:38,&quot;abs_x&quot;:728,&quot;abs_y&quot;:1213}">Libertadores</button>
+    <button bis_size="{&quot;x&quot;:461,&quot;y&quot;:1135,&quot;w&quot;:118,&quot;h&quot;:38,&quot;abs_x&quot;:861,&quot;abs_y&quot;:1213}">Brasileirão</button>
+    <button bis_size="{&quot;x&quot;:586,&quot;y&quot;:1135,&quot;w&quot;:154,&quot;h&quot;:38,&quot;abs_x&quot;:986,&quot;abs_y&quot;:1213}">Mercado da Bola</button>
+    <button bis_size="{&quot;x&quot;:747,&quot;y&quot;:1135,&quot;w&quot;:113,&quot;h&quot;:38,&quot;abs_x&quot;:1147,&quot;abs_y&quot;:1213}">Bastidores</button>
+    <div class="search" bis_size="{&quot;x&quot;:1068,&quot;y&quot;:1135,&quot;w&quot;:84,&quot;h&quot;:38,&quot;abs_x&quot;:1468,&quot;abs_y&quot;:1213}">⌕ BUSCAR</div>
+  </div>
+
+  <div class="section-header" bis_size="{&quot;x&quot;:31,&quot;y&quot;:1229,&quot;w&quot;:1136,&quot;h&quot;:63,&quot;abs_x&quot;:431,&quot;abs_y&quot;:1307}">
+    <h2 bis_size="{&quot;x&quot;:31,&quot;y&quot;:1229,&quot;w&quot;:244,&quot;h&quot;:49,&quot;abs_x&quot;:431,&quot;abs_y&quot;:1307}">Últimas <em bis_size="{&quot;x&quot;:159,&quot;y&quot;:1229,&quot;w&quot;:117,&quot;h&quot;:49,&quot;abs_x&quot;:559,&quot;abs_y&quot;:1307}">edições</em></h2>
+    <div class="counter" bis_size="{&quot;x&quot;:995,&quot;y&quot;:1263,&quot;w&quot;:172,&quot;h&quot;:15,&quot;abs_x&quot;:1395,&quot;abs_y&quot;:1341}">MOSTRANDO 1–8 DE 248</div>
+  </div>
+
+  <div class="content-grid" bis_size="{&quot;x&quot;:31,&quot;y&quot;:1316,&quot;w&quot;:1136,&quot;h&quot;:2163,&quot;abs_x&quot;:431,&quot;abs_y&quot;:1394}">
+
+    <!-- POST GRID -->
+    <div class="post-grid" id="posts" bis_size="{&quot;x&quot;:31,&quot;y&quot;:1316,&quot;w&quot;:768,&quot;h&quot;:2163,&quot;abs_x&quot;:431,&quot;abs_y&quot;:1394}">
+    <a href="post-arquibancada.html" class="post-card" bis_size="{&quot;x&quot;:30,&quot;y&quot;:1315,&quot;w&quot;:371,&quot;h&quot;:484,&quot;abs_x&quot;:430,&quot;abs_y&quot;:1393}">
+      <div class="post-card-tape" bis_size="{&quot;x&quot;:51,&quot;y&quot;:1304,&quot;w&quot;:89,&quot;h&quot;:31,&quot;abs_x&quot;:451,&quot;abs_y&quot;:1382}"></div>
+      <div class="post-card-img red" bis_size="{&quot;x&quot;:31,&quot;y&quot;:1316,&quot;w&quot;:366,&quot;h&quot;:230,&quot;abs_x&quot;:431,&quot;abs_y&quot;:1394}">
+        <div class="label" bis_size="{&quot;x&quot;:59,&quot;y&quot;:1408,&quot;w&quot;:310,&quot;h&quot;:46,&quot;abs_x&quot;:459,&quot;abs_y&quot;:1486}">CAMPEÃO 2025</div>
+      </div>
+      <div class="post-card-body" bis_size="{&quot;x&quot;:33,&quot;y&quot;:1544,&quot;w&quot;:366,&quot;h&quot;:253,&quot;abs_x&quot;:433,&quot;abs_y&quot;:1622}">
+        <div class="post-card-meta" bis_size="{&quot;x&quot;:55,&quot;y&quot;:1566,&quot;w&quot;:320,&quot;h&quot;:24,&quot;abs_x&quot;:455,&quot;abs_y&quot;:1644}">
+          <span class="cat-chip " bis_size="{&quot;x&quot;:55,&quot;y&quot;:1568,&quot;w&quot;:71,&quot;h&quot;:23,&quot;abs_x&quot;:455,&quot;abs_y&quot;:1646}">CRÔNICAS</span>
+          <span bis_size="{&quot;x&quot;:292,&quot;y&quot;:1571,&quot;w&quot;:84,&quot;h&quot;:13,&quot;abs_x&quot;:692,&quot;abs_y&quot;:1649}">12 Dez, 2025</span>
+        </div>
+        <h3 bis_size="{&quot;x&quot;:55,&quot;y&quot;:1601,&quot;w&quot;:321,&quot;h&quot;:50,&quot;abs_x&quot;:455,&quot;abs_y&quot;:1679}">Não é revanche. Mas também não é só futebol.</h3>
+        <p bis_size="{&quot;x&quot;:56,&quot;y&quot;:1661,&quot;w&quot;:321,&quot;h&quot;:67,&quot;abs_x&quot;:456,&quot;abs_y&quot;:1739}">O mergulho no histórico de Palmeiras, River, Inter. Um final de ano tinha que ser assim: barulhento, barulhento, barulhento.</p>
+        <div class="post-card-foot" bis_size="{&quot;x&quot;:56,&quot;y&quot;:1738,&quot;w&quot;:320,&quot;h&quot;:32,&quot;abs_x&quot;:456,&quot;abs_y&quot;:1816}">
+          <div class="author" bis_size="{&quot;x&quot;:57,&quot;y&quot;:1750,&quot;w&quot;:128,&quot;h&quot;:20,&quot;abs_x&quot;:457,&quot;abs_y&quot;:1828}">
+            <span class="avatar-sm" bis_size="{&quot;x&quot;:57,&quot;y&quot;:1751,&quot;w&quot;:20,&quot;h&quot;:20,&quot;abs_x&quot;:457,&quot;abs_y&quot;:1829}"></span>
+            <span bis_size="{&quot;x&quot;:83,&quot;y&quot;:1754,&quot;w&quot;:102,&quot;h&quot;:13,&quot;abs_x&quot;:483,&quot;abs_y&quot;:1832}">IGOR SCHWANSING</span>
+          </div>
+          <span bis_size="{&quot;x&quot;:343,&quot;y&quot;:1753,&quot;w&quot;:34,&quot;h&quot;:13,&quot;abs_x&quot;:743,&quot;abs_y&quot;:1831}">6 min</span>
+        </div>
+      </div>
+    </a>
+  
+    <a href="post-arquibancada.html" class="post-card" bis_size="{&quot;x&quot;:430,&quot;y&quot;:1315,&quot;w&quot;:370,&quot;h&quot;:483,&quot;abs_x&quot;:830,&quot;abs_y&quot;:1393}">
+      <div class="post-card-tape" bis_size="{&quot;x&quot;:690,&quot;y&quot;:1305,&quot;w&quot;:89,&quot;h&quot;:28,&quot;abs_x&quot;:1090,&quot;abs_y&quot;:1383}"></div>
+      <div class="post-card-img red" bis_size="{&quot;x&quot;:433,&quot;y&quot;:1317,&quot;w&quot;:365,&quot;h&quot;:229,&quot;abs_x&quot;:833,&quot;abs_y&quot;:1395}">
+        <div class="label" bis_size="{&quot;x&quot;:433,&quot;y&quot;:1395,&quot;w&quot;:366,&quot;h&quot;:73,&quot;abs_x&quot;:833,&quot;abs_y&quot;:1473}">SÁBADO É GUERRA</div>
+      </div>
+      <div class="post-card-body" bis_size="{&quot;x&quot;:432,&quot;y&quot;:1544,&quot;w&quot;:365,&quot;h&quot;:252,&quot;abs_x&quot;:832,&quot;abs_y&quot;:1622}">
+        <div class="post-card-meta" bis_size="{&quot;x&quot;:455,&quot;y&quot;:1567,&quot;w&quot;:320,&quot;h&quot;:24,&quot;abs_x&quot;:855,&quot;abs_y&quot;:1645}">
+          <span class="cat-chip " bis_size="{&quot;x&quot;:455,&quot;y&quot;:1567,&quot;w&quot;:71,&quot;h&quot;:23,&quot;abs_x&quot;:855,&quot;abs_y&quot;:1645}">CRÔNICAS</span>
+          <span bis_size="{&quot;x&quot;:692,&quot;y&quot;:1573,&quot;w&quot;:84,&quot;h&quot;:13,&quot;abs_x&quot;:1092,&quot;abs_y&quot;:1651}">08 Dez, 2025</span>
+        </div>
+        <h3 bis_size="{&quot;x&quot;:455,&quot;y&quot;:1601,&quot;w&quot;:320,&quot;h&quot;:25,&quot;abs_x&quot;:855,&quot;abs_y&quot;:1679}">Os dias mais demorados do ano</h3>
+        <p bis_size="{&quot;x&quot;:454,&quot;y&quot;:1637,&quot;w&quot;:321,&quot;h&quot;:88,&quot;abs_x&quot;:854,&quot;abs_y&quot;:1715}">As horas duram três dias. A semana dura um mês. Só quem ama entende que cada ponteiro parado entre o jogo e o jogo pesa como uma final.</p>
+        <div class="post-card-foot" bis_size="{&quot;x&quot;:454,&quot;y&quot;:1736,&quot;w&quot;:320,&quot;h&quot;:32,&quot;abs_x&quot;:854,&quot;abs_y&quot;:1814}">
+          <div class="author" bis_size="{&quot;x&quot;:454,&quot;y&quot;:1747,&quot;w&quot;:128,&quot;h&quot;:20,&quot;abs_x&quot;:854,&quot;abs_y&quot;:1825}">
+            <span class="avatar-sm" bis_size="{&quot;x&quot;:454,&quot;y&quot;:1747,&quot;w&quot;:20,&quot;h&quot;:20,&quot;abs_x&quot;:854,&quot;abs_y&quot;:1825}"></span>
+            <span bis_size="{&quot;x&quot;:480,&quot;y&quot;:1751,&quot;w&quot;:102,&quot;h&quot;:13,&quot;abs_x&quot;:880,&quot;abs_y&quot;:1829}">IGOR SCHWANSING</span>
+          </div>
+          <span bis_size="{&quot;x&quot;:741,&quot;y&quot;:1752,&quot;w&quot;:34,&quot;h&quot;:12,&quot;abs_x&quot;:1141,&quot;abs_y&quot;:1830}">5 min</span>
+        </div>
+      </div>
+    </a>
+  
+    <a href="post-arquibancada.html" class="post-card" bis_size="{&quot;x&quot;:31,&quot;y&quot;:1829,&quot;w&quot;:369,&quot;h&quot;:529,&quot;abs_x&quot;:431,&quot;abs_y&quot;:1907}">
+      <div class="post-card-tape" bis_size="{&quot;x&quot;:178,&quot;y&quot;:1820,&quot;w&quot;:88,&quot;h&quot;:25,&quot;abs_x&quot;:578,&quot;abs_y&quot;:1898}"></div>
+      <div class="post-card-img " bis_size="{&quot;x&quot;:32,&quot;y&quot;:1831,&quot;w&quot;:365,&quot;h&quot;:229,&quot;abs_x&quot;:432,&quot;abs_y&quot;:1909}">
+        <div class="label" bis_size="{&quot;x&quot;:60,&quot;y&quot;:1923,&quot;w&quot;:310,&quot;h&quot;:45,&quot;abs_x&quot;:460,&quot;abs_y&quot;:2001}">ARQUIBANCADA</div>
+      </div>
+      <div class="post-card-body" bis_size="{&quot;x&quot;:33,&quot;y&quot;:2059,&quot;w&quot;:365,&quot;h&quot;:297,&quot;abs_x&quot;:433,&quot;abs_y&quot;:2137}">
+        <div class="post-card-meta" bis_size="{&quot;x&quot;:55,&quot;y&quot;:2081,&quot;w&quot;:320,&quot;h&quot;:23,&quot;abs_x&quot;:455,&quot;abs_y&quot;:2159}">
+          <span class="cat-chip " bis_size="{&quot;x&quot;:55,&quot;y&quot;:2082,&quot;w&quot;:71,&quot;h&quot;:22,&quot;abs_x&quot;:455,&quot;abs_y&quot;:2160}">CRÔNICAS</span>
+          <span bis_size="{&quot;x&quot;:292,&quot;y&quot;:2086,&quot;w&quot;:84,&quot;h&quot;:13,&quot;abs_x&quot;:692,&quot;abs_y&quot;:2164}">05 Dez, 2025</span>
+        </div>
+        <h3 bis_size="{&quot;x&quot;:55,&quot;y&quot;:2115,&quot;w&quot;:320,&quot;h&quot;:73,&quot;abs_x&quot;:455,&quot;abs_y&quot;:2193}">A semana que sonhamos em janeiro cruzou quatro dias para a eternidade</h3>
+        <p bis_size="{&quot;x&quot;:56,&quot;y&quot;:2200,&quot;w&quot;:320,&quot;h&quot;:87,&quot;abs_x&quot;:456,&quot;abs_y&quot;:2278}">Tem momentos em que o relógio anda com a gente. E tem as semanas em que o relógio nos arrasta — pelos cabelos, pela camisa, pela memória.</p>
+        <div class="post-card-foot" bis_size="{&quot;x&quot;:56,&quot;y&quot;:2299,&quot;w&quot;:320,&quot;h&quot;:31,&quot;abs_x&quot;:456,&quot;abs_y&quot;:2377}">
+          <div class="author" bis_size="{&quot;x&quot;:56,&quot;y&quot;:2310,&quot;w&quot;:128,&quot;h&quot;:20,&quot;abs_x&quot;:456,&quot;abs_y&quot;:2388}">
+            <span class="avatar-sm" bis_size="{&quot;x&quot;:56,&quot;y&quot;:2310,&quot;w&quot;:20,&quot;h&quot;:20,&quot;abs_x&quot;:456,&quot;abs_y&quot;:2388}"></span>
+            <span bis_size="{&quot;x&quot;:82,&quot;y&quot;:2314,&quot;w&quot;:102,&quot;h&quot;:13,&quot;abs_x&quot;:482,&quot;abs_y&quot;:2392}">IGOR SCHWANSING</span>
+          </div>
+          <span bis_size="{&quot;x&quot;:343,&quot;y&quot;:2313,&quot;w&quot;:34,&quot;h&quot;:12,&quot;abs_x&quot;:743,&quot;abs_y&quot;:2391}">7 min</span>
+        </div>
+      </div>
+    </a>
+  
+    <a href="post-arquibancada.html" class="post-card" bis_size="{&quot;x&quot;:430,&quot;y&quot;:1828,&quot;w&quot;:371,&quot;h&quot;:530,&quot;abs_x&quot;:830,&quot;abs_y&quot;:1906}">
+      <div class="post-card-tape" bis_size="{&quot;x&quot;:450,&quot;y&quot;:1817,&quot;w&quot;:89,&quot;h&quot;:31,&quot;abs_x&quot;:850,&quot;abs_y&quot;:1895}"></div>
+      <div class="post-card-img " bis_size="{&quot;x&quot;:431,&quot;y&quot;:1830,&quot;w&quot;:366,&quot;h&quot;:230,&quot;abs_x&quot;:831,&quot;abs_y&quot;:1908}">
+        <div class="label" bis_size="{&quot;x&quot;:507,&quot;y&quot;:1925,&quot;w&quot;:215,&quot;h&quot;:40,&quot;abs_x&quot;:907,&quot;abs_y&quot;:2003}">MARACANÃ</div>
+      </div>
+      <div class="post-card-body" bis_size="{&quot;x&quot;:433,&quot;y&quot;:2058,&quot;w&quot;:366,&quot;h&quot;:299,&quot;abs_x&quot;:833,&quot;abs_y&quot;:2136}">
+        <div class="post-card-meta" bis_size="{&quot;x&quot;:455,&quot;y&quot;:2080,&quot;w&quot;:320,&quot;h&quot;:24,&quot;abs_x&quot;:855,&quot;abs_y&quot;:2158}">
+          <span class="cat-chip black" bis_size="{&quot;x&quot;:455,&quot;y&quot;:2082,&quot;w&quot;:60,&quot;h&quot;:23,&quot;abs_x&quot;:855,&quot;abs_y&quot;:2160}">ANÁLISE</span>
+          <span bis_size="{&quot;x&quot;:692,&quot;y&quot;:2085,&quot;w&quot;:84,&quot;h&quot;:13,&quot;abs_x&quot;:1092,&quot;abs_y&quot;:2163}">02 Dez, 2025</span>
+        </div>
+        <h3 bis_size="{&quot;x&quot;:455,&quot;y&quot;:2115,&quot;w&quot;:321,&quot;h&quot;:74,&quot;abs_x&quot;:855,&quot;abs_y&quot;:2193}">Derrota no Fla-Flu expõe erros graves e desperdiça chance de ouro</h3>
+        <p bis_size="{&quot;x&quot;:456,&quot;y&quot;:2199,&quot;w&quot;:321,&quot;h&quot;:67,&quot;abs_x&quot;:856,&quot;abs_y&quot;:2277}">Saiu do caminho com a bola por preguiça, perdeu posse, investiu no lado errado. Perde-se o Fla-Flu perdendo o óbvio.</p>
+        <div class="post-card-foot" bis_size="{&quot;x&quot;:456,&quot;y&quot;:2277,&quot;w&quot;:320,&quot;h&quot;:32,&quot;abs_x&quot;:856,&quot;abs_y&quot;:2355}">
+          <div class="author" bis_size="{&quot;x&quot;:457,&quot;y&quot;:2288,&quot;w&quot;:128,&quot;h&quot;:20,&quot;abs_x&quot;:857,&quot;abs_y&quot;:2366}">
+            <span class="avatar-sm" bis_size="{&quot;x&quot;:457,&quot;y&quot;:2289,&quot;w&quot;:20,&quot;h&quot;:20,&quot;abs_x&quot;:857,&quot;abs_y&quot;:2367}"></span>
+            <span bis_size="{&quot;x&quot;:483,&quot;y&quot;:2292,&quot;w&quot;:102,&quot;h&quot;:13,&quot;abs_x&quot;:883,&quot;abs_y&quot;:2370}">IGOR SCHWANSING</span>
+          </div>
+          <span bis_size="{&quot;x&quot;:743,&quot;y&quot;:2291,&quot;w&quot;:34,&quot;h&quot;:13,&quot;abs_x&quot;:1143,&quot;abs_y&quot;:2369}">9 min</span>
+        </div>
+      </div>
+    </a>
+  
+    <a href="post-arquibancada.html" class="post-card" bis_size="{&quot;x&quot;:30,&quot;y&quot;:2389,&quot;w&quot;:370,&quot;h&quot;:532,&quot;abs_x&quot;:430,&quot;abs_y&quot;:2467}">
+      <div class="post-card-tape" bis_size="{&quot;x&quot;:291,&quot;y&quot;:2379,&quot;w&quot;:89,&quot;h&quot;:28,&quot;abs_x&quot;:691,&quot;abs_y&quot;:2457}"></div>
+      <div class="post-card-img " bis_size="{&quot;x&quot;:33,&quot;y&quot;:2390,&quot;w&quot;:365,&quot;h&quot;:229,&quot;abs_x&quot;:433,&quot;abs_y&quot;:2468}">
+        <div class="label" bis_size="{&quot;x&quot;:120,&quot;y&quot;:2487,&quot;w&quot;:191,&quot;h&quot;:36,&quot;abs_x&quot;:520,&quot;abs_y&quot;:2565}">RETRATO</div>
+      </div>
+      <div class="post-card-body" bis_size="{&quot;x&quot;:32,&quot;y&quot;:2618,&quot;w&quot;:366,&quot;h&quot;:300,&quot;abs_x&quot;:432,&quot;abs_y&quot;:2696}">
+        <div class="post-card-meta" bis_size="{&quot;x&quot;:55,&quot;y&quot;:2640,&quot;w&quot;:320,&quot;h&quot;:24,&quot;abs_x&quot;:455,&quot;abs_y&quot;:2718}">
+          <span class="cat-chip black" bis_size="{&quot;x&quot;:55,&quot;y&quot;:2640,&quot;w&quot;:60,&quot;h&quot;:22,&quot;abs_x&quot;:455,&quot;abs_y&quot;:2718}">ANÁLISE</span>
+          <span bis_size="{&quot;x&quot;:292,&quot;y&quot;:2647,&quot;w&quot;:84,&quot;h&quot;:13,&quot;abs_x&quot;:692,&quot;abs_y&quot;:2725}">28 Nov, 2025</span>
+        </div>
+        <h3 bis_size="{&quot;x&quot;:55,&quot;y&quot;:2675,&quot;w&quot;:321,&quot;h&quot;:74,&quot;abs_x&quot;:455,&quot;abs_y&quot;:2753}">As expulsões no Flamengo e o tropeço em si mesmo: o inimigo veste vermelho e preto</h3>
+        <p bis_size="{&quot;x&quot;:54,&quot;y&quot;:2760,&quot;w&quot;:321,&quot;h&quot;:88,&quot;abs_x&quot;:454,&quot;abs_y&quot;:2838}">Sempre os dois cartões mais caros saem no mesmo quarto de hora. E quando saem, o castigo não é só do jogador — é do time inteiro que fica carregando.</p>
+        <div class="post-card-foot" bis_size="{&quot;x&quot;:54,&quot;y&quot;:2858,&quot;w&quot;:320,&quot;h&quot;:32,&quot;abs_x&quot;:454,&quot;abs_y&quot;:2936}">
+          <div class="author" bis_size="{&quot;x&quot;:54,&quot;y&quot;:2869,&quot;w&quot;:128,&quot;h&quot;:20,&quot;abs_x&quot;:454,&quot;abs_y&quot;:2947}">
+            <span class="avatar-sm" bis_size="{&quot;x&quot;:54,&quot;y&quot;:2869,&quot;w&quot;:20,&quot;h&quot;:20,&quot;abs_x&quot;:454,&quot;abs_y&quot;:2947}"></span>
+            <span bis_size="{&quot;x&quot;:80,&quot;y&quot;:2873,&quot;w&quot;:102,&quot;h&quot;:13,&quot;abs_x&quot;:480,&quot;abs_y&quot;:2951}">IGOR SCHWANSING</span>
+          </div>
+          <span bis_size="{&quot;x&quot;:341,&quot;y&quot;:2874,&quot;w&quot;:34,&quot;h&quot;:12,&quot;abs_x&quot;:741,&quot;abs_y&quot;:2952}">6 min</span>
+        </div>
+      </div>
+    </a>
+  
+    <a href="post-arquibancada.html" class="post-card" bis_size="{&quot;x&quot;:431,&quot;y&quot;:2389,&quot;w&quot;:369,&quot;h&quot;:531,&quot;abs_x&quot;:831,&quot;abs_y&quot;:2467}">
+      <div class="post-card-tape" bis_size="{&quot;x&quot;:578,&quot;y&quot;:2380,&quot;w&quot;:88,&quot;h&quot;:25,&quot;abs_x&quot;:978,&quot;abs_y&quot;:2458}"></div>
+      <div class="post-card-img red" bis_size="{&quot;x&quot;:432,&quot;y&quot;:2391,&quot;w&quot;:365,&quot;h&quot;:229,&quot;abs_x&quot;:832,&quot;abs_y&quot;:2469}">
+        <div class="label" bis_size="{&quot;x&quot;:436,&quot;y&quot;:2481,&quot;w&quot;:358,&quot;h&quot;:47,&quot;abs_x&quot;:836,&quot;abs_y&quot;:2559}">VAMOS FLAMENGO</div>
+      </div>
+      <div class="post-card-body" bis_size="{&quot;x&quot;:433,&quot;y&quot;:2619,&quot;w&quot;:365,&quot;h&quot;:300,&quot;abs_x&quot;:833,&quot;abs_y&quot;:2697}">
+        <div class="post-card-meta" bis_size="{&quot;x&quot;:455,&quot;y&quot;:2641,&quot;w&quot;:320,&quot;h&quot;:23,&quot;abs_x&quot;:855,&quot;abs_y&quot;:2719}">
+          <span class="cat-chip red" bis_size="{&quot;x&quot;:455,&quot;y&quot;:2641,&quot;w&quot;:95,&quot;h&quot;:22,&quot;abs_x&quot;:855,&quot;abs_y&quot;:2719}">LIBERTADORES</span>
+          <span bis_size="{&quot;x&quot;:692,&quot;y&quot;:2646,&quot;w&quot;:84,&quot;h&quot;:13,&quot;abs_x&quot;:1092,&quot;abs_y&quot;:2724}">24 Nov, 2025</span>
+        </div>
+        <h3 bis_size="{&quot;x&quot;:455,&quot;y&quot;:2675,&quot;w&quot;:321,&quot;h&quot;:97,&quot;abs_x&quot;:855,&quot;abs_y&quot;:2753}">Heróico, sofrido, clássico de Libertadores: Flamengo segue o Racing com um a menos e está na final</h3>
+        <p bis_size="{&quot;x&quot;:456,&quot;y&quot;:2784,&quot;w&quot;:320,&quot;h&quot;:66,&quot;abs_x&quot;:856,&quot;abs_y&quot;:2862}">Quarenta e cinco minutos de Flamengo, noventa de sufoco em Avellaneda, e a gente de pé até o último segundo.</p>
+        <div class="post-card-foot" bis_size="{&quot;x&quot;:456,&quot;y&quot;:2861,&quot;w&quot;:320,&quot;h&quot;:31,&quot;abs_x&quot;:856,&quot;abs_y&quot;:2939}">
+          <div class="author" bis_size="{&quot;x&quot;:456,&quot;y&quot;:2872,&quot;w&quot;:128,&quot;h&quot;:20,&quot;abs_x&quot;:856,&quot;abs_y&quot;:2950}">
+            <span class="avatar-sm" bis_size="{&quot;x&quot;:456,&quot;y&quot;:2873,&quot;w&quot;:20,&quot;h&quot;:20,&quot;abs_x&quot;:856,&quot;abs_y&quot;:2951}"></span>
+            <span bis_size="{&quot;x&quot;:482,&quot;y&quot;:2876,&quot;w&quot;:102,&quot;h&quot;:13,&quot;abs_x&quot;:882,&quot;abs_y&quot;:2954}">IGOR SCHWANSING</span>
+          </div>
+          <span bis_size="{&quot;x&quot;:736,&quot;y&quot;:2875,&quot;w&quot;:40,&quot;h&quot;:12,&quot;abs_x&quot;:1136,&quot;abs_y&quot;:2953}">10 min</span>
+        </div>
+      </div>
+    </a>
+  
+    <a href="post-arquibancada.html" class="post-card" bis_size="{&quot;x&quot;:30,&quot;y&quot;:2951,&quot;w&quot;:371,&quot;h&quot;:530,&quot;abs_x&quot;:430,&quot;abs_y&quot;:3029}">
+      <div class="post-card-tape" bis_size="{&quot;x&quot;:50,&quot;y&quot;:2940,&quot;w&quot;:89,&quot;h&quot;:31,&quot;abs_x&quot;:450,&quot;abs_y&quot;:3018}"></div>
+      <div class="post-card-img " bis_size="{&quot;x&quot;:31,&quot;y&quot;:2952,&quot;w&quot;:366,&quot;h&quot;:230,&quot;abs_x&quot;:431,&quot;abs_y&quot;:3030}">
+        <div class="label" bis_size="{&quot;x&quot;:71,&quot;y&quot;:3045,&quot;w&quot;:286,&quot;h&quot;:44,&quot;abs_x&quot;:471,&quot;abs_y&quot;:3123}">EL CILINDRO</div>
+      </div>
+      <div class="post-card-body" bis_size="{&quot;x&quot;:33,&quot;y&quot;:3180,&quot;w&quot;:366,&quot;h&quot;:299,&quot;abs_x&quot;:433,&quot;abs_y&quot;:3258}">
+        <div class="post-card-meta" bis_size="{&quot;x&quot;:55,&quot;y&quot;:3202,&quot;w&quot;:320,&quot;h&quot;:24,&quot;abs_x&quot;:455,&quot;abs_y&quot;:3280}">
+          <span class="cat-chip red" bis_size="{&quot;x&quot;:55,&quot;y&quot;:3204,&quot;w&quot;:95,&quot;h&quot;:23,&quot;abs_x&quot;:455,&quot;abs_y&quot;:3282}">LIBERTADORES</span>
+          <span bis_size="{&quot;x&quot;:292,&quot;y&quot;:3207,&quot;w&quot;:84,&quot;h&quot;:13,&quot;abs_x&quot;:692,&quot;abs_y&quot;:3285}">22 Nov, 2025</span>
+        </div>
+        <h3 bis_size="{&quot;x&quot;:55,&quot;y&quot;:3237,&quot;w&quot;:321,&quot;h&quot;:74,&quot;abs_x&quot;:455,&quot;abs_y&quot;:3315}">Flamengo x Racing: Análise do pré-jogo da semifinal da Libertadores 2025 no El Cilindro</h3>
+        <p bis_size="{&quot;x&quot;:56,&quot;y&quot;:3322,&quot;w&quot;:321,&quot;h&quot;:89,&quot;abs_x&quot;:456,&quot;abs_y&quot;:3400}">Jogar em um estádio no subúrbio de Buenos Aires é sentido no corpo. Mais de 50 mil em pé de guerra. O elenco não pode fugir dessa atmosfera.</p>
+        <div class="post-card-foot" bis_size="{&quot;x&quot;:57,&quot;y&quot;:3420,&quot;w&quot;:320,&quot;h&quot;:32,&quot;abs_x&quot;:457,&quot;abs_y&quot;:3498}">
+          <div class="author" bis_size="{&quot;x&quot;:57,&quot;y&quot;:3432,&quot;w&quot;:128,&quot;h&quot;:20,&quot;abs_x&quot;:457,&quot;abs_y&quot;:3510}">
+            <span class="avatar-sm" bis_size="{&quot;x&quot;:57,&quot;y&quot;:3433,&quot;w&quot;:20,&quot;h&quot;:20,&quot;abs_x&quot;:457,&quot;abs_y&quot;:3511}"></span>
+            <span bis_size="{&quot;x&quot;:83,&quot;y&quot;:3436,&quot;w&quot;:102,&quot;h&quot;:13,&quot;abs_x&quot;:483,&quot;abs_y&quot;:3514}">IGOR SCHWANSING</span>
+          </div>
+          <span bis_size="{&quot;x&quot;:343,&quot;y&quot;:3435,&quot;w&quot;:34,&quot;h&quot;:13,&quot;abs_x&quot;:743,&quot;abs_y&quot;:3513}">8 min</span>
+        </div>
+      </div>
+    </a>
+  
+    <a href="post-arquibancada.html" class="post-card" bis_size="{&quot;x&quot;:430,&quot;y&quot;:2951,&quot;w&quot;:370,&quot;h&quot;:529,&quot;abs_x&quot;:830,&quot;abs_y&quot;:3029}">
+      <div class="post-card-tape" bis_size="{&quot;x&quot;:691,&quot;y&quot;:2941,&quot;w&quot;:89,&quot;h&quot;:28,&quot;abs_x&quot;:1091,&quot;abs_y&quot;:3019}"></div>
+      <div class="post-card-img " bis_size="{&quot;x&quot;:433,&quot;y&quot;:2953,&quot;w&quot;:365,&quot;h&quot;:229,&quot;abs_x&quot;:833,&quot;abs_y&quot;:3031}">
+        <div class="label" bis_size="{&quot;x&quot;:520,&quot;y&quot;:3049,&quot;w&quot;:191,&quot;h&quot;:36,&quot;abs_x&quot;:920,&quot;abs_y&quot;:3127}">GOLEIRO</div>
+      </div>
+      <div class="post-card-body" bis_size="{&quot;x&quot;:432,&quot;y&quot;:3181,&quot;w&quot;:366,&quot;h&quot;:298,&quot;abs_x&quot;:832,&quot;abs_y&quot;:3259}">
+        <div class="post-card-meta" bis_size="{&quot;x&quot;:455,&quot;y&quot;:3203,&quot;w&quot;:320,&quot;h&quot;:24,&quot;abs_x&quot;:855,&quot;abs_y&quot;:3281}">
+          <span class="cat-chip black" bis_size="{&quot;x&quot;:455,&quot;y&quot;:3203,&quot;w&quot;:60,&quot;h&quot;:22,&quot;abs_x&quot;:855,&quot;abs_y&quot;:3281}">ANÁLISE</span>
+          <span bis_size="{&quot;x&quot;:692,&quot;y&quot;:3209,&quot;w&quot;:84,&quot;h&quot;:13,&quot;abs_x&quot;:1092,&quot;abs_y&quot;:3287}">18 Nov, 2025</span>
+        </div>
+        <h3 bis_size="{&quot;x&quot;:455,&quot;y&quot;:3237,&quot;w&quot;:321,&quot;h&quot;:74,&quot;abs_x&quot;:855,&quot;abs_y&quot;:3315}">Flamengo atua "modo banana" e perde para o Fortaleza: apatia na decisão contra o Racing</h3>
+        <p bis_size="{&quot;x&quot;:454,&quot;y&quot;:3322,&quot;w&quot;:321,&quot;h&quot;:88,&quot;abs_x&quot;:854,&quot;abs_y&quot;:3400}">Como se o corpo estivesse no Maracanã mas a cabeça em Avellaneda. O time se deixou levar pela ansiedade. Veja o que deu certo e o que deu errado.</p>
+        <div class="post-card-foot" bis_size="{&quot;x&quot;:454,&quot;y&quot;:3421,&quot;w&quot;:320,&quot;h&quot;:32,&quot;abs_x&quot;:854,&quot;abs_y&quot;:3499}">
+          <div class="author" bis_size="{&quot;x&quot;:454,&quot;y&quot;:3431,&quot;w&quot;:128,&quot;h&quot;:20,&quot;abs_x&quot;:854,&quot;abs_y&quot;:3509}">
+            <span class="avatar-sm" bis_size="{&quot;x&quot;:454,&quot;y&quot;:3431,&quot;w&quot;:20,&quot;h&quot;:20,&quot;abs_x&quot;:854,&quot;abs_y&quot;:3509}"></span>
+            <span bis_size="{&quot;x&quot;:480,&quot;y&quot;:3435,&quot;w&quot;:102,&quot;h&quot;:13,&quot;abs_x&quot;:880,&quot;abs_y&quot;:3513}">IGOR SCHWANSING</span>
+          </div>
+          <span bis_size="{&quot;x&quot;:741,&quot;y&quot;:3436,&quot;w&quot;:34,&quot;h&quot;:12,&quot;abs_x&quot;:1141,&quot;abs_y&quot;:3514}">7 min</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" bis_size="{&quot;x&quot;:848,&quot;y&quot;:1316,&quot;w&quot;:320,&quot;h&quot;:2163,&quot;abs_x&quot;:1248,&quot;abs_y&quot;:1394}">
+
+      <div class="side-card author-card" bis_size="{&quot;x&quot;:848,&quot;y&quot;:1316,&quot;w&quot;:320,&quot;h&quot;:405,&quot;abs_x&quot;:1248,&quot;abs_y&quot;:1394}">
+        <div class="corner-stamp" bis_size="{&quot;x&quot;:1107,&quot;y&quot;:1304,&quot;w&quot;:70,&quot;h&quot;:34,&quot;abs_x&quot;:1507,&quot;abs_y&quot;:1382}">OFICIAL</div>
+        <div class="big-avatar" bis_size="{&quot;x&quot;:965,&quot;y&quot;:1335,&quot;w&quot;:84,&quot;h&quot;:84,&quot;abs_x&quot;:1365,&quot;abs_y&quot;:1413}">IS</div>
+        <h3 bis_size="{&quot;x&quot;:869,&quot;y&quot;:1430,&quot;w&quot;:276,&quot;h&quot;:32,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1508}">Igor Schwansing</h3>
+        <div class="role" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1466,&quot;w&quot;:276,&quot;h&quot;:14,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1544}">CRONISTA · HOST DO PODFLAH</div>
+        <p class="bio" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1493,&quot;w&quot;:276,&quot;h&quot;:58,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1571}">Carioca, rubro-negro desde o berço. Escreve sobre Flamengo há 12 anos e apresenta o PodFlah toda semana.</p>
+        <div class="stats" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1567,&quot;w&quot;:276,&quot;h&quot;:78,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1645}">
+          <div bis_size="{&quot;x&quot;:891,&quot;y&quot;:1581,&quot;w&quot;:34,&quot;h&quot;:51,&quot;abs_x&quot;:1291,&quot;abs_y&quot;:1659}"><strong bis_size="{&quot;x&quot;:891,&quot;y&quot;:1581,&quot;w&quot;:34,&quot;h&quot;:32,&quot;abs_x&quot;:1291,&quot;abs_y&quot;:1659}">248</strong><span bis_size="{&quot;x&quot;:891,&quot;y&quot;:1619,&quot;w&quot;:34,&quot;h&quot;:12,&quot;abs_x&quot;:1291,&quot;abs_y&quot;:1697}">Posts</span></div>
+          <div bis_size="{&quot;x&quot;:969,&quot;y&quot;:1581,&quot;w&quot;:68,&quot;h&quot;:51,&quot;abs_x&quot;:1369,&quot;abs_y&quot;:1659}"><strong bis_size="{&quot;x&quot;:969,&quot;y&quot;:1581,&quot;w&quot;:68,&quot;h&quot;:32,&quot;abs_x&quot;:1369,&quot;abs_y&quot;:1659}">43.2k</strong><span bis_size="{&quot;x&quot;:969,&quot;y&quot;:1619,&quot;w&quot;:68,&quot;h&quot;:12,&quot;abs_x&quot;:1369,&quot;abs_y&quot;:1697}">Seguidores</span></div>
+          <div bis_size="{&quot;x&quot;:1081,&quot;y&quot;:1581,&quot;w&quot;:43,&quot;h&quot;:51,&quot;abs_x&quot;:1481,&quot;abs_y&quot;:1659}"><strong bis_size="{&quot;x&quot;:1081,&quot;y&quot;:1581,&quot;w&quot;:43,&quot;h&quot;:32,&quot;abs_x&quot;:1481,&quot;abs_y&quot;:1659}">2018</strong><span bis_size="{&quot;x&quot;:1085,&quot;y&quot;:1619,&quot;w&quot;:34,&quot;h&quot;:12,&quot;abs_x&quot;:1485,&quot;abs_y&quot;:1697}">Desde</span></div>
+        </div>
+        <a href="#" class="read-cta" style="width:100%;justify-content:center;" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1660,&quot;w&quot;:276,&quot;h&quot;:39,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1738}">Ver perfil completo</a>
+      </div>
+
+      <div class="side-card dark" hidden style="display:none" bis_size="{&quot;x&quot;:848,&quot;y&quot;:1749,&quot;w&quot;:320,&quot;h&quot;:303,&quot;abs_x&quot;:1248,&quot;abs_y&quot;:1827}">
+        <h4 bis_size="{&quot;x&quot;:869,&quot;y&quot;:1771,&quot;w&quot;:276,&quot;h&quot;:31,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1849}"><span class="pin-icon" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1779,&quot;w&quot;:7,&quot;h&quot;:7,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1857}"></span>PODCAST · ÚLTIMOS EPS</h4>
+        <div class="pod-list" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1816,&quot;w&quot;:276,&quot;h&quot;:215,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1894}">
+          <div class="pod-item" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1816,&quot;w&quot;:276,&quot;h&quot;:67,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1894}">
+            <div class="pod-number" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1839,&quot;w&quot;:47,&quot;h&quot;:22,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1917}">184</div>
+            <div bis_size="{&quot;x&quot;:929,&quot;y&quot;:1824,&quot;w&quot;:168,&quot;h&quot;:51,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:1902}">
+              <div class="pod-title" bis_size="{&quot;x&quot;:929,&quot;y&quot;:1824,&quot;w&quot;:168,&quot;h&quot;:36,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:1902}">O tetra e o que vem agora</div>
+              <div class="pod-meta" bis_size="{&quot;x&quot;:929,&quot;y&quot;:1862,&quot;w&quot;:168,&quot;h&quot;:12,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:1940}">15 DEZ · 1H 12MIN</div>
+            </div>
+            <button class="play-btn" bis_size="{&quot;x&quot;:1110,&quot;y&quot;:1832,&quot;w&quot;:35,&quot;h&quot;:35,&quot;abs_x&quot;:1510,&quot;abs_y&quot;:1910}">▶</button>
+          </div>
+          <div class="pod-item" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1898,&quot;w&quot;:276,&quot;h&quot;:67,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1976}">
+            <div class="pod-number" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1920,&quot;w&quot;:47,&quot;h&quot;:22,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:1998}">183</div>
+            <div bis_size="{&quot;x&quot;:929,&quot;y&quot;:1906,&quot;w&quot;:168,&quot;h&quot;:51,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:1984}">
+              <div class="pod-title" bis_size="{&quot;x&quot;:929,&quot;y&quot;:1906,&quot;w&quot;:168,&quot;h&quot;:36,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:1984}">A noite do Maracanã vermelho</div>
+              <div class="pod-meta" bis_size="{&quot;x&quot;:929,&quot;y&quot;:1944,&quot;w&quot;:168,&quot;h&quot;:12,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:2022}">10 DEZ · 58MIN</div>
+            </div>
+            <button class="play-btn" bis_size="{&quot;x&quot;:1110,&quot;y&quot;:1913,&quot;w&quot;:35,&quot;h&quot;:35,&quot;abs_x&quot;:1510,&quot;abs_y&quot;:1991}">▶</button>
+          </div>
+          <div class="pod-item" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1980,&quot;w&quot;:276,&quot;h&quot;:51,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2058}">
+            <div class="pod-number" bis_size="{&quot;x&quot;:869,&quot;y&quot;:1994,&quot;w&quot;:47,&quot;h&quot;:22,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2072}">182</div>
+            <div bis_size="{&quot;x&quot;:929,&quot;y&quot;:1989,&quot;w&quot;:168,&quot;h&quot;:32,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:2067}">
+              <div class="pod-title" bis_size="{&quot;x&quot;:929,&quot;y&quot;:1989,&quot;w&quot;:168,&quot;h&quot;:18,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:2067}">Rumo à final continental</div>
+              <div class="pod-meta" bis_size="{&quot;x&quot;:929,&quot;y&quot;:2009,&quot;w&quot;:168,&quot;h&quot;:12,&quot;abs_x&quot;:1329,&quot;abs_y&quot;:2087}">03 DEZ · 1H 04MIN</div>
+            </div>
+            <button class="play-btn" bis_size="{&quot;x&quot;:1110,&quot;y&quot;:1987,&quot;w&quot;:35,&quot;h&quot;:35,&quot;abs_x&quot;:1510,&quot;abs_y&quot;:2065}">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-card newsletter" bis_size="{&quot;x&quot;:848,&quot;y&quot;:2081,&quot;w&quot;:320,&quot;h&quot;:263,&quot;abs_x&quot;:1248,&quot;abs_y&quot;:2159}">
+        <h4 bis_size="{&quot;x&quot;:869,&quot;y&quot;:2103,&quot;w&quot;:276,&quot;h&quot;:31,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2181}">↓ A CARTA DO IGOR</h4>
+        <p bis_size="{&quot;x&quot;:869,&quot;y&quot;:2148,&quot;w&quot;:276,&quot;h&quot;:62,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2226}">Toda segunda na sua caixa de entrada: a leitura da rodada, bastidores e uma crônica exclusiva.</p>
+        <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='INSCRITO ✓';" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2225,&quot;w&quot;:276,&quot;h&quot;:97,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2303}">
+          <input type="email" placeholder="seu@email.com.br" required="" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2225,&quot;w&quot;:276,&quot;h&quot;:42,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2303}">
+          <button type="submit" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2276,&quot;w&quot;:276,&quot;h&quot;:46,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2354}">QUERO ASSINAR →</button>
+        </form>
+      </div>
+
+      <div class="side-card red" bis_size="{&quot;x&quot;:848,&quot;y&quot;:2372,&quot;w&quot;:320,&quot;h&quot;:218,&quot;abs_x&quot;:1248,&quot;abs_y&quot;:2450}">
+        <h4 style="color:var(--paper);" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2394,&quot;w&quot;:276,&quot;h&quot;:31,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2472}">MAIS LIDOS DA SEMANA</h4>
+        <ol style="list-style:none; display:flex; flex-direction:column; gap:14px;" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2439,&quot;w&quot;:276,&quot;h&quot;:129,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2517}">
+          <li style="display:grid; grid-template-columns:32px 1fr; gap:10px; align-items:start;" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2439,&quot;w&quot;:276,&quot;h&quot;:33,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2517}">
+            <div style="font-family:'Rubik Mono One',sans-serif; font-size:22px; color:var(--yellow);" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2439,&quot;w&quot;:31,&quot;h&quot;:27,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2517}">01</div>
+            <div bis_size="{&quot;x&quot;:911,&quot;y&quot;:2439,&quot;w&quot;:234,&quot;h&quot;:33,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2517}">
+              <div style="font-family:'DM Serif Display',serif; font-size:16px; line-height:1.2;" bis_size="{&quot;x&quot;:911,&quot;y&quot;:2439,&quot;w&quot;:234,&quot;h&quot;:19,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2517}">A Epopeia do Tetra</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:10px; opacity:0.7; margin-top:2px;" bis_size="{&quot;x&quot;:911,&quot;y&quot;:2460,&quot;w&quot;:234,&quot;h&quot;:12,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2538}">14.2K LEITURAS</div>
+            </div>
+          </li>
+          <li style="display:grid; grid-template-columns:32px 1fr; gap:10px; align-items:start;" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2487,&quot;w&quot;:276,&quot;h&quot;:33,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2565}">
+            <div style="font-family:'Rubik Mono One',sans-serif; font-size:22px; color:var(--yellow);" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2487,&quot;w&quot;:31,&quot;h&quot;:27,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2565}">02</div>
+            <div bis_size="{&quot;x&quot;:911,&quot;y&quot;:2487,&quot;w&quot;:234,&quot;h&quot;:33,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2565}">
+              <div style="font-family:'DM Serif Display',serif; font-size:16px; line-height:1.2;" bis_size="{&quot;x&quot;:911,&quot;y&quot;:2487,&quot;w&quot;:234,&quot;h&quot;:19,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2565}">Flamengo na final continental</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:10px; opacity:0.7; margin-top:2px;" bis_size="{&quot;x&quot;:911,&quot;y&quot;:2508,&quot;w&quot;:234,&quot;h&quot;:12,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2586}">9.8K LEITURAS</div>
+            </div>
+          </li>
+          <li style="display:grid; grid-template-columns:32px 1fr; gap:10px; align-items:start;" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2535,&quot;w&quot;:276,&quot;h&quot;:33,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2613}">
+            <div style="font-family:'Rubik Mono One',sans-serif; font-size:22px; color:var(--yellow);" bis_size="{&quot;x&quot;:869,&quot;y&quot;:2535,&quot;w&quot;:31,&quot;h&quot;:27,&quot;abs_x&quot;:1269,&quot;abs_y&quot;:2613}">03</div>
+            <div bis_size="{&quot;x&quot;:911,&quot;y&quot;:2535,&quot;w&quot;:234,&quot;h&quot;:33,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2613}">
+              <div style="font-family:'DM Serif Display',serif; font-size:16px; line-height:1.2;" bis_size="{&quot;x&quot;:911,&quot;y&quot;:2535,&quot;w&quot;:234,&quot;h&quot;:19,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2613}">Não é revanche, mas também…</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:10px; opacity:0.7; margin-top:2px;" bis_size="{&quot;x&quot;:911,&quot;y&quot;:2556,&quot;w&quot;:234,&quot;h&quot;:12,&quot;abs_x&quot;:1311,&quot;abs_y&quot;:2634}">7.4K LEITURAS</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <div class="pagination" bis_size="{&quot;x&quot;:31,&quot;y&quot;:3560,&quot;w&quot;:1136,&quot;h&quot;:40,&quot;abs_x&quot;:431,&quot;abs_y&quot;:3638}">
+    <a href="#" class="arrow" bis_size="{&quot;x&quot;:362,&quot;y&quot;:3560,&quot;w&quot;:77,&quot;h&quot;:40,&quot;abs_x&quot;:762,&quot;abs_y&quot;:3638}">← ANT</a>
+    <a href="#" bis_size="{&quot;x&quot;:450,&quot;y&quot;:3560,&quot;w&quot;:40,&quot;h&quot;:40,&quot;abs_x&quot;:850,&quot;abs_y&quot;:3638}">01</a>
+    <span class="active" bis_size="{&quot;x&quot;:500,&quot;y&quot;:3560,&quot;w&quot;:40,&quot;h&quot;:40,&quot;abs_x&quot;:900,&quot;abs_y&quot;:3638}">02</span>
+    <a href="#" bis_size="{&quot;x&quot;:550,&quot;y&quot;:3560,&quot;w&quot;:40,&quot;h&quot;:40,&quot;abs_x&quot;:950,&quot;abs_y&quot;:3638}">03</a>
+    <a href="#" bis_size="{&quot;x&quot;:600,&quot;y&quot;:3560,&quot;w&quot;:40,&quot;h&quot;:40,&quot;abs_x&quot;:1000,&quot;abs_y&quot;:3638}">04</a>
+    <a href="#" bis_size="{&quot;x&quot;:650,&quot;y&quot;:3560,&quot;w&quot;:40,&quot;h&quot;:40,&quot;abs_x&quot;:1050,&quot;abs_y&quot;:3638}">…</a>
+    <a href="#" bis_size="{&quot;x&quot;:700,&quot;y&quot;:3560,&quot;w&quot;:40,&quot;h&quot;:40,&quot;abs_x&quot;:1100,&quot;abs_y&quot;:3638}">31</a>
+    <a href="#" class="arrow" bis_size="{&quot;x&quot;:750,&quot;y&quot;:3560,&quot;w&quot;:87,&quot;h&quot;:40,&quot;abs_x&quot;:1150,&quot;abs_y&quot;:3638}">PRÓX →</a>
+  </div>
+
+</main>
+
+<footer bis_size="{&quot;x&quot;:0,&quot;y&quot;:3660,&quot;w&quot;:1200,&quot;h&quot;:302,&quot;abs_x&quot;:400,&quot;abs_y&quot;:3738}">
+  <div class="wrap" bis_size="{&quot;x&quot;:0,&quot;y&quot;:3720,&quot;w&quot;:1200,&quot;h&quot;:212,&quot;abs_x&quot;:400,&quot;abs_y&quot;:3798}">
+    <div class="footer-grid" bis_size="{&quot;x&quot;:31,&quot;y&quot;:3720,&quot;w&quot;:1136,&quot;h&quot;:174,&quot;abs_x&quot;:431,&quot;abs_y&quot;:3798}">
+      <div class="footer-brand" bis_size="{&quot;x&quot;:31,&quot;y&quot;:3720,&quot;w&quot;:406,&quot;h&quot;:133,&quot;abs_x&quot;:431,&quot;abs_y&quot;:3798}">
+        <div class="logo" style="color:var(--paper);" bis_size="{&quot;x&quot;:31,&quot;y&quot;:3720,&quot;w&quot;:406,&quot;h&quot;:43,&quot;abs_x&quot;:431,&quot;abs_y&quot;:3798}">
+          <span class="logo-mark" bis_size="{&quot;x&quot;:30,&quot;y&quot;:3718,&quot;w&quot;:46,&quot;h&quot;:46,&quot;abs_x&quot;:430,&quot;abs_y&quot;:3796}">P</span>
+          <span bis_size="{&quot;x&quot;:83,&quot;y&quot;:3724,&quot;w&quot;:217,&quot;h&quot;:35,&quot;abs_x&quot;:483,&quot;abs_y&quot;:3802}">podflah<small bis_size="{&quot;x&quot;:246,&quot;y&quot;:3724,&quot;w&quot;:55,&quot;h&quot;:35,&quot;abs_x&quot;:646,&quot;abs_y&quot;:3802}">.blog</small></span>
+        </div>
+        <p bis_size="{&quot;x&quot;:31,&quot;y&quot;:3776,&quot;w&quot;:340,&quot;h&quot;:41,&quot;abs_x&quot;:431,&quot;abs_y&quot;:3854}">Crônicas, análises e o podcast sobre o Flamengo. Feito por torcedor, pra torcedor, desde 2018.</p>
+      </div>
+      <div bis_size="{&quot;x&quot;:478,&quot;y&quot;:3720,&quot;w&quot;:203,&quot;h&quot;:133,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3798}">
+        <h5 bis_size="{&quot;x&quot;:478,&quot;y&quot;:3720,&quot;w&quot;:203,&quot;h&quot;:17,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3798}">NAVEGAR</h5>
+        <ul bis_size="{&quot;x&quot;:478,&quot;y&quot;:3752,&quot;w&quot;:203,&quot;h&quot;:101,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3830}">
+          <li bis_size="{&quot;x&quot;:478,&quot;y&quot;:3752,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3830}"><a href="#" bis_size="{&quot;x&quot;:478,&quot;y&quot;:3754,&quot;w&quot;:29,&quot;h&quot;:16,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3832}">Blog</a></li>
+          <li bis_size="{&quot;x&quot;:478,&quot;y&quot;:3779,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3857}"><a href="#" bis_size="{&quot;x&quot;:478,&quot;y&quot;:3781,&quot;w&quot;:53,&quot;h&quot;:16,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3859}">Podcast</a></li>
+          <li bis_size="{&quot;x&quot;:478,&quot;y&quot;:3806,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3884}"><a href="#" bis_size="{&quot;x&quot;:478,&quot;y&quot;:3809,&quot;w&quot;:58,&quot;h&quot;:16,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3887}">Crônicas</a></li>
+          <li bis_size="{&quot;x&quot;:478,&quot;y&quot;:3834,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3912}"><a href="#" bis_size="{&quot;x&quot;:478,&quot;y&quot;:3836,&quot;w&quot;:50,&quot;h&quot;:16,&quot;abs_x&quot;:878,&quot;abs_y&quot;:3914}">Arquivo</a></li>
+        </ul>
+      </div>
+      <div bis_size="{&quot;x&quot;:721,&quot;y&quot;:3720,&quot;w&quot;:203,&quot;h&quot;:133,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3798}">
+        <h5 bis_size="{&quot;x&quot;:721,&quot;y&quot;:3720,&quot;w&quot;:203,&quot;h&quot;:17,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3798}">SOBRE</h5>
+        <ul bis_size="{&quot;x&quot;:721,&quot;y&quot;:3752,&quot;w&quot;:203,&quot;h&quot;:101,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3830}">
+          <li bis_size="{&quot;x&quot;:721,&quot;y&quot;:3752,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3830}"><a href="#" bis_size="{&quot;x&quot;:721,&quot;y&quot;:3754,&quot;w&quot;:68,&quot;h&quot;:16,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3832}">O PodFlah</a></li>
+          <li bis_size="{&quot;x&quot;:721,&quot;y&quot;:3779,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3857}"><a href="#" bis_size="{&quot;x&quot;:721,&quot;y&quot;:3781,&quot;w&quot;:78,&quot;h&quot;:16,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3859}">Perfil oficial</a></li>
+          <li bis_size="{&quot;x&quot;:721,&quot;y&quot;:3806,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3884}"><a href="#" bis_size="{&quot;x&quot;:721,&quot;y&quot;:3809,&quot;w&quot;:54,&quot;h&quot;:16,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3887}">Anuncie</a></li>
+          <li bis_size="{&quot;x&quot;:721,&quot;y&quot;:3834,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3912}"><a href="#" bis_size="{&quot;x&quot;:721,&quot;y&quot;:3836,&quot;w&quot;:52,&quot;h&quot;:16,&quot;abs_x&quot;:1121,&quot;abs_y&quot;:3914}">Contato</a></li>
+        </ul>
+      </div>
+      <div bis_size="{&quot;x&quot;:964,&quot;y&quot;:3720,&quot;w&quot;:203,&quot;h&quot;:133,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3798}">
+        <h5 bis_size="{&quot;x&quot;:964,&quot;y&quot;:3720,&quot;w&quot;:203,&quot;h&quot;:17,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3798}">LEGAL</h5>
+        <ul bis_size="{&quot;x&quot;:964,&quot;y&quot;:3752,&quot;w&quot;:203,&quot;h&quot;:74,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3830}">
+          <li bis_size="{&quot;x&quot;:964,&quot;y&quot;:3752,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3830}"><a href="#" bis_size="{&quot;x&quot;:964,&quot;y&quot;:3754,&quot;w&quot;:77,&quot;h&quot;:16,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3832}">Privacidade</a></li>
+          <li bis_size="{&quot;x&quot;:964,&quot;y&quot;:3779,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3857}"><a href="#" bis_size="{&quot;x&quot;:964,&quot;y&quot;:3781,&quot;w&quot;:95,&quot;h&quot;:16,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3859}">Acessibilidade</a></li>
+          <li bis_size="{&quot;x&quot;:964,&quot;y&quot;:3806,&quot;w&quot;:203,&quot;h&quot;:19,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3884}"><a href="#" bis_size="{&quot;x&quot;:964,&quot;y&quot;:3809,&quot;w&quot;:49,&quot;h&quot;:16,&quot;abs_x&quot;:1364,&quot;abs_y&quot;:3887}">Termos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom" bis_size="{&quot;x&quot;:31,&quot;y&quot;:3894,&quot;w&quot;:1136,&quot;h&quot;:38,&quot;abs_x&quot;:431,&quot;abs_y&quot;:3972}">
+      <span bis_size="{&quot;x&quot;:31,&quot;y&quot;:3918,&quot;w&quot;:269,&quot;h&quot;:14,&quot;abs_x&quot;:431,&quot;abs_y&quot;:3996}">© 2026 · PODFLAH · TODOS OS DIREITOS</span>
+      <span bis_size="{&quot;x&quot;:921,&quot;y&quot;:3918,&quot;w&quot;:246,&quot;h&quot;:14,&quot;abs_x&quot;:1321,&quot;abs_y&quot;:3996}">FEITO NO RIO · COM TINTA VERMELHA</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../shared/data.js"></script>
+<script>
+  // Render posts
+  const posts = window.PODFLAH_DATA.posts;
+  const grid = document.getElementById('posts');
+  const catClass = (c) => {
+    if (c === 'CRÔNICAS') return '';
+    if (c === 'ANÁLISE') return 'black';
+    return 'red';
+  };
+  const imgClass = (c) => c === 'red' ? 'red' : '';
+
+  grid.innerHTML = posts.slice(0, 8).map(p => `
+    <a href="post-arquibancada.html" class="post-card">
+      <div class="post-card-tape"></div>
+      <div class="post-card-img ${imgClass(p.imgColor)}">
+        <div class="label">${p.imgLabel}</div>
+      </div>
+      <div class="post-card-body">
+        <div class="post-card-meta">
+          <span class="cat-chip ${catClass(p.category)}">${p.category}</span>
+          <span>${p.date}</span>
+        </div>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+        <div class="post-card-foot">
+          <div class="author">
+            <span class="avatar-sm"></span>
+            <span>${p.author.toUpperCase()}</span>
+          </div>
+          <span>${p.readTime}</span>
+        </div>
+      </div>
+    </a>
+  `).join('');
+</script>
+
+
+</body></html>
