@@ -118,65 +118,6 @@ export default function ConfiguracoesPage() {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Cabeçalho — Nome do Blog</h2>
-        <p className={styles.preview}>
-          <span className={styles.previewPrefix}>{settings.site_name_prefix} </span>
-          <em className={styles.previewHighlight}>{settings.site_name_highlight}</em>
-          <span className={styles.previewSuffix}> {settings.site_name_suffix}</span>
-        </p>
-        <div className={styles.fields}>
-          <label className={styles.field}>
-            <span>Texto antes (ex: "A")</span>
-            <input value={settings.site_name_prefix} onChange={e => set('site_name_prefix', e.target.value)} />
-          </label>
-          <label className={styles.field}>
-            <span>Nome em destaque vermelho</span>
-            <input value={settings.site_name_highlight} onChange={e => set('site_name_highlight', e.target.value)} />
-          </label>
-          <label className={styles.field}>
-            <span>Texto depois (ex: "do PodFlah")</span>
-            <input value={settings.site_name_suffix} onChange={e => set('site_name_suffix', e.target.value)} />
-          </label>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Cabeçalho — Tagline (lado direito)</h2>
-        <div className={styles.fields}>
-          <label className={styles.field}>
-            <span>Linha 1 (ex: "EDIÇÃO DIGITAL")</span>
-            <input value={settings.site_tagline_top} onChange={e => set('site_tagline_top', e.target.value)} />
-          </label>
-          <label className={styles.field}>
-            <span>Linha 2 (ex: "FUTEBOL · CRÔNICA · ANÁLISE")</span>
-            <input value={settings.site_tagline_mid} onChange={e => set('site_tagline_mid', e.target.value)} />
-          </label>
-          <label className={styles.field}>
-            <span>Linha 3 (ex: "DESDE 2018")</span>
-            <input value={settings.site_tagline_bot} onChange={e => set('site_tagline_bot', e.target.value)} />
-          </label>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Barra de Navegação</h2>
-        <div className={styles.fields}>
-          <label className={styles.field}>
-            <span>Texto esquerda (ex: "ARQUIBANCADA")</span>
-            <input value={settings.nav_brand} onChange={e => set('nav_brand', e.target.value)} />
-          </label>
-          <label className={styles.field}>
-            <span>Texto centro (ex: "O BLOG OFICIAL DO PODFLAH")</span>
-            <input value={settings.nav_center} onChange={e => set('nav_center', e.target.value)} />
-          </label>
-          <label className={styles.field}>
-            <span>Texto direita (ex: "2026 · TEMPORADA EM CURSO")</span>
-            <input value={settings.nav_right} onChange={e => set('nav_right', e.target.value)} />
-          </label>
-        </div>
-      </section>
-
-      <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Perfil do Autor</h2>
         <div className={styles.authorRow}>
           <div className={styles.avatarWrap}>
