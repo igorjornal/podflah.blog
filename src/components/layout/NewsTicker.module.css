@@ -4,14 +4,8 @@
   background: var(--ink);
   height: 40px;
   overflow: hidden;
-  border-top: 2px solid var(--red);
-  border-bottom: 2px solid var(--red);
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  border-bottom: 3px solid var(--red);
+  margin-top: 6px;
 }
 
 .label {
