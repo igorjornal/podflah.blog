@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './Configuracoes.module.css';
 
 const DEFAULTS = {
+  site_logo: '',
   site_name_prefix: 'A',
   site_name_highlight: 'Arquibancada',
   site_name_suffix: 'do PodFlah',
@@ -26,7 +27,9 @@ export default function ConfiguracoesPage() {
   const [authorAvatar, setAuthorAvatar] = useState('');
   const [authorId, setAuthorId] = useState<number | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const logoRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch('/api/settings').then(r => r.json()).then(d => {
@@ -61,6 +64,16 @@ export default function ConfiguracoesPage() {
     setTimeout(() => setSaved(false), 3000);
   }
 
+  async function uploadLogo(file: File) {
+    setUploadingLogo(true);
+    const form = new FormData();
+    form.append('file', file);
+    const res = await fetch('/api/upload', { method: 'POST', body: form });
+    const data = await res.json();
+    if (data.url) set('site_logo', data.url);
+    setUploadingLogo(false);
+  }
+
   async function uploadPhoto(file: File) {
     setUploading(true);
     const form = new FormData();
@@ -83,6 +96,26 @@ export default function ConfiguracoesPage() {
           {saving ? 'Salvando…' : saved ? '✓ Salvo!' : 'Salvar tudo'}
         </button>
       </div>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Logo / Marca</h2>
+        <div className={styles.logoRow}>
+          {settings.site_logo
+            ? <img src={settings.site_logo} alt="logo" className={styles.logoPreview} />
+            : <div className={styles.logoPlaceholder}>SEM LOGO</div>}
+          <div>
+            <button className={styles.uploadBtn} onClick={() => logoRef.current?.click()} disabled={uploadingLogo}>
+              {uploadingLogo ? 'Enviando…' : settings.site_logo ? 'Trocar logo' : 'Enviar logo'}
+            </button>
+            {settings.site_logo && (
+              <button className={styles.removeBtn} onClick={() => set('site_logo', '')}>Remover</button>
+            )}
+            <input ref={logoRef} type="file" accept="image/*" style={{ display: 'none' }}
+              onChange={e => e.target.files?.[0] && uploadLogo(e.target.files[0])} />
+            <p className={styles.hint}>PNG ou SVG com fundo transparente. Aparece no topo do site.</p>
+          </div>
+        </div>
+      </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Cabeçalho — Nome do Blog</h2>

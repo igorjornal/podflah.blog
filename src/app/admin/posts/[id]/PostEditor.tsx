@@ -26,14 +26,20 @@ export default function PostEditor({ post, categories, authors, revisions }: Pro
   const [featured, setFeatured] = useState(post.featured ?? false);
   const [pinned, setPinned] = useState(post.pinned ?? false);
   const [allowComments, setAllowComments] = useState(post.allowComments ?? true);
+  const [coverUrl, setCoverUrl] = useState(post.coverUrl ?? '');
+  const [imgLabel, setImgLabel] = useState(post.imgLabel ?? '');
+  const [imgColor, setImgColor] = useState(post.imgColor ?? 'red');
+  const [uploading, setUploading] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved'>('saved');
   const saveTimer = useRef<ReturnType<typeof setTimeout>>();
+  const coverRef = useRef<HTMLInputElement>(null);
 
   async function save(fields?: Partial<Record<string, unknown>>) {
     setSaveStatus('saving');
     const body = {
       title, slug, kicker, dek, content, categoryId, authorId,
       status, tags, metaTitle, metaDescription: metaDesc, featured, pinned, allowComments,
+      coverUrl, imgLabel, imgColor,
       ...fields,
     };
     await fetch(`/api/posts/${post.id}`, {
@@ -54,6 +60,16 @@ export default function PostEditor({ post, categories, authors, revisions }: Pro
     setTitle(v);
     if (!post.slug || post.slug.startsWith('rascunho-')) setSlug(slugify(v));
     scheduleAutosave();
+  }
+
+  async function uploadCover(file: File) {
+    setUploading(true);
+    const form = new FormData();
+    form.append('file', file);
+    const res = await fetch('/api/upload', { method: 'POST', body: form });
+    const data = await res.json();
+    if (data.url) { setCoverUrl(data.url); scheduleAutosave(); }
+    setUploading(false);
   }
 
   async function publish() {
@@ -124,6 +140,38 @@ export default function PostEditor({ post, categories, authors, revisions }: Pro
 
         {/* SIDEBAR */}
         <aside className={styles.side}>
+          {/* Cover Image */}
+          <div className={styles.sideBlock}>
+            <h4>Imagem de Capa</h4>
+            <div
+              className={styles.coverDrop}
+              onClick={() => coverRef.current?.click()}
+              style={{ backgroundImage: coverUrl ? `url(${coverUrl})` : undefined }}
+            >
+              {!coverUrl && <span>{uploading ? 'Enviando…' : '+ Clique para enviar imagem'}</span>}
+              {coverUrl && <div className={styles.coverOverlay}>{uploading ? 'Enviando…' : 'Trocar imagem'}</div>}
+            </div>
+            <input ref={coverRef} type="file" accept="image/*" style={{ display: 'none' }}
+              onChange={e => e.target.files?.[0] && uploadCover(e.target.files[0])} />
+            {coverUrl && (
+              <button className={styles.removeCover} onClick={() => { setCoverUrl(''); scheduleAutosave(); }}>
+                Remover imagem
+              </button>
+            )}
+            <div className={styles.field}>
+              <label>Texto do placeholder (sem imagem)</label>
+              <input value={imgLabel} onChange={e => { setImgLabel(e.target.value); scheduleAutosave(); }} placeholder="DESTAQUE" />
+            </div>
+            <div className={styles.field}>
+              <label>Cor do placeholder</label>
+              <select value={imgColor} onChange={e => { setImgColor(e.target.value); scheduleAutosave(); }}>
+                <option value="red">Vermelho</option>
+                <option value="dark">Escuro</option>
+                <option value="yellow">Amarelo</option>
+              </select>
+            </div>
+          </div>
+
           {/* Status */}
           <div className={styles.sideBlock}>
             <h4>Status & Publicação</h4>

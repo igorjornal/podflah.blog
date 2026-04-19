@@ -152,3 +152,57 @@
   border-bottom: 1px dashed rgba(0,0,0,0.1);
   font-family: "JetBrains Mono"; font-size: 11px;
 }
+
+.coverDrop {
+  width: 100%;
+  height: 140px;
+  border: 2px dashed rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: border-color 0.15s;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+.coverDrop:hover { border-color: var(--yellow); }
+
+.coverOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.coverDrop:hover .coverOverlay { opacity: 1; }
+
+.removeCover {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px;
+  background: transparent;
+  border: 1px solid rgba(255,0,0,0.3);
+  color: #ff6b6b;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+.removeCover:hover { background: rgba(255,0,0,0.1); }
+
