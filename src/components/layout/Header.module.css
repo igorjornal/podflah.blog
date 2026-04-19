@@ -1,0 +1,114 @@
+.topbar {
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--red) 0 8px, transparent 8px 16px);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 32px;
+  padding: 18px 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-family: "Rubik Mono One", "Oswald", sans-serif;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.logo small {
+  font-family: "DM Serif Display", serif;
+  font-weight: 400;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--red);
+}
+
+.logoMark {
+  width: 44px;
+  height: 44px;
+  background: var(--red);
+  color: var(--yellow);
+  display: grid;
+  place-items: center;
+  font-family: "Rubik Mono One", sans-serif;
+  font-size: 22px;
+  transform: rotate(-4deg);
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  flex-shrink: 0;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nav a {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.nav a:hover { border-bottom-color: var(--red); }
+.nav a.active { border-bottom-color: var(--ink); }
+
+.social {
+  display: flex;
+  gap: 10px;
+}
+
+.social a {
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--ink);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 11px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  background: var(--paper);
+  transition: all 0.15s;
+}
+
+.social a:hover {
+  background: var(--ink);
+  color: var(--paper);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--red);
+}
+
+@media (max-width: 900px) {
+  .inner { grid-template-columns: auto 1fr; gap: 16px; padding: 14px 16px; }
+  .nav { display: none; }
+  .social { gap: 6px; }
+  .social a { width: 30px; height: 30px; font-size: 10px; }
+}

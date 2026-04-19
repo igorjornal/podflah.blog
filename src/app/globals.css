@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Rubik+Mono+One&display=swap');
+
+:root {
+  --paper: #f1ebdc;
+  --ink: #151310;
+  --red: #c8102e;
+  --red-deep: #8a0b1f;
+  --yellow: #ffd63a;
+  --yellow-soft: #fff2a8;
+  --muted: #6a6558;
+  --line: rgba(0,0,0,0.15);
+  --panel: #faf6ea;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+}
+
+body {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(0,0,0,0.025) 1px, transparent 1.5px),
+    radial-gradient(circle at 80% 70%, rgba(200,16,46,0.02) 1px, transparent 1.5px),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(120,100,60,0.02) 3px 4px);
+  background-size: 9px 9px, 13px 13px, auto;
+}
+
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+/* ——— BUTTONS ——— */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 13px;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+  background: transparent;
+}
+.btn-primary { background: var(--ink); color: var(--yellow); }
+.btn-primary:hover { background: var(--red); color: var(--paper); }
+.btn-ghost { background: var(--paper); color: var(--ink); }
+.btn-ghost:hover { background: var(--yellow); }
+
+/* ——— CATEGORY CHIPS ——— */
+.cat-chip {
+  display: inline-block;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1.5px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+  text-decoration: none;
+}
+.cat-chip.red { background: var(--red); color: var(--paper); border-color: var(--red); }
+.cat-chip.black { background: var(--ink); color: var(--yellow); border-color: var(--ink); }
+.cat-chip.white { background: var(--paper); color: var(--ink); }
+
+/* ——— TAGS (admin) ——— */
+.tag {
+  display: inline-block;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border: 1px solid var(--ink);
+}
+.tag.pub { background: var(--ink); color: var(--yellow); }
+.tag.draft { background: var(--paper); color: var(--ink); }
+.tag.sched { background: var(--yellow); color: var(--ink); }
+
+/* ——— PAGINATION ——— */
+.pagination {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 48px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+.pagination a, .pagination span {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border: 2px solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+.pagination a:hover { background: var(--yellow); }
+.pagination .active { background: var(--ink); color: var(--yellow); }
+
+/* ——— BREADCRUMBS ——— */
+.crumbs {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 24px;
+}
+.crumbs a { color: var(--muted); text-decoration: none; }
+.crumbs a:hover { color: var(--ink); }
+.crumbs .sep { color: var(--red); }
+
+/* ——— AVATAR ——— */
+.avatar {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--red), var(--red-deep));
+  border: 2px solid var(--yellow);
+  display: grid; place-items: center;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  color: var(--paper);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* ——— NEWSLETTER FORM ——— */
+.newsletter-form { display: flex; }
+.newsletter-form input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid var(--ink);
+  border-right: none;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  background: var(--paper);
+  outline: none;
+}
+.newsletter-form button {
+  padding: 10px 16px;
+  background: var(--ink);
+  color: var(--yellow);
+  border: 2px solid var(--ink);
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.newsletter-form button:hover { background: var(--red); border-color: var(--red); }
+
+/* ——— CARD IMAGE PLACEHOLDER ——— */
+.card-img {
+  position: relative;
+  background: linear-gradient(180deg, #c8102e 0%, #4a0810 100%);
+  overflow: hidden;
+}
+.card-img::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1.5px);
+  background-size: 5px 5px;
+  mix-blend-mode: screen;
+}
+.card-img.dark-bg { background: linear-gradient(180deg, #2a2520 0%, #151310 100%); }
+.card-img .img-label-text {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%) rotate(-3deg);
+  font-family: "Rubik Mono One", sans-serif;
+  color: var(--yellow);
+  -webkit-text-stroke: 1px var(--ink);
+  text-align: center;
+  line-height: 0.9;
+  pointer-events: none;
+}

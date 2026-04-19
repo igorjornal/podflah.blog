@@ -1,0 +1,79 @@
+.container { padding: 60px 0 80px; }
+
+.grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center; margin-bottom: 64px; }
+
+.bigNum {
+  font-family: "Rubik Mono One", sans-serif;
+  font-size: clamp(120px, 18vw, 200px);
+  line-height: 0.9;
+  color: var(--yellow);
+  -webkit-text-stroke: 3px var(--ink);
+  letter-spacing: -0.04em;
+  user-select: none;
+  position: relative;
+}
+
+.stamp {
+  display: inline-block;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700; font-size: 14px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 3px solid var(--red);
+  color: var(--red);
+  transform: rotate(-5deg);
+  margin-bottom: 20px;
+}
+
+.heading {
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.0; letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+.heading em { font-style: italic; color: var(--red); }
+
+.desc { font-size: 16px; line-height: 1.65; color: var(--muted); margin-bottom: 28px; max-width: 480px; }
+
+.actions { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+
+.searchForm { display: flex; max-width: 380px; }
+.searchForm input {
+  flex: 1; padding: 10px 14px;
+  border: 2px solid var(--ink); border-right: none;
+  font-family: "Inter"; font-size: 13px;
+  background: var(--paper); outline: none;
+}
+.searchForm button {
+  padding: 10px 16px;
+  background: var(--ink); color: var(--yellow);
+  border: 2px solid var(--ink);
+  font-family: "Oswald"; font-weight: 700; font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer;
+}
+.searchForm button:hover { background: var(--red); border-color: var(--red); }
+
+.suggestions { border-top: 2px solid var(--ink); padding-top: 40px; }
+.suggestions h2 { font-family: "DM Serif Display"; font-size: 28px; margin-bottom: 20px; letter-spacing: -0.01em; }
+
+.suggestGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+.suggestCard {
+  border: 2px solid var(--ink); text-decoration: none; color: var(--ink);
+  transition: all 0.15s; display: block;
+}
+.suggestCard:hover { transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--red); }
+
+.suggestImg { height: 120px; background: linear-gradient(135deg, #6a6558, #2a2520); }
+.red { background: linear-gradient(135deg, var(--red), var(--red-deep)); }
+.dark { background: linear-gradient(135deg, #1a1614, #0a0908); }
+
+.suggestBody { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.suggestBody p { font-size: 14px; color: var(--muted); line-height: 1.4; }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+  .bigNum { font-size: 100px; }
+  .suggestGrid { grid-template-columns: 1fr; }
+}

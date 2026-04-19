@@ -1,0 +1,145 @@
+.wrap {
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--panel, #faf6ea);
+  flex-wrap: wrap;
+}
+
+.toolbar button {
+  min-width: 32px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  transition: all 0.12s;
+  display: grid;
+  place-items: center;
+}
+
+.toolbar button:hover { background: var(--yellow); border-color: var(--ink); }
+.toolbar button:disabled { opacity: 0.3; cursor: not-allowed; }
+.toolbar button.on { background: var(--ink); color: var(--yellow); }
+
+.sep {
+  width: 1px;
+  height: 20px;
+  background: rgba(0,0,0,0.15);
+  margin: 0 4px;
+}
+
+.editorContent {
+  flex: 1;
+  padding: 32px 40px;
+  min-height: 400px;
+}
+
+/* Prose styles for the editor */
+.prose {
+  font-family: "DM Serif Display", serif;
+  font-size: 21px;
+  line-height: 1.65;
+  color: var(--ink);
+  outline: none;
+  max-width: 680px;
+}
+
+.prose p { margin-bottom: 1.4em; }
+
+.prose h2 {
+  font-family: "DM Serif Display", serif;
+  font-size: 34px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 1.8em 0 0.6em;
+}
+
+.prose h3 {
+  font-family: "Oswald", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 1.6em 0 0.6em;
+}
+
+.prose em { font-style: italic; color: var(--red); }
+
+.prose strong { font-weight: 700; }
+
+.prose a { color: var(--red); text-decoration: underline; }
+
+.prose blockquote {
+  background: var(--ink);
+  color: var(--yellow);
+  padding: 20px 24px;
+  margin: 1.6em 0;
+  border-left: 4px solid var(--yellow);
+  font-style: italic;
+  font-size: 22px;
+}
+
+.prose ul, .prose ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.4em;
+}
+
+.prose li { margin-bottom: 0.4em; }
+
+.prose code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85em;
+  background: rgba(0,0,0,0.08);
+  padding: 2px 6px;
+}
+
+.prose pre {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 20px;
+  margin: 1.4em 0;
+  overflow-x: auto;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+}
+
+.prose img {
+  max-width: 100%;
+  border: 2px solid var(--ink);
+  margin: 1.4em 0;
+}
+
+.prose p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+  pointer-events: none;
+  height: 0;
+  float: left;
+}
+
+.footer {
+  display: flex;
+  gap: 20px;
+  padding: 8px 14px;
+  border-top: 1px dashed var(--line);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}

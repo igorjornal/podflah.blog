@@ -1,0 +1,114 @@
+.page {
+  min-height: 100vh;
+  background: var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--paper);
+  border: 3px solid var(--paper);
+  box-shadow: 8px 8px 0 var(--red);
+  padding: 40px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.mark {
+  width: 44px; height: 44px;
+  background: var(--red);
+  color: var(--yellow);
+  display: grid; place-items: center;
+  font-family: "Rubik Mono One", sans-serif;
+  font-size: 22px;
+  transform: rotate(-4deg);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.brandName {
+  font-family: "Rubik Mono One", sans-serif;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.brandSub {
+  font-family: "DM Serif Display", serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--red);
+}
+
+.heading {
+  font-family: "DM Serif Display", serif;
+  font-size: 32px;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.heading em { font-style: italic; color: var(--red); }
+
+.sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.error {
+  background: var(--red);
+  color: var(--paper);
+  padding: 10px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  margin-bottom: 20px;
+  letter-spacing: 0.08em;
+}
+
+.form { display: flex; flex-direction: column; gap: 16px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field label {
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.field input {
+  padding: 10px 14px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.field input:focus { border-color: var(--red); }
+
+.form button {
+  margin-top: 8px;
+  padding: 14px;
+  background: var(--ink);
+  color: var(--yellow);
+  border: 2px solid var(--ink);
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.form button:hover:not(:disabled) { background: var(--red); border-color: var(--red); }
+.form button:disabled { opacity: 0.5; cursor: not-allowed; }

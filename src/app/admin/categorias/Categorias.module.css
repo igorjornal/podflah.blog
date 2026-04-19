@@ -1,0 +1,47 @@
+.grid { display: grid; grid-template-columns: 1fr 320px; gap: 32px; }
+
+.formCard {
+  border: 2px solid var(--ink);
+  background: var(--panel, #faf6ea);
+  padding: 24px;
+  height: fit-content;
+}
+
+.formCard h3 {
+  font-family: "DM Serif Display", serif;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.success {
+  background: #d4edda;
+  color: #1a7a1a;
+  padding: 8px 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.form { display: flex; flex-direction: column; gap: 14px; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+.field label {
+  font-family: "Oswald", sans-serif;
+  font-weight: 700; font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+}
+
+.field input, .field select, .field textarea {
+  padding: 8px 10px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  font-family: "Inter", sans-serif; font-size: 13px;
+  outline: none; transition: border-color 0.15s; resize: vertical;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--red); }
