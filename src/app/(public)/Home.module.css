@@ -128,7 +128,7 @@
   content: "";
   position: absolute;
   top: -14px; left: 40px;
-  width: 140px; height: 36px;
+  width: 200px; height: 36px;
   background: var(--yellow);
   transform: rotate(-3deg);
   background-image: repeating-linear-gradient(90deg, transparent 0 3px, rgba(0,0,0,0.05) 3px 4px);
