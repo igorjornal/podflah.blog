@@ -31,20 +31,6 @@ export default async function HomePage() {
 
   return (
     <div>
-      <div className="wrap">
-        <div className={styles.masthead}>
-          <h1>{s('site_name_prefix','A')} <em>{s('site_name_highlight','Arquibancada')}</em><br />{s('site_name_suffix','do PodFlah')}</h1>
-          <div className={styles.mastheadMeta}>
-            <strong>{s('site_tagline_top','EDIÇÃO DIGITAL')}</strong><br />{s('site_tagline_mid','Futebol · Crônica · Análise')}<br />{s('site_tagline_bot','Desde 2018')}
-          </div>
-        </div>
-        <div className={styles.editionBar}>
-          <span className={styles.pill}>{s('nav_brand','ARQUIBANCADA')}</span>
-          <span>{s('nav_center','O BLOG OFICIAL DO PODFLAH')}</span>
-          <span>{s('nav_right', new Date().getFullYear() + ' · TEMPORADA EM CURSO')}</span>
-        </div>
-      </div>
-
       {featuredPost && (
         <div className="wrap">
           <div className={styles.hero}>

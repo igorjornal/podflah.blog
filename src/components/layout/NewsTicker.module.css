@@ -1,0 +1,70 @@
+.ticker {
+  display: flex;
+  align-items: center;
+  background: var(--ink);
+  height: 36px;
+  overflow: hidden;
+  border-bottom: 2px solid var(--red);
+}
+
+.label {
+  flex-shrink: 0;
+  background: var(--red);
+  color: var(--paper);
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.track {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.scroll {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+
+.scroll:hover { animation-play-state: paused; }
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.item a {
+  font-family: "Oswald", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: rgba(241, 235, 220, 0.85);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+
+.item a:hover { color: var(--yellow); }
+
+.sep {
+  color: var(--red);
+  font-size: 8px;
+  margin: 0 16px;
+}
