@@ -71,6 +71,7 @@ export default function ConfiguracoesPage() {
     const res = await fetch('/api/upload', { method: 'POST', body: form });
     const data = await res.json();
     if (data.url) set('site_logo', data.url);
+    else alert('Erro no upload: ' + (data.error ?? 'tente novamente'));
     setUploadingLogo(false);
   }
 
@@ -81,6 +82,7 @@ export default function ConfiguracoesPage() {
     const res = await fetch('/api/upload', { method: 'POST', body: form });
     const data = await res.json();
     if (data.url) setAuthorAvatar(data.url);
+    else alert('Erro no upload: ' + (data.error ?? 'tente novamente'));
     setUploading(false);
   }
 
