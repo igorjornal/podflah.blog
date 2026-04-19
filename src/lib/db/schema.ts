@@ -80,6 +80,13 @@ export const subscribers = pgTable('subscribers', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
+export const siteSettings = pgTable('site_settings', {
+  id: serial('id').primaryKey(),
+  key: varchar('key', { length: 100 }).notNull().unique(),
+  value: text('value'),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
 export type Post = typeof posts.$inferSelect;
 export type NewPost = typeof posts.$inferInsert;
 export type Category = typeof categories.$inferSelect;

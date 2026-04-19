@@ -1,22 +1,27 @@
 export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import { db } from '@/lib/db';
-import { posts, categories, authors } from '@/lib/db/schema';
+import { posts, categories, authors, siteSettings } from '@/lib/db/schema';
 import { desc, eq } from 'drizzle-orm';
 import PostCard from '@/components/posts/PostCard';
 import styles from './Home.module.css';
 
 async function getData() {
-  const [allPosts, allCategories, allAuthors] = await Promise.all([
+  const [allPosts, allCategories, allAuthors, settingsRows] = await Promise.all([
     db.select().from(posts).where(eq(posts.status, 'published')).orderBy(desc(posts.publishedAt)).limit(20),
     db.select().from(categories),
     db.select().from(authors).limit(1),
+    db.select().from(siteSettings),
   ]);
-  return { allPosts, allCategories, allAuthors };
+  const settings: Record<string, string> = {};
+  for (const r of settingsRows) settings[r.key] = r.value ?? '';
+  return { allPosts, allCategories, allAuthors, settings };
 }
 
 export default async function HomePage() {
-  const { allPosts, allCategories, allAuthors } = await getData();
+  const { allPosts, allCategories, allAuthors, settings } = await getData();
+
+  const s = (key: string, fallback: string) => settings[key] || fallback;
 
   const featuredPost = allPosts.find(p => p.featured) ?? allPosts[0];
   const gridPosts = allPosts.filter(p => p.id !== featuredPost?.id).slice(0, 9);
@@ -28,15 +33,15 @@ export default async function HomePage() {
     <div>
       <div className="wrap">
         <div className={styles.masthead}>
-          <h1>A <em>Arquibancada</em><br />do PodFlah</h1>
+          <h1>{s('site_name_prefix','A')} <em>{s('site_name_highlight','Arquibancada')}</em><br />{s('site_name_suffix','do PodFlah')}</h1>
           <div className={styles.mastheadMeta}>
-            <strong>EDIÇÃO DIGITAL</strong><br />Futebol · Crônica · Análise<br />Desde 2018
+            <strong>{s('site_tagline_top','EDIÇÃO DIGITAL')}</strong><br />{s('site_tagline_mid','Futebol · Crônica · Análise')}<br />{s('site_tagline_bot','Desde 2018')}
           </div>
         </div>
         <div className={styles.editionBar}>
-          <span className={styles.pill}>ARQUIBANCADA</span>
-          <span>O BLOG OFICIAL DO PODFLAH</span>
-          <span>{new Date().getFullYear()} · TEMPORADA EM CURSO</span>
+          <span className={styles.pill}>{s('nav_brand','ARQUIBANCADA')}</span>
+          <span>{s('nav_center','O BLOG OFICIAL DO PODFLAH')}</span>
+          <span>{s('nav_right', new Date().getFullYear() + ' · TEMPORADA EM CURSO')}</span>
         </div>
       </div>
 

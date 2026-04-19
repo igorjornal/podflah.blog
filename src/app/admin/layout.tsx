@@ -41,6 +41,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin/newsletter" className={styles.navLink}><span className={styles.navIcon}>✉</span>Newsletter</Link>
 
           <p className={styles.navSectionLabel}>Site</p>
+          <Link href="/admin/configuracoes" className={styles.navLink}><span className={styles.navIcon}>⚙</span>Configurações</Link>
           <Link href="/" className={styles.navLink} target="_blank"><span className={styles.navIcon}>↗</span>Ver site</Link>
         </nav>
 
